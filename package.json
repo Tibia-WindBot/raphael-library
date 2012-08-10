@@ -1,0 +1,18 @@
+{
+    "name": "raphael's iBot library"
+  , "description": "iBot library created with a view to ease and fasten scripts development"
+  , "version": "1.0.0"
+  , "keywords": ["ibot", "tibia"]
+  , "homepage": "https://github.com/rmobis/RaphaelLibrary"
+  , "author": "Raphael Mobis"
+  , "repository": {
+      "type": "git"
+    , "url": "https://github.com/rmobis/RaphaelLibrary.git"
+  }
+  , "licenses": [
+    {
+        "type": "Apache-2.0"
+      , "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
