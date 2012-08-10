@@ -20,6 +20,12 @@ Content
 
 
 
+Contributing
+------------
+
+If you have any contribution to make, please make a pull request to the development branch.
+
+
 Versioning
 ----------
 
