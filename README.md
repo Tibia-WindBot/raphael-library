@@ -5,6 +5,27 @@ Raphael's Library is a pack of functions created with a view to ease and fasten 
 
 
 
+Content
+-------
+
+* __exec(__ execstring __)__
+* __time(__ secs, _pattern_ __)__
+* __num(__ n, _mark_ __)__
+* __compversions(__ v1, v2 __)__
+* __exptolvl(__ _l1_, l2 __)__
+* __exptolevel(__ _level_ __)__
+* __itemcount(__ item, _origin_ __)__
+* __maround(__ _range_, _samefloor_, _name1_, _name2_, _name..._, _f_ __)__
+* _To be continued..._
+
+
+
+Contributing
+------------
+
+If you have any contribution to make, please make a pull request to the development branch.
+
+
 Versioning
 ----------
 
