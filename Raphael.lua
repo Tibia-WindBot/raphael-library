@@ -1,18 +1,6 @@
 -- Raphael's Library v1.0.0
 --		Last updated: 08/10/12 - 20:38
 
---[[
- * Changelog v1.0.0
- *
- * - First stable release, project added to GitHub.
- * - Started working on some basic documentation. (Based on http://goo.gl/93Q62 & http://goo.gl/67idS)
- * - Updated num(), itemcount() and table.each().
- * - Fixed small bugs on maround(), file.line() and file.isline().
- * - Added table.merge(), table.sum() and table.average().
- * - Added string.begin() and string.finish().
- * - Added ischannel(), npctalk(), toyesno(), toonoff(), tobool(), get() and set().
---]]
-
 LIBS = LIBS or {}
 LIBS.RAPHAEL = '1.0.0'
 
@@ -30,6 +18,7 @@ findcreature = getcreature
  *
  * @param	{number}	n		- The number to be formatted
  * @param	{string}	[mark]	- The decimal mark to be used; defaults to ','
+ *
  * @returns	{string}			- Formatted number
 --]]
 function num(n, mark)
@@ -58,6 +47,7 @@ end
  * @param	{number}	secs		- The number of seconds the time represents
  * @param	{string}	[pattern]	- The pattern it sould be parsed on; defaults to the best
  									  pattern to display all info
+ *
  * @returns	{string}				- Formatted time string
 --]]
 function time(secs, pattern)
@@ -94,6 +84,7 @@ end
  *
  * @param	{string}	v1	- The first version string
  * @param	{string}	v2	- The second version string
+ *
  * @returns	{boolean}		- Whether v2 is equal or higher than v1
 --]]
 function compversions(v1, v2)
@@ -120,6 +111,7 @@ end
  * @since 0.2
  *
  * @param	{string}	execstring	- The string to be executed
+ *
  * @returns {?}						- Anything returned by the code ran
 --]]
 function exec(execstring)
@@ -142,6 +134,7 @@ end
  *
  * @param	{number}	[l1]	- The starting level; defaults to 0
  * @param	{number}	l2		- The target level
+ *
  * @returns {number}			- The experience needed
 --]]
 function exptolvl(l1, l2)
@@ -165,6 +158,7 @@ end
  * @since 0.3
  *
  * @param	{number}	[lvl]	- The target level; defaults to level + 1
+ *
  * @returns {number}			- The experience needed
 --]]
 function exptolevel(lvl)
@@ -181,6 +175,7 @@ end
  *
  * @param	{number|string|table}	item		- The item(s) name or id.
  * @param	{number|string}			[origin]	- The location to look for; defaults to 'all'
+ *
  * @returns {number}							- The amount of items
 --]]
 function itemcount(item, origin)
@@ -196,18 +191,17 @@ end
 
 
 --[[
- * Returns the amount of creatures around you.
- *
- *
+ * Returns the amount of creatures that meet some specific criteria around you.
  *
  * @overrides
  * @since 0.3
  * @updated 1.0.0
  *
  * @param	{number}		[range]					- The range the creatures need to be around you; defaults to 7
- * @param	{boolean}		[samefloor]				- WConsider creature on the same floor as you; defaults to true
+ * @param	{boolean}		[samefloor]				- Only consider creatures on the same floor as you; defaults to true
  * @param	{string|table}	[name1], [name2], ...	- Names of the creatures that should be considered; defaults to any
  * @param	{function}		[f]						- A function to validate each creature; must return a boolean
+ *
  * @returns {number}								- The amount of creatures
 --]]
 function maround(...)
@@ -247,6 +241,19 @@ function maround(...)
 	end
 end
 
+
+--[[
+ * Returns the pointers to the creatures that meet the specified criteria.
+ *
+ * @overrides
+ * @since 0.3
+ *
+ * @param	{string}		[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
+ 										  means on the screen, 'm' means monster & 'p' means player; defaults to 'mpsf'
+ * @param	{function}		[f]			- A function to validate each creature; must return a boolean
+ *
+ * @returns {table}						- The pointers to the creatures
+--]]
 function getcreatures(...)
 	local fl = 'mpsf'
 	local cre
@@ -268,39 +275,105 @@ function getcreatures(...)
 	return cre
 end
 
-function moveitems(item, origin, dest, amount)
-	if amount == nil then
 
-	end
-end
+--[[
+ * Returns whether a channel is open or not.
+ *
+ * @malfunction
+ * @since 0.3
+ *
+ * @param	{string}		channel	- The channel to be checked.
 
-function ischannel(ch)
-	return #getmessages(ch) > 0
+ * @returns {boolean}				- Whether the channel is open or not
+--]]
+function ischannel(channel)
+	return #getmessages(channel) > 0
 end
 
 local trueValues = {'yes', 'on', 1, true}
-function toyesno(v)
-	return (table.find(trueValues, v) and 'yes') or 'no'
+
+
+--[[
+ * Converts a possible boolean value to its 'yes' or 'no' equivalent.
+ *
+ * @since 1.0.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {string}		- The equivalent 'yes' or 'no' value
+--]]
+function toyesno(val)
+	return (table.find(trueValues, val) and 'yes') or 'no'
 end
 
-function toonoff(v)
-	return (table.find(trueValues, v) and 'on') or 'off'
+
+--[[
+ * Converts a possible boolean value to its 'on' or 'off' equivalent.
+ *
+ * @since 1.0.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {string}		- The equivalent 'on' or 'off' value
+--]]
+function toonoff(val)
+	return (table.find(trueValues, val) and 'on') or 'off'
 end
 
-function tobool(v)
-	return table.find(trueValues, v)
+
+--[[
+ * Converts a possible boolean value to its boolean equivalent.
+ *
+ * @since 1.0.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {boolean}		- The equivalent boolean value
+--]]
+function tobool(val)
+	return table.find(trueValues, val)
 end
 
-local function getfullpath(t, p)
-	return p:begin('Settings/'):gsub('/', '\\')
+
+--[[
+ * Replaces all '/' with '\\' and prepends 'Settings\\' to the beginning of the setting path.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{string}		path	- The setting path
+
+ * @returns {string}				- The converted path
+--]]
+local function getfullpath(path)
+	return path:gsub('/', '\\'):begin('Settings\\')
 end
 
-function set(p, v)
-	setsettings(getfullpath(p), v)
+
+--[[
+ * Simply a helper for setsettings(), which automatically runs the path through getfullpath().
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}		path	- The setting path to be set
+ * @param	{any}			val		- The value to be set
+--]]
+function set(path, val)
+	setsettings(getfullpath(path), val)
 end
 
-function get(p)
-	return getsettings(getfullpath(p))
+
+--[[
+ * Simply a helper for getsettings(), which automatically runs the path through getfullpath().
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}		path	- The setting path to be gotten
+ *
+ * @returns {any}					- The value contained in the setting path
+--]]
+function get(path)
+	return getsettings(getfullpath(path))
 end
 
 
