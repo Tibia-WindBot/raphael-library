@@ -7,6 +7,14 @@ LIBS.RAPHAEL = '1.0.0'
 findcreature = getcreature
 
 
+
+--     _ ____        __     ______     __                  _
+--    (_) __ )____  / /_   / ____/  __/ /____  ____  _____(_)___  ____
+--   / / __  / __ \/ __/  / __/ | |/_/ __/ _ \/ __ \/ ___/ / __ \/ __ \
+--  / / /_/ / /_/ / /_   / /____>  </ /_/  __/ / / (__  ) / /_/ / / / /
+-- /_/_____/\____/\__/  /_____/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
+
+
 --[[
  * Groups thousands digits for readability.
  *
@@ -248,11 +256,11 @@ end
  * @overrides
  * @since 0.3
  *
- * @param	{string}		[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
- 										  means on the screen, 'm' means monster & 'p' means player; defaults to 'mpsf'
- * @param	{function}		[f]			- A function to validate each creature; must return a boolean
+ * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
+ 									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
+ * @param	{function}	[f]			- A function to validate each creature; must return a boolean
  *
- * @returns {table}						- The pointers to the creatures
+ * @returns {table}					- The pointers to the creatures
 --]]
 function getcreatures(...)
 	local fl = 'mpsf'
@@ -282,17 +290,16 @@ end
  * @malfunction
  * @since 0.3
  *
- * @param	{string}		channel	- The channel to be checked.
+ * @param	{string}	channel	- The channel to be checked.
 
- * @returns {boolean}				- Whether the channel is open or not
+ * @returns {boolean}			- Whether the channel is open or not
 --]]
 function ischannel(channel)
 	return #getmessages(channel) > 0
 end
 
+
 local trueValues = {'yes', 'on', 1, true}
-
-
 --[[
  * Converts a possible boolean value to its 'yes' or 'no' equivalent.
  *
@@ -341,9 +348,9 @@ end
  * @since 1.0.0
  * @updated 1.1.0
  *
- * @param	{string}		path	- The setting path
+ * @param	{string}	path	- The setting path
 
- * @returns {string}				- The converted path
+ * @returns {string}			- The converted path
 --]]
 local function getfullpath(path)
 	return path:gsub('/', '\\'):begin('Settings\\')
@@ -355,8 +362,8 @@ end
  *
  * @since 1.0.0
  *
- * @param	{string}		path	- The setting path to be set
- * @param	{any}			val		- The value to be set
+ * @param	{string}	path	- The setting path to be set
+ * @param	{any}		val		- The value to be set
 --]]
 function set(path, val)
 	setsettings(getfullpath(path), val)
@@ -368,9 +375,9 @@ end
  *
  * @since 1.0.0
  *
- * @param	{string}		path	- The setting path to be gotten
+ * @param	{string}	path	- The setting path to be gotten
  *
- * @returns {any}					- The value contained in the setting path
+ * @returns {any}				- The value contained in the setting path
 --]]
 function get(path)
 	return getsettings(getfullpath(path))
@@ -386,6 +393,20 @@ end
 -- /_/  /_/\__,_/\__/_/ /_/   \___/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 --
 
+
+--[[
+ * Formats a number according to a specified pattern.
+ *
+ * Formats a number according to a specified pattern, in order to keep a specific amount of digits before and after the
+ * decimal mark.
+ *
+ * @since 0.1
+ *
+ * @param	{number}	self	- The number to be formatted
+ * @param	{string}	pattern	- The pattern in which the number should be formatted; e.g: '00.00'
+ *
+ * @returns	{string}			- The formatted number
+--]]
 function math.format(self, pattern)
 	local s, p
 	s = string.explode('0' .. tostring(self), '%.')
@@ -419,50 +440,138 @@ end
 -- /____/\__/_/  /_/_/ /_/\__, /  /_____/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 --                       /____/
 
-function string.explode(self, sep) -- By Socket, improved by Hardek.
+
+--[[
+ * Splits the string by the specified delimiter.
+ *
+ * Returns an array of strings, each of which is a substring of self formed by splitting it on boundaries formed by
+ * the string delimiter.
+ *
+ * @since 0.1
+ *
+ * @param	{string}	self		- The string to be split
+ * @param	{string}	delimiter	- The string delimiter
+ *
+ * @returns	{array}					- An array of strings created by splitting the string.
+--]]
+function string.explode(self, delimiter) -- By Socket, improved by Hardek.
 	local result = {}
-	self:gsub('[^'.. sep ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
+	self:gsub('[^'.. delimiter ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
 	return result
 end
 
+
+--[[
+ * Capitalizes the first character in a given string.
+ *
+ * @since 0.1
+ *
+ * @param	{string}	self	- The string to be capitalized
+ *
+ * @returns {string}			- The capitalized string
+--]]
 function string.capitalize(self)
 	return self:sub(1, 1):upper() .. self:sub(2):lower()
 end
 
+
+--[[
+ * Capitalizes the first character of every word in a given string.
+ *
+ * @since 0.1
+ * @updated 1.1.0
+ *
+ * @param	{string}	self	- The string to be capitalized
+ *
+ * @returns {string}			- The capitalized string
+--]]
 function string.capitalizeall(self)
 	local r = self:explode(' ')
-	for i = 1, #r do
-		r[i] = r[i]:capitalize()
-	end
-
+	table.each(r, function(v) return v:capitalize() end)
 	return table.concat(r, ' ')
 end
 
+
+--[[
+ * Returns the nth character in a given string.
+ *
+ * @since 0.1
+ *
+ * @param	{string}	self	- The target string
+ * @param	{number}	n		- The character's position
+ *
+ * @returns {string}			- The nth character
+--]]
 function string.at(self, n)
 	return self:sub(n, n)
 end
 
+
+--[[
+ * Checks whether a given string ends with a given substring.
+ *
+ * @since 0.1
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The ending substring
+ *
+ * @returns {boolean}			- Whether it ends or not with the given substring
+--]]
 function string.ends(self, substr)
 	return self:sub(-#substr) == substr
 end
 
+
+--[[
+ * Checks whether a given string starts with a given substring.
+ *
+ * @since 0.1
+ * @updated 0.3
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The starting substring
+ *
+ * @returns {boolean}			- Whether it starts or not with the given substring
+--]]
 function string.starts(self, substr)
 	return self:sub(1, #substr) == substr
 end
 
-function string.begin(self, substr)
-	if self:starts(substr) then
-		return self
-	else
-		return substr .. self
-	end
-end
 
+--[[
+ * Forces a given string to start with a given substring.
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The starting substring
+ *
+ * @returns {string}			- The string starting with the substring
+--]]
 function string.finish(self, substr)
 	if self:ends(substr) then
 		return self
 	else
 		return self .. substr
+	end
+end
+
+
+--[[
+ * Forces a given string to end with a given substring.
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The starting substring
+ *
+ * @returns {string}			- The string ending with the substring
+--]]
+function string.begin(self, substr)
+	if self:starts(substr) then
+		return self
+	else
+		return substr .. self
 	end
 end
 
