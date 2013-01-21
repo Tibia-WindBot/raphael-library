@@ -1,8 +1,8 @@
--- Raphael's Library v1.0.0
+-- Raphael's Library v1.1.0
 --		Last updated: 08/10/12 - 20:38
 
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.0.0'
+LIBS.RAPHAEL = '1.1.0'
 
 findcreature = getcreature
 tilewalkable = tileiswalkable
