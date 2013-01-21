@@ -120,7 +120,7 @@ end
  *
  * @param	{string}	execstring	- The string to be executed
  *
- * @returns {?}						- Anything returned by the code ran
+ * @returns {any}						- Anything returned by the code ran
 --]]
 function exec(execstring)
 	local func = loadstring(execstring)
@@ -571,10 +571,35 @@ end
 -- /_/  \__,_/_.___/_/\___/  /_____/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 --
 
+
+--[[
+ * Checks wheter given table is empty, that is, has no elements. This may be needed for tables with non-numeric indexes,
+ * where the length operator (#) might not work properly.
+ *
+ * NOTE: May return incorrect values if the given table contains nil values.
+ *
+ * @malfunction
+ * @since 0.1
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {boolean}			- Wheter the target table is empty or not
+--]]
 function table.isempty(self)
 	return next(self) == nil
 end
 
+
+--[[
+ * Returns the amount of elements present in the table. This may be needed for tables with non-numeric indexes, where
+ * the length operator (#) might not work properly.
+ *
+ * @since 0.1
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The number of elements inside the target table
+--]]
 function table.size(self)
 	local i = 0
 	for v in pairs(self) do
@@ -584,6 +609,19 @@ function table.size(self)
 	return i
 end
 
+
+--[[
+ * Runs a routine through every item in the given table. The routine to be ran will receive as arguments, for each item,
+ * it's value and correspondet index.
+ *
+ * @since 0.1
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{function}	f			- Routine to be ran on each element
+ *
+ * @returns {table}					- A table with the returning values for each item
+--]]
 function table.each(self, f)
 	local r = {}
 
@@ -594,20 +632,66 @@ function table.each(self, f)
 	return r
 end
 
+
+--[[
+ * Runs a routine through every item in the given table and replace the item with the value returned by it. The routine
+ * to be ran will receive as arguments, for each item, it's value and correspondet index.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{function}	f			- Routine to be ran on each element
+--]]
 function table.map(self, f)
 	for k, v in pairs(self) do
 		self[k] = f(v, k)
 	end
 end
 
+
+--[[
+ * Transforms all strings in the given table to their lowercase equivalent.
+ *
+ * @since 0.1
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{boolean}	[passive]	- Wheter the target table original values should be preserved; defaults to false
+ *
+ * @returns {table}					- A table with the equivalent lowercase strings
+--]]
 function table.lower(self)
 	table.each(self, string.lower)
 end
 
+
+--[[
+ * Transforms all strings in the given table to their uppercase equivalent.
+ *
+ * @since 0.1
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{boolean}	[passive]	- Wheter the target table original values should be preserved; defaults to false
+ *
+ * @returns {table}					- A table with the equivalent uppercase strings
+--]]
 function table.upper(self)
 	table.each(self, string.upper)
 end
 
+
+--[[
+ * Transforms all item names in the table to their equivalent item id.
+ *
+ * @since 0.1
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{boolean}	[passive]	- Wheter the target table original values should be preserved; defaults to false
+ *
+ * @returns {table}					- A table with the equivalent item ids
+--]]
 function table.id(self)
 	table.each(self, itemid)
 end
