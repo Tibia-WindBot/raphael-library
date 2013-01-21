@@ -5,6 +5,7 @@ LIBS = LIBS or {}
 LIBS.RAPHAEL = '1.0.0'
 
 findcreature = getcreature
+tilewalkable = tileiswalkable
 table.unpack = table.unpack or unpack
 
 
