@@ -921,9 +921,10 @@ end
 
 
 --[[
- * Gets all the content of a given file.
+ * Gets all the content of a given file. Returns nil if file doesn't exist.
  *
  * @since 0.2.0
+ * @updated 1.1.0
  *
  * @param	{string}	filename	- File name to be read
  *
@@ -932,7 +933,7 @@ end
 function file.content(filename)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
-		return ''
+		return nil
 	end
 
 	local handler = io.open(filename, 'r')
@@ -943,9 +944,10 @@ end
 
 
 --[[
- * Gets the number of lines in a given file.
+ * Gets the number of lines in a given file. Returns -1 if file doesn't exist.
  *
  * @since 0.2.0
+ * @updated 1.1.0
  *
  * @param	{string}	filename	- File name to be checked
  *
@@ -967,10 +969,10 @@ end
 
 
 --[[
- * Gets the content of the nth file line.
+ * Gets the content of the nth file line. Returns nil if file doesn't exist.
  *
  * @since 0.2.0
- * @updated 1.0.0
+ * @updated 1.1.0
  *
  * @param	{string}	filename	- File name to be read
  * @param	{number}	linenum		- Line number
@@ -980,7 +982,7 @@ end
 function file.line(filename, linenum)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
-		return ''
+		return nil
 	end
 
 	local l, linev = 0, ''
@@ -1002,7 +1004,7 @@ end
  * @since 0.2.0
  *
  * @param	{string}	filename	- File name to be written on
- * @param	{number}	content		- Content to be appended
+ * @param	{string}	content		- Content to be appended
 --]]
 function file.write(filename, content)
 	filename = file.checkname(filename)
@@ -1019,7 +1021,7 @@ end
  * @since 0.2.0
  *
  * @param	{string}	filename	- File name to be written on
- * @param	{number}	content		- Content to be written
+ * @param	{string}	content		- Content to be written
 --]]
 function file.rewrite(filename, content)
 	filename = file.checkname(filename)
@@ -1052,7 +1054,7 @@ end
  * @since 0.2.0
  *
  * @param	{string}	filename	- File name to be written on
- * @param	{number}	content		- Content to be appended
+ * @param	{string}	content		- Content to be appended
 --]]
 function file.writeline(filename, content)
 	filename = file.checkname(filename)
@@ -1066,13 +1068,15 @@ end
 
 
 --[[
- * Checks whether the any file line matches given content
+ * Checks whether the any file line matches given content. Returns false if it can't be found.
  *
  * @since 0.2.0
  * @updated 1.0.0
  *
  * @param	{string}	filename	- File name to be checked
- * @param	{number}	content		- Content to be matched against
+ * @param	{string}	content		- Content to be matched against
+ *
+ * @returns {number}				- Matching line number
 --]]
 function file.isline(filename, content)
 	filename = file.checkname(filename)
@@ -1091,15 +1095,18 @@ end
 
 
 --[[
- * Executes the content of given file
+ * Executes the content of given file.
  *
  * @since 0.2.0
- * @updated 0.30
+ * @updated 1.1.0
  *
- * @param	{string}	filename	- File name to be executed
+ * @param	{any}	filename	- File name to be executed
 --]]
 function file.exec(filename)
 	filename = file.checkname(filename)
 
-	return dofile(filename)
+	if file.exists(filename) then
+		return dofile(filename)
+	end
+	return nil
 end
