@@ -869,10 +869,30 @@ end
 
 file = {}
 
+
+--[[
+ * Used as a helper function to ensure all files are placed inside the files folder.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ *
+ * @returns	{string}				- Checked file name
+--]]
 function file.checkname(filename)
 	return filename:begin('files/')
 end
 
+
+--[[
+ * Checks wheter given file exists in disk or not.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ *
+ * @returns	{boolean}				- Whether it exists or not
+--]]
 function file.exists(filename)
 	filename = file.checkname(filename)
 	local handler, exists = io.open(filename), false
@@ -884,6 +904,16 @@ function file.exists(filename)
 	return false
 end
 
+
+--[[
+ * Gets all the content of a given file.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be read
+ *
+ * @returns {string}				- File content
+--]]
 function file.content(filename)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
@@ -896,6 +926,16 @@ function file.content(filename)
 	return content
 end
 
+
+--[[
+ * Gets the number of lines in a given file.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ *
+ * @returns {number}				- File lines count
+--]]
 function file.linescount(filename)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
@@ -910,7 +950,19 @@ function file.linescount(filename)
 	return l
 end
 
--- @updated 1.0.0
+
+
+--[[
+ * Gets the content of the nth file line.
+ *
+ * @since 0.2.0
+ * @updated 1.0.0
+ *
+ * @param	{string}	filename	- File name to be read
+ * @param	{number}	linenum		- Line number
+ *
+ * @returns {string}				- Line content
+--]]
 function file.line(filename, linenum)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
