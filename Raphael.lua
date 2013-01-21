@@ -693,12 +693,24 @@ function table.id(self)
 	return table.each(self, itemid)
 end
 
-function table.filter(self, f)
-	for k, v in pairs(self) do
-		if not f(v, k) then
-			table.remove(self, k)
+function table.filter(self, f, forceKey)
+	local r = {}
+
+	if forceKey then
+		for k, v in pairs(self) do
+			if f(v, k) then
+				r[k] = v
+			end
+		end
+	else
+		for k, v in pairs(self) do
+			if f(v, k) then
+				table.insert(r)
+			end
 		end
 	end
+
+	return r
 end
 
 function table.merge(self, v, forceKey)
