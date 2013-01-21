@@ -626,7 +626,7 @@ function table.each(self, f)
 	local r = {}
 
 	for k, v in pairs(self) do
-		ret[k] = f(v, k)
+		r[k] = f(v, k)
 	end
 
 	return r
@@ -713,19 +713,32 @@ function table.filter(self, f, forceKey)
 	return r
 end
 
-function table.merge(self, v, forceKey)
-	local f
+function table.merge(...)
+	local args = {...}
+	local r = {}
+	local forceKey, f
+
+	if (type(table.last(args)) == 'boolean') then
+		forceKey = table.remove(args)
+	end
+
 	if forceKey then
 		f = function(v, k)
-				self[k] = v
+				r[k] = v
 			end
 	else
 		f = function(v)
 				local rv = v
-				table.insert(self, rv)
+				table.insert(r, rv)
 			end
 	end
-	table.each(v, f)
+
+	table.each(args,
+		function(v)
+			table.each(v, f)
+		end)
+
+	return r
 end
 
 function table.sum(self)
@@ -736,6 +749,14 @@ end
 
 function table.average(self)
 	return table.sum(self) / #self
+end
+
+function table.first(self)
+	return self[1]
+end
+
+function table.last(self)
+	return self[#self]
 end
 
 
