@@ -1,6 +1,22 @@
 -- Raphael's Library v1.1.0
 --		Last updated: 08/10/12 - 20:38
 
+--[[
+ * Changelog v1.1.0
+ *
+ * - Finished all the documentation.
+ * - Added tilewalkable() and table.unpack() aliases.
+ * - Renamed time() to formattime(), as there was already a native time() function.
+ * - Updated getfullpath().
+ * - Updated string.capitalizeall().
+ * - Updated table.each(), table.lower(), table.upper(), table.id(), table.filter(), table.merge(), table.sum() and
+ *   table.average().
+ * - Updated file.content(), file.linescount(), file.line() and file.exec().
+ * - Added toonezero().
+ * - Added table.map(), table.first(), table.last(), table.max() and table.min().
+--]]
+
+
 LIBS = LIBS or {}
 LIBS.RAPHAEL = '1.1.0'
 
