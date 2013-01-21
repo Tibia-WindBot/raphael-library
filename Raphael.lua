@@ -339,7 +339,7 @@ end
 --]]
 function toonezero(val)
 	return (table.find(trueValues, val) and 1) or 0
-do
+end
 
 
 --[[
