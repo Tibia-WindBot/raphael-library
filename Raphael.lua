@@ -7,7 +7,7 @@
  * - Finished all the documentation.
  * - Added tilewalkable() and table.unpack() aliases.
  * - Renamed time() to formattime(), as there was already a native time() function.
- * - Updated getfullpath().
+ * - Updated itemcount() and getfullpath().
  * - Updated string.capitalizeall().
  * - Updated table.each(), table.lower(), table.upper(), table.id(), table.filter(), table.merge(), table.sum() and
  *   table.average().
@@ -196,7 +196,7 @@ end
  *
  * @overrides
  * @since 0.3.0
- * @updated 1.0.0
+ * @updated 1.1.0
  *
  * @param	{number|string|table}	item		- The item(s) name or id.
  * @param	{number|string}			[origin]	- The location to look for; defaults to 'all'
@@ -208,9 +208,7 @@ function itemcount(item, origin)
 	if type(item) ~= 'table' then
 		return _itemcount(item, origin)
 	else
-		local c = 0
-		table.each(item, function(v) c = c + _itemcount(v, origin) end, true)
-		return c
+		return table.sum(table.each(item, function(v) return _itemcount(v, origin) end))
 	end
 end
 
