@@ -58,7 +58,7 @@ end
  *
  * @returns	{string}				- Formatted time string
 --]]
-function time(secs, pattern)
+function formattime(secs, pattern)
 	local dt = {
 		dd = math.floor(secs / (60 * 60 * 24)),		-- Days
 		hh = math.floor(secs / (60 * 60)) % 24,		-- Hours
