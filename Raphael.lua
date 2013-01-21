@@ -601,7 +601,6 @@ end
 
 --@updated 1.0.0 added passive
 function table.each(self, f, passive)
-	passive = passive or false
 	if not passive then
 		for k, v in pairs(self) do
 			self[k] = f(v, k)
