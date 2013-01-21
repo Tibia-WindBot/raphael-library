@@ -284,21 +284,6 @@ function getcreatures(...)
 end
 
 
---[[
- * Returns whether a channel is open or not.
- *
- * @malfunction
- * @since 0.3
- *
- * @param	{string}	channel	- The channel to be checked.
-
- * @returns {boolean}			- Whether the channel is open or not
---]]
-function ischannel(channel)
-	return #getmessages(channel) > 0
-end
-
-
 local trueValues = {'yes', 'on', 1, true}
 --[[
  * Converts a possible boolean value to its 'yes' or 'no' equivalent.
@@ -599,16 +584,19 @@ function table.size(self)
 	return i
 end
 
---@updated 1.0.0 added passive
-function table.each(self, f, passive)
-	if not passive then
-		for k, v in pairs(self) do
-			self[k] = f(v, k)
-		end
-	else
-		for k, v in pairs(self) do
-			f(v, k)
-		end
+function table.each(self, f)
+	local r = {}
+
+	for k, v in pairs(self) do
+		ret[k] = f(v, k)
+	end
+
+	return r
+end
+
+function table.map(self, f)
+	for k, v in pairs(self) do
+		self[k] = f(v, k)
 	end
 end
 
@@ -622,10 +610,6 @@ end
 
 function table.id(self)
 	table.each(self, itemid)
-end
-
-function table.findcreature(self)
-	table.each(self, findcreature)
 end
 
 function table.filter(self, f)
