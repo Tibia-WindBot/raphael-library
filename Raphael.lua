@@ -314,6 +314,20 @@ end
 
 
 --[[
+ * Converts a possible boolean value to its 1 or 0 equivalent.
+ *
+ * @since 1.1.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {number}		- The equivalent 'on' or 'off' value
+--]]
+function toonezero(val)
+	return (table.find(trueValues, val) and 1) or 0
+do
+
+
+--[[
  * Converts a possible boolean value to its boolean equivalent.
  *
  * @since 1.0.0
