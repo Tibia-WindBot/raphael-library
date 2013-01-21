@@ -693,6 +693,21 @@ function table.id(self)
 	return table.each(self, itemid)
 end
 
+
+--[[
+ * Filters the items in the given table, running a routine on each of them and removing those which the routines returns
+ * false. The routine to be ran will receive as arguments, for each item, it's value and correspondet index.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{function}	f			- Routine to be ran on each element
+ * @param	{boolean}	[forceKey]	- Whether to assure the filtered items have the same key they had on the original
+ *                             		  array; defaults to false
+ *
+ * @returns {table}					- A table with the filtered items
+--]]
 function table.filter(self, f, forceKey)
 	local r = {}
 
@@ -713,6 +728,19 @@ function table.filter(self, f, forceKey)
 	return r
 end
 
+
+--[[
+ * Merges the items of the given tables to a single table.
+ *
+ * @since 0.1
+ * @updated 1.1.0
+ *
+ * @param	{table}		[table1], [table2], ...		- The target table
+ * @param	{boolean}	[forceKey]					- Whether to assure the filtered items have the same key they had on
+ *                                 					  the original array; defaults to false
+ *
+ * @returns {table}									- A table with all items on the given tables
+--]]
 function table.merge(...)
 	local args = {...}
 	local r = {}
