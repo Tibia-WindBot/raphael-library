@@ -5,7 +5,7 @@ LIBS = LIBS or {}
 LIBS.RAPHAEL = '1.0.0'
 
 findcreature = getcreature
-
+table.unpack = table.unpack or unpack
 
 
 --     _ ____        __     ______     __                  _
@@ -771,7 +771,7 @@ end
 
 function table.sum(self)
 	local s = 0
-	table.each(self, function(v) s = s + v end, true)
+	table.each(self, function(v) s = s + v end)
 	return s
 end
 
@@ -785,6 +785,14 @@ end
 
 function table.last(self)
 	return self[#self]
+end
+
+function table.max(self)
+	return math.max(table.unpack(self))
+end
+
+function table.min(self)
+	return math.min(table.unpack(self))
 end
 
 
