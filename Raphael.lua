@@ -965,7 +965,6 @@ function file.linescount(filename)
 end
 
 
-
 --[[
  * Gets the content of the nth file line.
  *
@@ -995,6 +994,15 @@ function file.line(filename, linenum)
 	return linev
 end
 
+
+--[[
+ * Appends content to the end of given file. If the file does not exist, it's created.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be written on
+ * @param	{number}	content		- Content to be appended
+--]]
 function file.write(filename, content)
 	filename = file.checkname(filename)
 
@@ -1003,6 +1011,15 @@ function file.write(filename, content)
 	handler:close()
 end
 
+
+--[[
+ * Write content to the given file, erasing any previous content. If the file does not exist, it's created.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be written on
+ * @param	{number}	content		- Content to be written
+--]]
 function file.rewrite(filename, content)
 	filename = file.checkname(filename)
 
@@ -1011,6 +1028,15 @@ function file.rewrite(filename, content)
 	handler:close()
 end
 
+
+--[[
+ * Clears all the content of the given file. If the file does not exist, it's created. Useful to create new, empty
+ * files.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be cleared
+--]]
 function file.clear(filename)
 	filename = file.checkname(filename)
 
@@ -1018,6 +1044,15 @@ function file.clear(filename)
 	handler:close()
 end
 
+
+--[[
+ * Appends content to the end of given file, on a new line. If the file does not exist, it's created.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be written on
+ * @param	{number}	content		- Content to be appended
+--]]
 function file.writeline(filename, content)
 	filename = file.checkname(filename)
 	local s = ''
@@ -1028,8 +1063,16 @@ function file.writeline(filename, content)
 	file.write(filename, s .. content)
 end
 
--- @updated 1.0.0
 
+--[[
+ * Checks whether the any file line matches given content
+ *
+ * @since 0.2.0
+ * @updated 1.0.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ * @param	{number}	content		- Content to be matched against
+--]]
 function file.isline(filename, content)
 	filename = file.checkname(filename)
 	local l = 0
@@ -1045,6 +1088,15 @@ function file.isline(filename, content)
 	return false
 end
 
+
+--[[
+ * Executes the content of given file
+ *
+ * @since 0.2.0
+ * @updated 0.30
+ *
+ * @param	{string}	filename	- File name to be executed
+--]]
 function file.exec(filename)
 	filename = file.checkname(filename)
 
