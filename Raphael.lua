@@ -21,7 +21,7 @@ findcreature = getcreature
  * Receives a number and returns a equivalent string with its thousands digits
  * separated by the chosen decimal mark. Ex: 12,345,678
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.0.0
  *
  * @param	{number}	n		- The number to be formatted
@@ -50,7 +50,7 @@ end
  * Receives the number of seconds representing the time and parses it into a
  * string according to the pattern passed. Ex: 01:23:45
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{number}	secs		- The number of seconds the time represents
  * @param	{string}	[pattern]	- The pattern it sould be parsed on; defaults to the best
@@ -88,7 +88,7 @@ end
  * Receveives two version strings, compares them and return a boolean
  * indicating whether v2 is equal or higher than v1.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{string}	v1	- The first version string
  * @param	{string}	v2	- The second version string
@@ -116,7 +116,7 @@ end
  * Executes the code string in protection mode without propagating the errors. Returns any value
  * returned by the executed code and a boolean indicating whether any error was fired.
  *
- * @since 0.2
+ * @since 0.2.0
  *
  * @param	{string}	execstring	- The string to be executed
  *
@@ -138,7 +138,7 @@ end
  * scenario, where you would have just reached the starting level, the latter is based on your
  * character's current experience.
  *
- * @since 0.3
+ * @since 0.3.0
  *
  * @param	{number}	[l1]	- The starting level; defaults to 0
  * @param	{number}	l2		- The target level
@@ -178,7 +178,7 @@ end
  * Returns the amount of items in a specified location.
  *
  * @overrides
- * @since 0.3
+ * @since 0.3.0
  * @updated 1.0.0
  *
  * @param	{number|string|table}	item		- The item(s) name or id.
@@ -202,7 +202,7 @@ end
  * Returns the amount of creatures that meet some specific criteria around you.
  *
  * @overrides
- * @since 0.3
+ * @since 0.3.0
  * @updated 1.0.0
  *
  * @param	{number}		[range]					- The range the creatures need to be around you; defaults to 7
@@ -254,7 +254,7 @@ end
  * Returns the pointers to the creatures that meet the specified criteria.
  *
  * @overrides
- * @since 0.3
+ * @since 0.3.0
  *
  * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
  									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
@@ -385,7 +385,7 @@ end
  * Formats a number according to a specified pattern, in order to keep a specific amount of digits before and after the
  * decimal mark.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{number}	self	- The number to be formatted
  * @param	{string}	pattern	- The pattern in which the number should be formatted; e.g: '00.00'
@@ -432,7 +432,7 @@ end
  * Returns an array of strings, each of which is a substring of self formed by splitting it on boundaries formed by
  * the string delimiter.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{string}	self		- The string to be split
  * @param	{string}	delimiter	- The string delimiter
@@ -449,7 +449,7 @@ end
 --[[
  * Capitalizes the first character in a given string.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{string}	self	- The string to be capitalized
  *
@@ -463,7 +463,7 @@ end
 --[[
  * Capitalizes the first character of every word in a given string.
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.1.0
  *
  * @param	{string}	self	- The string to be capitalized
@@ -480,7 +480,7 @@ end
 --[[
  * Returns the nth character in a given string.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{string}	self	- The target string
  * @param	{number}	n		- The character's position
@@ -495,7 +495,7 @@ end
 --[[
  * Checks whether a given string ends with a given substring.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{string}	self	- The target string
  * @param	{string}	substr	- The ending substring
@@ -510,8 +510,8 @@ end
 --[[
  * Checks whether a given string starts with a given substring.
  *
- * @since 0.1
- * @updated 0.3
+ * @since 0.1.0
+ * @updated 0.3.0
  *
  * @param	{string}	self	- The target string
  * @param	{string}	substr	- The starting substring
@@ -579,7 +579,7 @@ end
  * NOTE: May return incorrect values if the given table contains nil values.
  *
  * @malfunction
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{table}		self	- The target table
  *
@@ -594,7 +594,7 @@ end
  * Returns the amount of elements present in the table. This may be needed for tables with non-numeric indexes, where
  * the length operator (#) might not work properly.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{table}		self	- The target table
  *
@@ -614,7 +614,7 @@ end
  * Runs a routine through every item in the given table. The routine to be ran will receive as arguments, for each item,
  * it's value and correspondet index.
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
@@ -652,7 +652,7 @@ end
 --[[
  * Transforms all strings in the given table to their lowercase equivalent.
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
@@ -667,7 +667,7 @@ end
 --[[
  * Transforms all strings in the given table to their uppercase equivalent.
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
@@ -682,7 +682,7 @@ end
 --[[
  * Transforms all item names in the table to their equivalent item id.
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
