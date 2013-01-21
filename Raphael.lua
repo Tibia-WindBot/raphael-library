@@ -656,12 +656,11 @@ end
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
- * @param	{boolean}	[passive]	- Wheter the target table original values should be preserved; defaults to false
  *
  * @returns {table}					- A table with the equivalent lowercase strings
 --]]
 function table.lower(self)
-	table.each(self, string.lower)
+	return table.each(self, string.lower)
 end
 
 
@@ -672,12 +671,11 @@ end
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
- * @param	{boolean}	[passive]	- Wheter the target table original values should be preserved; defaults to false
  *
  * @returns {table}					- A table with the equivalent uppercase strings
 --]]
 function table.upper(self)
-	table.each(self, string.upper)
+	return table.each(self, string.upper)
 end
 
 
@@ -688,12 +686,11 @@ end
  * @updated 1.1.0
  *
  * @param	{table}		self		- The target table
- * @param	{boolean}	[passive]	- Wheter the target table original values should be preserved; defaults to false
  *
  * @returns {table}					- A table with the equivalent item ids
 --]]
 function table.id(self)
-	table.each(self, itemid)
+	return table.each(self, itemid)
 end
 
 function table.filter(self, f)
