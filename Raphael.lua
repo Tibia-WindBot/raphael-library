@@ -732,10 +732,10 @@ end
 --[[
  * Merges the items of the given tables to a single table.
  *
- * @since 0.1
+ * @since 1.0.0
  * @updated 1.1.0
  *
- * @param	{table}		[table1], [table2], ...		- The target table
+ * @param	{table}		[table1], [table2], ...		- Tables to be merged
  * @param	{boolean}	[forceKey]					- Whether to assure the filtered items have the same key they had on
  *                                 					  the original array; defaults to false
  *
@@ -769,28 +769,90 @@ function table.merge(...)
 	return r
 end
 
+
+--[[
+ * Returns the sum of all items in the given table.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The sum of all items
+--]]
 function table.sum(self)
 	local s = 0
 	table.each(self, function(v) s = s + v end)
 	return s
 end
 
+
+--[[
+ * Returns the average of all items in the given table.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The average of all items
+--]]
 function table.average(self)
 	return table.sum(self) / #self
 end
 
+
+--[[
+ * Returns the first item of the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {any}				- The first item of the given table
+--]]
 function table.first(self)
 	return self[1]
 end
 
+
+--[[
+ * Returns the last item of the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {any}				- The last item of the given table
+--]]
 function table.last(self)
 	return self[#self]
 end
 
+
+--[[
+ * Returns the maximum value of all items in the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The maximum value of all items
+--]]
 function table.max(self)
 	return math.max(table.unpack(self))
 end
 
+
+--[[
+ * Returns the minimum value of all items in the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The minimum value of all items
+--]]
 function table.min(self)
 	return math.min(table.unpack(self))
 end
