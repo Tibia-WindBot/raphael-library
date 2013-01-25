@@ -1,5 +1,5 @@
--- Raphael's Library v1.1.0 beta
---		Last updated: 08/10/12 - 20:38
+-- Raphael's Library v1.1.0
+--		Last updated: 01/25/13 - 05:12
 
 --[[
  * Changelog v1.1.0
