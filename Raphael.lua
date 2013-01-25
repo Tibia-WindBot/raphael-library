@@ -1,28 +1,23 @@
--- Raphael's Library v1.1.0
---		Last updated: 01/25/13 - 05:12
+-- Raphael's Library v1.1.1
+--		Last updated: 01/25/13 - 06:43
 
 --[[
- * Changelog v1.1.0
+ * Changelog v1.1.1
  *
- * - Finished all the documentation.
- * - Added tilewalkable() and table.unpack() aliases.
- * - Renamed time() to formattime(), as there was already a native time() function.
- * - Updated itemcount() and getfullpath().
- * - Updated string.capitalizeall().
- * - Updated table.each(), table.lower(), table.upper(), table.id(), table.filter(), table.merge(), table.sum() and
- *   table.average().
- * - Updated file.content(), file.linescount(), file.line() and file.exec().
- * - Added toonezero().
- * - Added table.map(), table.first(), table.last(), table.max() and table.min().
+ * - Added overriden methods backup variable.
 --]]
 
 
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.1.0'
+LIBS.RAPHAEL = '1.1.1'
 
 findcreature = getcreature
 tilewalkable = tileiswalkable
 table.unpack = table.unpack or unpack
+
+_maround = maround
+_itemcount = itemcount
+_getcreatures = getcreatures
 
 
 --     _ ____        __     ______     __                  _
@@ -272,7 +267,7 @@ end
  * @since 0.3.0
  *
  * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
- 									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
+ *									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
  * @param	{function}	[f]			- A function to validate each creature; must return a boolean
  *
  * @returns {table}					- The pointers to the creatures
@@ -306,7 +301,7 @@ local trueValues = {'yes', 'on', 1, true}
  * @since 1.0.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {string}		- The equivalent 'yes' or 'no' value
 --]]
 function toyesno(val)
@@ -320,7 +315,7 @@ end
  * @since 1.0.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {string}		- The equivalent 'on' or 'off' value
 --]]
 function toonoff(val)
@@ -334,7 +329,7 @@ end
  * @since 1.1.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {number}		- The equivalent 'on' or 'off' value
 --]]
 function toonezero(val)
@@ -348,7 +343,7 @@ end
  * @since 1.0.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {boolean}		- The equivalent boolean value
 --]]
 function tobool(val)
@@ -363,7 +358,7 @@ end
  * @updated 1.1.0
  *
  * @param	{string}	path	- The setting path
-
+ *
  * @returns {string}			- The converted path
 --]]
 local function getfullpath(path)
