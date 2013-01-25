@@ -1,22 +1,35 @@
--- Raphael's Library v1.0.0
+-- Raphael's Library v1.1.0 beta
 --		Last updated: 08/10/12 - 20:38
 
 --[[
- * Changelog v1.0.0
+ * Changelog v1.1.0
  *
- * - First stable release, project added to GitHub.
- * - Started working on some basic documentation. (Based on http://goo.gl/93Q62 & http://goo.gl/67idS)
- * - Updated num(), itemcount() and table.each().
- * - Fixed small bugs on maround(), file.line() and file.isline().
- * - Added table.merge(), table.sum() and table.average().
- * - Added string.begin() and string.finish().
- * - Added ischannel(), npctalk(), toyesno(), toonoff(), tobool(), get() and set().
+ * - Finished all the documentation.
+ * - Added tilewalkable() and table.unpack() aliases.
+ * - Renamed time() to formattime(), as there was already a native time() function.
+ * - Updated itemcount() and getfullpath().
+ * - Updated string.capitalizeall().
+ * - Updated table.each(), table.lower(), table.upper(), table.id(), table.filter(), table.merge(), table.sum() and
+ *   table.average().
+ * - Updated file.content(), file.linescount(), file.line() and file.exec().
+ * - Added toonezero().
+ * - Added table.map(), table.first(), table.last(), table.max() and table.min().
 --]]
 
+
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.0.0'
+LIBS.RAPHAEL = '1.1.0'
 
 findcreature = getcreature
+tilewalkable = tileiswalkable
+table.unpack = table.unpack or unpack
+
+
+--     _ ____        __     ______     __                  _
+--    (_) __ )____  / /_   / ____/  __/ /____  ____  _____(_)___  ____
+--   / / __  / __ \/ __/  / __/ | |/_/ __/ _ \/ __ \/ ___/ / __ \/ __ \
+--  / / /_/ / /_/ / /_   / /____>  </ /_/  __/ / / (__  ) / /_/ / / / /
+-- /_/_____/\____/\__/  /_____/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 
 
 --[[
@@ -25,11 +38,12 @@ findcreature = getcreature
  * Receives a number and returns a equivalent string with its thousands digits
  * separated by the chosen decimal mark. Ex: 12,345,678
  *
- * @since 0.1
+ * @since 0.1.0
  * @updated 1.0.0
  *
  * @param	{number}	n		- The number to be formatted
  * @param	{string}	[mark]	- The decimal mark to be used; defaults to ','
+ *
  * @returns	{string}			- Formatted number
 --]]
 function num(n, mark)
@@ -53,14 +67,15 @@ end
  * Receives the number of seconds representing the time and parses it into a
  * string according to the pattern passed. Ex: 01:23:45
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{number}	secs		- The number of seconds the time represents
  * @param	{string}	[pattern]	- The pattern it sould be parsed on; defaults to the best
  									  pattern to display all info
+ *
  * @returns	{string}				- Formatted time string
 --]]
-function time(secs, pattern)
+function formattime(secs, pattern)
 	local dt = {
 		dd = math.floor(secs / (60 * 60 * 24)),		-- Days
 		hh = math.floor(secs / (60 * 60)) % 24,		-- Hours
@@ -90,10 +105,11 @@ end
  * Receveives two version strings, compares them and return a boolean
  * indicating whether v2 is equal or higher than v1.
  *
- * @since 0.1
+ * @since 0.1.0
  *
  * @param	{string}	v1	- The first version string
  * @param	{string}	v2	- The second version string
+ *
  * @returns	{boolean}		- Whether v2 is equal or higher than v1
 --]]
 function compversions(v1, v2)
@@ -117,10 +133,11 @@ end
  * Executes the code string in protection mode without propagating the errors. Returns any value
  * returned by the executed code and a boolean indicating whether any error was fired.
  *
- * @since 0.2
+ * @since 0.2.0
  *
  * @param	{string}	execstring	- The string to be executed
- * @returns {?}						- Anything returned by the code ran
+ *
+ * @returns {any}						- Anything returned by the code ran
 --]]
 function exec(execstring)
 	local func = loadstring(execstring)
@@ -138,10 +155,11 @@ end
  * scenario, where you would have just reached the starting level, the latter is based on your
  * character's current experience.
  *
- * @since 0.3
+ * @since 0.3.0
  *
  * @param	{number}	[l1]	- The starting level; defaults to 0
  * @param	{number}	l2		- The target level
+ *
  * @returns {number}			- The experience needed
 --]]
 function exptolvl(l1, l2)
@@ -165,6 +183,7 @@ end
  * @since 0.3
  *
  * @param	{number}	[lvl]	- The target level; defaults to level + 1
+ *
  * @returns {number}			- The experience needed
 --]]
 function exptolevel(lvl)
@@ -176,11 +195,12 @@ end
  * Returns the amount of items in a specified location.
  *
  * @overrides
- * @since 0.3
- * @updated 1.0.0
+ * @since 0.3.0
+ * @updated 1.1.0
  *
  * @param	{number|string|table}	item		- The item(s) name or id.
  * @param	{number|string}			[origin]	- The location to look for; defaults to 'all'
+ *
  * @returns {number}							- The amount of items
 --]]
 function itemcount(item, origin)
@@ -188,26 +208,23 @@ function itemcount(item, origin)
 	if type(item) ~= 'table' then
 		return _itemcount(item, origin)
 	else
-		local c = 0
-		table.each(item, function(v) c = c + _itemcount(v, origin) end, true)
-		return c
+		return table.sum(table.each(item, function(v) return _itemcount(v, origin) end))
 	end
 end
 
 
 --[[
- * Returns the amount of creatures around you.
- *
- *
+ * Returns the amount of creatures that meet some specific criteria around you.
  *
  * @overrides
- * @since 0.3
+ * @since 0.3.0
  * @updated 1.0.0
  *
  * @param	{number}		[range]					- The range the creatures need to be around you; defaults to 7
- * @param	{boolean}		[samefloor]				- WConsider creature on the same floor as you; defaults to true
+ * @param	{boolean}		[samefloor]				- Only consider creatures on the same floor as you; defaults to true
  * @param	{string|table}	[name1], [name2], ...	- Names of the creatures that should be considered; defaults to any
  * @param	{function}		[f]						- A function to validate each creature; must return a boolean
+ *
  * @returns {number}								- The amount of creatures
 --]]
 function maround(...)
@@ -247,6 +264,19 @@ function maround(...)
 	end
 end
 
+
+--[[
+ * Returns the pointers to the creatures that meet the specified criteria.
+ *
+ * @overrides
+ * @since 0.3.0
+ *
+ * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
+ 									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
+ * @param	{function}	[f]			- A function to validate each creature; must return a boolean
+ *
+ * @returns {table}					- The pointers to the creatures
+--]]
 function getcreatures(...)
 	local fl = 'mpsf'
 	local cre
@@ -268,39 +298,103 @@ function getcreatures(...)
 	return cre
 end
 
-function moveitems(item, origin, dest, amount)
-	if amount == nil then
-
-	end
-end
-
-function ischannel(ch)
-	return #getmessages(ch) > 0
-end
 
 local trueValues = {'yes', 'on', 1, true}
-function toyesno(v)
-	return (table.find(trueValues, v) and 'yes') or 'no'
+--[[
+ * Converts a possible boolean value to its 'yes' or 'no' equivalent.
+ *
+ * @since 1.0.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {string}		- The equivalent 'yes' or 'no' value
+--]]
+function toyesno(val)
+	return (table.find(trueValues, val) and 'yes') or 'no'
 end
 
-function toonoff(v)
-	return (table.find(trueValues, v) and 'on') or 'off'
+
+--[[
+ * Converts a possible boolean value to its 'on' or 'off' equivalent.
+ *
+ * @since 1.0.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {string}		- The equivalent 'on' or 'off' value
+--]]
+function toonoff(val)
+	return (table.find(trueValues, val) and 'on') or 'off'
 end
 
-function tobool(v)
-	return table.find(trueValues, v)
+
+--[[
+ * Converts a possible boolean value to its 1 or 0 equivalent.
+ *
+ * @since 1.1.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {number}		- The equivalent 'on' or 'off' value
+--]]
+function toonezero(val)
+	return (table.find(trueValues, val) and 1) or 0
 end
 
-local function getfullpath(t, p)
-	return p:begin('Settings/'):gsub('/', '\\')
+
+--[[
+ * Converts a possible boolean value to its boolean equivalent.
+ *
+ * @since 1.0.0
+ *
+ * @param	{any}		val	- The value to be converted
+
+ * @returns {boolean}		- The equivalent boolean value
+--]]
+function tobool(val)
+	return table.find(trueValues, val)
 end
 
-function set(p, v)
-	setsettings(getfullpath(p), v)
+
+--[[
+ * Replaces all '/' with '\\' and prepends 'Settings\\' to the beginning of the setting path.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{string}	path	- The setting path
+
+ * @returns {string}			- The converted path
+--]]
+local function getfullpath(path)
+	return path:gsub('/', '\\'):begin('Settings\\')
 end
 
-function get(p)
-	return getsettings(getfullpath(p))
+
+--[[
+ * Simply a helper for setsettings(), which automatically runs the path through getfullpath().
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}	path	- The setting path to be set
+ * @param	{any}		val		- The value to be set
+--]]
+function set(path, val)
+	setsettings(getfullpath(path), val)
+end
+
+
+--[[
+ * Simply a helper for getsettings(), which automatically runs the path through getfullpath().
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}	path	- The setting path to be gotten
+ *
+ * @returns {any}				- The value contained in the setting path
+--]]
+function get(path)
+	return getsettings(getfullpath(path))
 end
 
 
@@ -313,6 +407,20 @@ end
 -- /_/  /_/\__,_/\__/_/ /_/   \___/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 --
 
+
+--[[
+ * Formats a number according to a specified pattern.
+ *
+ * Formats a number according to a specified pattern, in order to keep a specific amount of digits before and after the
+ * decimal mark.
+ *
+ * @since 0.1.0
+ *
+ * @param	{number}	self	- The number to be formatted
+ * @param	{string}	pattern	- The pattern in which the number should be formatted; e.g: '00.00'
+ *
+ * @returns	{string}			- The formatted number
+--]]
 function math.format(self, pattern)
 	local s, p
 	s = string.explode('0' .. tostring(self), '%.')
@@ -346,50 +454,138 @@ end
 -- /____/\__/_/  /_/_/ /_/\__, /  /_____/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 --                       /____/
 
-function string.explode(self, sep) -- By Socket, improved by Hardek.
+
+--[[
+ * Splits the string by the specified delimiter.
+ *
+ * Returns an array of strings, each of which is a substring of self formed by splitting it on boundaries formed by
+ * the string delimiter.
+ *
+ * @since 0.1.0
+ *
+ * @param	{string}	self		- The string to be split
+ * @param	{string}	delimiter	- The string delimiter
+ *
+ * @returns	{array}					- An array of strings created by splitting the string.
+--]]
+function string.explode(self, delimiter) -- By Socket, improved by Hardek.
 	local result = {}
-	self:gsub('[^'.. sep ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
+	self:gsub('[^'.. delimiter ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
 	return result
 end
 
+
+--[[
+ * Capitalizes the first character in a given string.
+ *
+ * @since 0.1.0
+ *
+ * @param	{string}	self	- The string to be capitalized
+ *
+ * @returns {string}			- The capitalized string
+--]]
 function string.capitalize(self)
 	return self:sub(1, 1):upper() .. self:sub(2):lower()
 end
 
+
+--[[
+ * Capitalizes the first character of every word in a given string.
+ *
+ * @since 0.1.0
+ * @updated 1.1.0
+ *
+ * @param	{string}	self	- The string to be capitalized
+ *
+ * @returns {string}			- The capitalized string
+--]]
 function string.capitalizeall(self)
 	local r = self:explode(' ')
-	for i = 1, #r do
-		r[i] = r[i]:capitalize()
-	end
-
+	table.each(r, function(v) return v:capitalize() end)
 	return table.concat(r, ' ')
 end
 
+
+--[[
+ * Returns the nth character in a given string.
+ *
+ * @since 0.1.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{number}	n		- The character's position
+ *
+ * @returns {string}			- The nth character
+--]]
 function string.at(self, n)
 	return self:sub(n, n)
 end
 
+
+--[[
+ * Checks whether a given string ends with a given substring.
+ *
+ * @since 0.1.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The ending substring
+ *
+ * @returns {boolean}			- Whether it ends or not with the given substring
+--]]
 function string.ends(self, substr)
 	return self:sub(-#substr) == substr
 end
 
+
+--[[
+ * Checks whether a given string starts with a given substring.
+ *
+ * @since 0.1.0
+ * @updated 0.3.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The starting substring
+ *
+ * @returns {boolean}			- Whether it starts or not with the given substring
+--]]
 function string.starts(self, substr)
 	return self:sub(1, #substr) == substr
 end
 
-function string.begin(self, substr)
-	if self:starts(substr) then
-		return self
-	else
-		return substr .. self
-	end
-end
 
+--[[
+ * Forces a given string to start with a given substring.
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The starting substring
+ *
+ * @returns {string}			- The string starting with the substring
+--]]
 function string.finish(self, substr)
 	if self:ends(substr) then
 		return self
 	else
 		return self .. substr
+	end
+end
+
+
+--[[
+ * Forces a given string to end with a given substring.
+ *
+ * @since 1.0.0
+ *
+ * @param	{string}	self	- The target string
+ * @param	{string}	substr	- The starting substring
+ *
+ * @returns {string}			- The string ending with the substring
+--]]
+function string.begin(self, substr)
+	if self:starts(substr) then
+		return self
+	else
+		return substr .. self
 	end
 end
 
@@ -404,10 +600,35 @@ end
 -- /_/  \__,_/_.___/_/\___/  /_____/_/|_|\__/\___/_/ /_/____/_/\____/_/ /_/
 --
 
+
+--[[
+ * Checks wheter given table is empty, that is, has no elements. This may be needed for tables with non-numeric indexes,
+ * where the length operator (#) might not work properly.
+ *
+ * NOTE: May return incorrect values if the given table contains nil values.
+ *
+ * @malfunction
+ * @since 0.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {boolean}			- Wheter the target table is empty or not
+--]]
 function table.isempty(self)
 	return next(self) == nil
 end
 
+
+--[[
+ * Returns the amount of elements present in the table. This may be needed for tables with non-numeric indexes, where
+ * the length operator (#) might not work properly.
+ *
+ * @since 0.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The number of elements inside the target table
+--]]
 function table.size(self)
 	local i = 0
 	for v in pairs(self) do
@@ -417,67 +638,252 @@ function table.size(self)
 	return i
 end
 
---@updated 1.0.0 added passive
-function table.each(self, f, passive)
-	passive = passive or false
-	if not passive then
+
+--[[
+ * Runs a routine through every item in the given table. The routine to be ran will receive as arguments, for each item,
+ * it's value and correspondet index.
+ *
+ * @since 0.1.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{function}	f			- Routine to be ran on each element
+ *
+ * @returns {table}					- A table with the returning values for each item
+--]]
+function table.each(self, f)
+	local r = {}
+
+	for k, v in pairs(self) do
+		r[k] = f(v, k)
+	end
+
+	return r
+end
+
+
+--[[
+ * Runs a routine through every item in the given table and replace the item with the value returned by it. The routine
+ * to be ran will receive as arguments, for each item, it's value and correspondet index.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{function}	f			- Routine to be ran on each element
+--]]
+function table.map(self, f)
+	for k, v in pairs(self) do
+		self[k] = f(v, k)
+	end
+end
+
+
+--[[
+ * Transforms all strings in the given table to their lowercase equivalent.
+ *
+ * @since 0.1.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ *
+ * @returns {table}					- A table with the equivalent lowercase strings
+--]]
+function table.lower(self)
+	return table.each(self, string.lower)
+end
+
+
+--[[
+ * Transforms all strings in the given table to their uppercase equivalent.
+ *
+ * @since 0.1.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ *
+ * @returns {table}					- A table with the equivalent uppercase strings
+--]]
+function table.upper(self)
+	return table.each(self, string.upper)
+end
+
+
+--[[
+ * Transforms all item names in the table to their equivalent item id.
+ *
+ * @since 0.1.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ *
+ * @returns {table}					- A table with the equivalent item ids
+--]]
+function table.id(self)
+	return table.each(self, itemid)
+end
+
+
+--[[
+ * Filters the items in the given table, running a routine on each of them and removing those which the routines returns
+ * false. The routine to be ran will receive as arguments, for each item, it's value and correspondet index.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self		- The target table
+ * @param	{function}	f			- Routine to be ran on each element
+ * @param	{boolean}	[forceKey]	- Whether to assure the filtered items have the same key they had on the original
+ *                             		  array; defaults to false
+ *
+ * @returns {table}					- A table with the filtered items
+--]]
+function table.filter(self, f, forceKey)
+	local r = {}
+
+	if forceKey then
 		for k, v in pairs(self) do
-			self[k] = f(v, k)
+			if f(v, k) then
+				r[k] = v
+			end
 		end
 	else
 		for k, v in pairs(self) do
-			f(v, k)
+			if f(v, k) then
+				table.insert(r)
+			end
 		end
 	end
+
+	return r
 end
 
-function table.lower(self)
-	table.each(self, string.lower)
-end
 
-function table.upper(self)
-	table.each(self, string.upper)
-end
+--[[
+ * Merges the items of the given tables to a single table.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		[table1], [table2], ...		- Tables to be merged
+ * @param	{boolean}	[forceKey]					- Whether to assure the filtered items have the same key they had on
+ *                                 					  the original array; defaults to false
+ *
+ * @returns {table}									- A table with all items on the given tables
+--]]
+function table.merge(...)
+	local args = {...}
+	local r = {}
+	local forceKey, f
 
-function table.id(self)
-	table.each(self, itemid)
-end
-
-function table.findcreature(self)
-	table.each(self, findcreature)
-end
-
-function table.filter(self, f)
-	for k, v in pairs(self) do
-		if not f(v, k) then
-			table.remove(self, k)
-		end
+	if (type(table.last(args)) == 'boolean') then
+		forceKey = table.remove(args)
 	end
-end
 
-function table.merge(self, v, forceKey)
-	local f
 	if forceKey then
 		f = function(v, k)
-				self[k] = v
+				r[k] = v
 			end
 	else
 		f = function(v)
 				local rv = v
-				table.insert(self, rv)
+				table.insert(r, rv)
 			end
 	end
-	table.each(v, f)
+
+	table.each(args,
+		function(v)
+			table.each(v, f)
+		end)
+
+	return r
 end
 
+
+--[[
+ * Returns the sum of all items in the given table.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The sum of all items
+--]]
 function table.sum(self)
 	local s = 0
-	table.each(self, function(v) s = s + v end, true)
+	table.each(self, function(v) s = s + v end)
 	return s
 end
 
+
+--[[
+ * Returns the average of all items in the given table.
+ *
+ * @since 1.0.0
+ * @updated 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The average of all items
+--]]
 function table.average(self)
 	return table.sum(self) / #self
+end
+
+
+--[[
+ * Returns the first item of the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {any}				- The first item of the given table
+--]]
+function table.first(self)
+	return self[1]
+end
+
+
+--[[
+ * Returns the last item of the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {any}				- The last item of the given table
+--]]
+function table.last(self)
+	return self[#self]
+end
+
+
+--[[
+ * Returns the maximum value of all items in the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The maximum value of all items
+--]]
+function table.max(self)
+	return math.max(table.unpack(self))
+end
+
+
+--[[
+ * Returns the minimum value of all items in the given table.
+ *
+ * @since 1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The minimum value of all items
+--]]
+function table.min(self)
+	return math.min(table.unpack(self))
 end
 
 
@@ -492,10 +898,30 @@ end
 
 file = {}
 
+
+--[[
+ * Used as a helper function to ensure all files are placed inside the files folder.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ *
+ * @returns	{string}				- Checked file name
+--]]
 function file.checkname(filename)
 	return filename:begin('files/')
 end
 
+
+--[[
+ * Checks wheter given file exists in disk or not.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ *
+ * @returns	{boolean}				- Whether it exists or not
+--]]
 function file.exists(filename)
 	filename = file.checkname(filename)
 	local handler, exists = io.open(filename), false
@@ -507,10 +933,21 @@ function file.exists(filename)
 	return false
 end
 
+
+--[[
+ * Gets all the content of a given file. Returns nil if file doesn't exist.
+ *
+ * @since 0.2.0
+ * @updated 1.1.0
+ *
+ * @param	{string}	filename	- File name to be read
+ *
+ * @returns {string}				- File content
+--]]
 function file.content(filename)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
-		return ''
+		return nil
 	end
 
 	local handler = io.open(filename, 'r')
@@ -519,6 +956,17 @@ function file.content(filename)
 	return content
 end
 
+
+--[[
+ * Gets the number of lines in a given file. Returns -1 if file doesn't exist.
+ *
+ * @since 0.2.0
+ * @updated 1.1.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ *
+ * @returns {number}				- File lines count
+--]]
 function file.linescount(filename)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
@@ -533,11 +981,22 @@ function file.linescount(filename)
 	return l
 end
 
--- @updated 1.0.0
+
+--[[
+ * Gets the content of the nth file line. Returns nil if file doesn't exist.
+ *
+ * @since 0.2.0
+ * @updated 1.1.0
+ *
+ * @param	{string}	filename	- File name to be read
+ * @param	{number}	linenum		- Line number
+ *
+ * @returns {string}				- Line content
+--]]
 function file.line(filename, linenum)
 	filename = file.checkname(filename)
 	if not file.exists(filename) then
-		return ''
+		return nil
 	end
 
 	local l, linev = 0, ''
@@ -552,6 +1011,15 @@ function file.line(filename, linenum)
 	return linev
 end
 
+
+--[[
+ * Appends content to the end of given file. If the file does not exist, it's created.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be written on
+ * @param	{string}	content		- Content to be appended
+--]]
 function file.write(filename, content)
 	filename = file.checkname(filename)
 
@@ -560,6 +1028,15 @@ function file.write(filename, content)
 	handler:close()
 end
 
+
+--[[
+ * Write content to the given file, erasing any previous content. If the file does not exist, it's created.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be written on
+ * @param	{string}	content		- Content to be written
+--]]
 function file.rewrite(filename, content)
 	filename = file.checkname(filename)
 
@@ -568,6 +1045,15 @@ function file.rewrite(filename, content)
 	handler:close()
 end
 
+
+--[[
+ * Clears all the content of the given file. If the file does not exist, it's created. Useful to create new, empty
+ * files.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be cleared
+--]]
 function file.clear(filename)
 	filename = file.checkname(filename)
 
@@ -575,6 +1061,15 @@ function file.clear(filename)
 	handler:close()
 end
 
+
+--[[
+ * Appends content to the end of given file, on a new line. If the file does not exist, it's created.
+ *
+ * @since 0.2.0
+ *
+ * @param	{string}	filename	- File name to be written on
+ * @param	{string}	content		- Content to be appended
+--]]
 function file.writeline(filename, content)
 	filename = file.checkname(filename)
 	local s = ''
@@ -585,8 +1080,18 @@ function file.writeline(filename, content)
 	file.write(filename, s .. content)
 end
 
--- @updated 1.0.0
 
+--[[
+ * Checks whether the any file line matches given content. Returns false if it can't be found.
+ *
+ * @since 0.2.0
+ * @updated 1.0.0
+ *
+ * @param	{string}	filename	- File name to be checked
+ * @param	{string}	content		- Content to be matched against
+ *
+ * @returns {number}				- Matching line number
+--]]
 function file.isline(filename, content)
 	filename = file.checkname(filename)
 	local l = 0
@@ -602,8 +1107,20 @@ function file.isline(filename, content)
 	return false
 end
 
+
+--[[
+ * Executes the content of given file.
+ *
+ * @since 0.2.0
+ * @updated 1.1.0
+ *
+ * @param	{any}	filename	- File name to be executed
+--]]
 function file.exec(filename)
 	filename = file.checkname(filename)
 
-	return dofile(filename)
+	if file.exists(filename) then
+		return dofile(filename)
+	end
+	return nil
 end
