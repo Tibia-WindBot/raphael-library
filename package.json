@@ -1,7 +1,7 @@
 {
     "name": "raphael's iBot library"
   , "description": "iBot library created with a view to ease and fasten scripts development"
-  , "version": "1.1.0"
+  , "version": "1.1.1"
   , "keywords": ["ibot", "tibia"]
   , "homepage": "https://github.com/rmobis/RaphaelLibrary"
   , "author": "Raphael Mobis"
