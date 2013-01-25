@@ -17,7 +17,9 @@ table.unpack = table.unpack or unpack
 
 _maround = maround
 _itemcount = itemcount
+_getmessages = getmessages
 _getcreatures = getcreatures
+_getnewmessages = getnewmessages
 
 
 --     _ ____        __     ______     __                  _
@@ -291,6 +293,52 @@ function getcreatures(...)
 		table.filter(cre, arg[1])
 	end
 	return cre
+end
+
+
+--[[
+ * Returns the pointers to the messages sent on specified channel.
+ *
+ * @overrides
+ * @since 1.1.2
+ *
+ * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
+ *
+ * @returns {table}					- The pointers to the messages
+--]]
+function getmessages(channel)
+	local msgs
+	do
+		local tmsgs = _getmessages(channel)
+		for i = 0, tmsgs.count - 1 do
+			table.insert(msgs, tmsgs[i])
+		end
+	end
+
+	return msgs
+end
+
+
+--[[
+ * Returns the pointers to the new messages sent on specified channel.
+ *
+ * @overrides
+ * @since 1.1.2
+ *
+ * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
+ *
+ * @returns {table}					- The pointers to the messages
+--]]
+function getnewmessages(channel)
+	local msgs
+	do
+		local tmsgs = _getnewmessages(channel)
+		for i = 0, tmsgs.count - 1 do
+			table.insert(msgs, tmsgs[i])
+		end
+	end
+
+	return msgs
 end
 
 
