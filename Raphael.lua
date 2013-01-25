@@ -272,7 +272,7 @@ end
  * @since 0.3.0
  *
  * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
- 									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
+ *									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
  * @param	{function}	[f]			- A function to validate each creature; must return a boolean
  *
  * @returns {table}					- The pointers to the creatures
@@ -306,7 +306,7 @@ local trueValues = {'yes', 'on', 1, true}
  * @since 1.0.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {string}		- The equivalent 'yes' or 'no' value
 --]]
 function toyesno(val)
@@ -320,7 +320,7 @@ end
  * @since 1.0.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {string}		- The equivalent 'on' or 'off' value
 --]]
 function toonoff(val)
@@ -334,7 +334,7 @@ end
  * @since 1.1.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {number}		- The equivalent 'on' or 'off' value
 --]]
 function toonezero(val)
@@ -348,7 +348,7 @@ end
  * @since 1.0.0
  *
  * @param	{any}		val	- The value to be converted
-
+ *
  * @returns {boolean}		- The equivalent boolean value
 --]]
 function tobool(val)
@@ -363,7 +363,7 @@ end
  * @updated 1.1.0
  *
  * @param	{string}	path	- The setting path
-
+ *
  * @returns {string}			- The converted path
 --]]
 local function getfullpath(path)
