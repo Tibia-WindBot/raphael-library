@@ -1,24 +1,22 @@
--- Raphael's Library v1.1.1
---		Last updated: 01/25/13 - 06:43
+-- Raphael's Library v1.1.2
+--		Last updated: 01/25/13 - 22:17
 
 --[[
- * Changelog v1.1.1
+ * Changelog v1.1.2
  *
- * - Added overriden methods backup variable.
+ * - Removed unnecessary overriden methods variables.
+ * - Added getmessages() and getnewmessages().
 --]]
 
 
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.1.1'
+LIBS.RAPHAEL = '1.1.2'
 
 findcreature = getcreature
 tilewalkable = tileiswalkable
 table.unpack = table.unpack or unpack
 
-_maround = maround
-_itemcount = itemcount
 _getmessages = getmessages
-_getcreatures = getcreatures
 _getnewmessages = getnewmessages
 
 
