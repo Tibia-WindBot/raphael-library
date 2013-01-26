@@ -1,23 +1,23 @@
--- Raphael's Library v1.1.1
---		Last updated: 01/25/13 - 06:43
+-- Raphael's Library v1.1.2
+--		Last updated: 01/25/13 - 22:17
 
 --[[
- * Changelog v1.1.1
+ * Changelog v1.1.2
  *
- * - Added overriden methods backup variable.
+ * - Removed unnecessary overriden methods variables.
+ * - Added getmessages() and getnewmessages().
 --]]
 
 
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.1.1'
+LIBS.RAPHAEL = '1.1.2'
 
 findcreature = getcreature
 tilewalkable = tileiswalkable
 table.unpack = table.unpack or unpack
 
-_maround = maround
-_itemcount = itemcount
-_getcreatures = getcreatures
+_getmessages = getmessages
+_getnewmessages = getnewmessages
 
 
 --     _ ____        __     ______     __                  _
@@ -291,6 +291,52 @@ function getcreatures(...)
 		table.filter(cre, arg[1])
 	end
 	return cre
+end
+
+
+--[[
+ * Returns the pointers to the messages sent on specified channel.
+ *
+ * @overrides
+ * @since 1.1.2
+ *
+ * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
+ *
+ * @returns {table}					- The pointers to the messages
+--]]
+function getmessages(channel)
+	local msgs
+	do
+		local tmsgs = _getmessages(channel)
+		for i = 0, tmsgs.count - 1 do
+			table.insert(msgs, tmsgs[i])
+		end
+	end
+
+	return msgs
+end
+
+
+--[[
+ * Returns the pointers to the new messages sent on specified channel.
+ *
+ * @overrides
+ * @since 1.1.2
+ *
+ * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
+ *
+ * @returns {table}					- The pointers to the messages
+--]]
+function getnewmessages(channel)
+	local msgs
+	do
+		local tmsgs = _getnewmessages(channel)
+		for i = 0, tmsgs.count - 1 do
+			table.insert(msgs, tmsgs[i])
+		end
+	end
+
+	return msgs
 end
 
 
