@@ -1,16 +1,16 @@
--- Raphael's Library v1.1.2
---		Last updated: 01/25/13 - 22:17
+-- Raphael's Library v1.1.3
+--		Last updated: 01/26/13 - -02:57
 
 --[[
- * Changelog v1.1.2
+ * Changelog v1.1.3
  *
- * - Removed unnecessary overriden methods variables.
- * - Added getmessages() and getnewmessages().
+ * - Fixed bugs in getcreatures(), getmessages() and getnewmessages().
+ *
 --]]
 
 
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.1.2'
+LIBS.RAPHAEL = '1.1.3'
 
 findcreature = getcreature
 tilewalkable = tileiswalkable
@@ -265,6 +265,7 @@ end
  *
  * @overrides
  * @since 0.3.0
+ * @updated 1.1.3
  *
  * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
  *									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
@@ -274,7 +275,7 @@ end
 --]]
 function getcreatures(...)
 	local fl = 'mpsf'
-	local cre
+	local cre = {}
 
 	if type(arg[1]) == 'string' then
 		fl = table.remove(arg, 1)
@@ -299,13 +300,14 @@ end
  *
  * @overrides
  * @since 1.1.2
+ * @updated 1.1.3
  *
  * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
  *
  * @returns {table}					- The pointers to the messages
 --]]
 function getmessages(channel)
-	local msgs
+	local msgs = {}
 	do
 		local tmsgs = _getmessages(channel)
 		for i = 0, tmsgs.count - 1 do
@@ -322,13 +324,14 @@ end
  *
  * @overrides
  * @since 1.1.2
+ * @updated 1.1.3
  *
  * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
  *
  * @returns {table}					- The pointers to the messages
 --]]
 function getnewmessages(channel)
-	local msgs
+	local msgs = {}
 	do
 		local tmsgs = _getnewmessages(channel)
 		for i = 0, tmsgs.count - 1 do
