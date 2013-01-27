@@ -1,23 +1,21 @@
--- Raphael's Library v1.1.3
---		Last updated: 01/26/13 - -02:57
+-- Raphael's Library v1.1.4
+--		Last updated: 01/27/13 - -04:25
 
 --[[
- * Changelog v1.1.3
+ * Changelog v1.1.4
  *
- * - Fixed bugs in getcreatures(), getmessages() and getnewmessages().
+ * - Renamed functions that overrode native methods and broke backwards compatibility; that
+ * 		includes __getmessages(), __getnewmessages() and __getcreatures().
  *
 --]]
 
 
 LIBS = LIBS or {}
-LIBS.RAPHAEL = '1.1.3'
+LIBS.RAPHAEL = '1.1.4'
 
 findcreature = getcreature
 tilewalkable = tileiswalkable
 table.unpack = table.unpack or unpack
-
-_getmessages = getmessages
-_getnewmessages = getnewmessages
 
 
 --     _ ____        __     ______     __                  _
@@ -265,7 +263,7 @@ end
  *
  * @overrides
  * @since 0.3.0
- * @updated 1.1.3
+ * @updated 1.1.4
  *
  * @param	{string}	[filter]	- A string containing the filters to be applied, where 'f' means same floor, 's'
  *									  means on the screen, 'm' means monster and 'p' means player; defaults to 'mpsf'
@@ -273,7 +271,7 @@ end
  *
  * @returns {table}					- The pointers to the creatures
 --]]
-function getcreatures(...)
+function __getcreatures(...)
 	local fl = 'mpsf'
 	local cre = {}
 
@@ -300,16 +298,16 @@ end
  *
  * @overrides
  * @since 1.1.2
- * @updated 1.1.3
+ * @updated 1.1.4
  *
  * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
  *
  * @returns {table}					- The pointers to the messages
 --]]
-function getmessages(channel)
+function __getmessages(channel)
 	local msgs = {}
 	do
-		local tmsgs = _getmessages(channel)
+		local tmsgs = getmessages(channel)
 		for i = 0, tmsgs.count - 1 do
 			table.insert(msgs, tmsgs[i])
 		end
@@ -324,16 +322,16 @@ end
  *
  * @overrides
  * @since 1.1.2
- * @updated 1.1.3
+ * @updated 1.1.4
  *
  * @param	{string}	[channel]	- Client channel to pull messages from; defaults to all
  *
  * @returns {table}					- The pointers to the messages
 --]]
-function getnewmessages(channel)
+function __getnewmessages(channel)
 	local msgs = {}
 	do
-		local tmsgs = _getnewmessages(channel)
+		local tmsgs = getnewmessages(channel)
 		for i = 0, tmsgs.count - 1 do
 			table.insert(msgs, tmsgs[i])
 		end
