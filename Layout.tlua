@@ -10,6 +10,7 @@ print("{{ name }} Version: " .. RAPHAEL_LIB)
  * Changelog v{{ version }}
  *
 @include(log/changelog-{{ version }}.lua)
+ *
 --]]
 
 
