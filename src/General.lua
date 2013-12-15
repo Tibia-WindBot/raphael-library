@@ -50,9 +50,12 @@ function versionhigherorequal(v1, v2)
 end
 
 --[[
- * Executes a given string and returns its return values.
+ * Executes the code string in protection mode without propagating the errors.
+ * Returns any value returned by the executed code and a boolean indicating
+ * whether any error was fired.
  *
  * @since     0.1.0
+ * @modified  0.1.1
  *
  * @param     {string}       code           - The string to be executed
  *
@@ -60,14 +63,10 @@ end
 --]]
 function exec(code)
 	local func = loadstring(code)
-
-	-- Needs pcall to be reenabled
-	-- local arg = {pcall(func)}
-	-- table.insert(arg, arg[1])
-	-- table.remove(arg, 1)
-	-- return table.unpack(arg)
-
-	return func()
+	local arg = {pcall(func)}
+	table.insert(arg, arg[1])
+	table.remove(arg, 1)
+	return table.unpack(arg)
 end
 
 --[[
