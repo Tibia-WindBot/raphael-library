@@ -308,3 +308,18 @@ function getopencontainers()
 
 	return conts
 end
+
+--[[
+ * Toggles a setting. If it's set to `a`, sets it to `b` and the other way
+ * around.
+ *
+ * @since     0.1.1
+ *
+ * @param     {string}       setting        - The setting to be toggled
+ * @param     {string}       a              - One of the values used on toggle
+ * @param     {string}       b              - The other value used on toggle
+--]]
+function toggle(setting, a, b)
+	a, b = a or 'no', b or 'yes'
+	set(setting, tern(get(setting) == a, b, a))
+end
