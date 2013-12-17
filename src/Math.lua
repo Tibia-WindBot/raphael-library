@@ -3,6 +3,7 @@
  * multiples, rounds up.
  *
  * @since     0.1.0
+ * @modified  0.1.1
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
@@ -12,7 +13,7 @@
 function math.round(self, mult)
 	div = div or 1
 
-	if self % 1 >= 0.5 then
+	if self % div >= 0.5 * div then
 		return math.ceil(self, mult)
 	else
 		return math.floor(self, mult)
