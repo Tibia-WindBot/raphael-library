@@ -323,3 +323,30 @@ function toggle(setting, a, b)
 	a, b = a or 'no', b or 'yes'
 	set(setting, tern(get(setting) == a, b, a))
 end
+
+--[[
+ * Checks wheter a given variable has a given property.
+ *
+ * @since     0.1.1
+ *
+ * @param     {table|user}   obj            - The setting to be toggled
+ * @param     {string}       property       - One of the values used on toggle
+ *
+ * @return    {boolean}                     - Whether the object has the
+ *                                            property
+--]]
+function hasproperty(obj, property)
+	if type(obj) == 'table' then
+		return obj[property] ~= nil
+	elseif type(obj) == 'userdata' then
+
+		-- This is a hack. We run the code in protected mode only to see if
+		-- an error is thrown. That's because userdata can't be indexed like
+		-- regular tables; if the index doesn't exist, an error is thrown. And
+		-- that's how we're checking the the property exists or not: if no
+		-- error is thrown, it does; if an error is thrown, it doesn't.
+		return not table.last({exec('return GLOBAL_OBJ.' .. property)})
+	end
+
+	return false
+end
