@@ -350,3 +350,33 @@ function hasproperty(obj, property)
 
 	return false
 end
+
+--[[
+ * Converts any variable to a boolean representation.
+ *
+ * @since     0.1.1
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {boolean}                     - Boolean representation
+--]]
+function tobool(value, strict)
+	strict = strict or false
+
+	local valType = type(value)
+
+	if valType == 'nil' then
+		return false
+	elseif valType == 'userdata' then
+		return true
+	elseif valType == 'number' then
+		return value ~= 0
+	elseif valType == 'string' then
+		return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
+	elseif valType == 'table' then
+		return table.size(value) == 0
+	end
+end
