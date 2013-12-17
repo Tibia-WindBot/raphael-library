@@ -23,6 +23,7 @@ end
  * Rounds up to the nearest multiple of mult.
  *
  * @since     0.1.0
+ * @overrides
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
@@ -39,6 +40,7 @@ end
  * Rounds down to the nearest multiple of mult.
  *
  * @since     0.1.0
+ * @overrides
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
