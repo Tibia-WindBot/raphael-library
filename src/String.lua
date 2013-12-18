@@ -79,6 +79,10 @@ end
 function string.fit(self, size, trailing, trueSize)
 	trailing = trailing or '...'
 
+	if size <= 0 then
+		return ''
+	end
+
 	-- Use the actual pixels measurement if required
 	local sizeFunction = string.len
 	if trueSize then
@@ -98,7 +102,7 @@ function string.fit(self, size, trailing, trueSize)
 
 	-- Helper function
 	local function attempt(n)
-		return sizeFunction(trailedText:sub(0, n)) <= size
+		return n > 0 and sizeFunction(trailedText:sub(0, n)) <= size
 	end
 
 	local ratio = size / sizeFunction(trailedText)
@@ -115,8 +119,11 @@ function string.fit(self, size, trailing, trueSize)
 	-- size
 	repeat
 		suggestedSize = suggestedSize + upDown
-		print('Attempting again at ' .. suggestedSize)
-	until attempt(suggestedSize) ~= firstAttempt
+	until suggestedSize <= 0 or attempt(suggestedSize) ~= firstAttempt
 
-	return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+	if suggestedSize > 0 then
+		return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+	else
+		return ''
+	end
 end
