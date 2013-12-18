@@ -1,19 +1,15 @@
--- Raphael's Library v0.1.1
--- Last Updated: 18/12/2013 - 17:46 UTC
+-- Raphael's Library v0.1.2
+-- Last Updated: 18/12/2013 - 21:50 UTC
 -- Released for WindBot v1.1.2
 
-RAPHAEL_LIB = '0.1.1'
+RAPHAEL_LIB = '0.1.2'
 print("Raphael's Library Version: " .. RAPHAEL_LIB)
 
 
 --[[
- * Changelog v0.1.1
+ * Changelog v0.1.2
  *
- * - Added tobool.
- * - Added toggle.
- * - Added string.fit.
- * - Fixed math.round not working properly when mult ~= 1.
- * - Minor internal changes.
+ * - Fix string.fit.
  *
 --]]
 
@@ -713,6 +709,10 @@ end
 function string.fit(self, size, trailing, trueSize)
 	trailing = trailing or '...'
 
+	if size <= 0 then
+		return ''
+	end
+
 	-- Use the actual pixels measurement if required
 	local sizeFunction = string.len
 	if trueSize then
@@ -732,7 +732,7 @@ function string.fit(self, size, trailing, trueSize)
 
 	-- Helper function
 	local function attempt(n)
-		return sizeFunction(trailedText:sub(0, n)) <= size
+		return n > 0 and sizeFunction(trailedText:sub(0, n)) <= size
 	end
 
 	local ratio = size / sizeFunction(trailedText)
@@ -749,12 +749,14 @@ function string.fit(self, size, trailing, trueSize)
 	-- size
 	repeat
 		suggestedSize = suggestedSize + upDown
-		print('Attempting again at ' .. suggestedSize)
-	until attempt(suggestedSize) ~= firstAttempt
+	until suggestedSize <= 0 or attempt(suggestedSize) ~= firstAttempt
 
-	return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+	if suggestedSize > 0 then
+		return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+	else
+		return ''
+	end
 end
-
 
 
 
