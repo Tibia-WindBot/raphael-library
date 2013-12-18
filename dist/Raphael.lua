@@ -1,15 +1,20 @@
--- Raphael's Library v0.1.0
--- Last Updated: 14/12/2013 - 19:15 UTC
--- Released for WindBot v1.1.0
+-- Raphael's Library v0.1.1
+-- Last Updated: 18/12/2013 - 17:46 UTC
+-- Released for WindBot v1.1.2
 
-RAPHAEL_LIB = '0.1.0'
+RAPHAEL_LIB = '0.1.1'
 print("Raphael's Library Version: " .. RAPHAEL_LIB)
 
 
 --[[
- * Changelog v0.1.0
+ * Changelog v0.1.1
  *
- * - Initial release.
+ * - Added tobool.
+ * - Added toggle.
+ * - Added string.fit.
+ * - Fixed math.round not working properly when mult ~= 1.
+ * - Minor internal changes.
+ *
 --]]
 
 
@@ -232,15 +237,15 @@ end
  * @returns   {any}                         - Anything returned by the code ran
 --]]
 function exec(code)
-	local func = loadstring(code)
+        local func = loadstring(code)
 
-	-- Needs pcall to be reenabled
-	-- local arg = {pcall(func)}
-	-- table.insert(arg, arg[1])
-	-- table.remove(arg, 1)
-	-- return table.unpack(arg)
+        -- Needs pcall to be reenabled
+        -- local arg = {pcall(func)}
+        -- table.insert(arg, arg[1])
+        -- table.remove(arg, 1)
+        -- return table.unpack(arg)
 
-	return func()
+        return func()
 end
 
 --[[
@@ -328,95 +333,6 @@ function flasks()
 	return itemcount('empty potion flask (small)') +
 	       itemcount('empty potion flask (medium)') +
 	       itemcount('empty potion flask (large)')
-end
-
---[[
- * Handles talking to a NPC. Takes care of all waiting times and checks if NPCs
- * channel is open. By default, it uses a waiting method that waits until it
- * sees the the message was actually sent. Optionally, you can opt for the
- * original waitping() solution, passing `normalWait` as true.
- *
- * @since     0.1.0
- *
- * @param     {string...}    messages       - Messages to be said
- * @param     {boolean}      [normalWait]   - If waitping should be used as
- *                                            waiting method; defaults to false
---]]
-function npctalk(...)
-	local args = {...}
-
-	-- Checks for aditional parameters
-	local normalWait = false
-	if type(table.last(args)) == 'boolean' then
-		normalWait = table.remove(args)
-	end
-
-	-- Use specified waiting method
-	local waitFunction = waitmessage
-	if normalWait then
-		waitFunction = function()
-			waitping()
-			return true
-		end
-	end
-
-	-- We gotta convert all args to strings because there may be some numbers
-	-- in between and those wouldn't be correctly said by the bot.
-	table.map(args, tostring)
-
-	local msgSuccess = false
-
-	-- Open NPCs channel if needed
-	if not ischannel('NPCs') then
-		while not msgSuccess do
-			say(args[1])
-			msgSuccess = waitFunction($name, args[1], 3000, true, MSG_DEFAULT)
-		end
-
-		table.remove(args, 1)
-		wait(400, 600)
-	end
-
-	for k, v in ipairs(args) do
-		msgSuccess = false
-		while not msgSuccess do
-			say('NPCs', v)
-			msgSuccess = waitFunction($name, v, 3000, true, MSG_SENT)
-			if not msgSuccess then
-				if not ischannel('NPCs') then
-					npctalk(select(k, ...))
-					return
-				end
-			end
-		end
-	end
-end
-
---[[
- * Handles pressing specific keys in the given sentence. It reads the `keys`
- * argument and presses the keys as if a human was writing it. For special
- * keys, make use of brackets. For instance, to press delete, use [DELETE].
- *
- * @since     0.1.0
- *
- * @param     {string}       keys           - Keys to be pressed
---]]
-function press(keys)
-	keys = keys:upper()
-
-	for i, j, k in string.gmatch(keys .. '[]', '([^%[]-)%[(.-)%]([^%[]-)') do
-		for n = 1, #i do
-			keyevent(KEYS[i:at(n)])
-		end
-
-		if #j then
-			keyevent(KEYS[j])
-		end
-
-		for n = 1, #k do
-			keyevent(KEYS[k:at(n)])
-		end
-	end
 end
 
 --[[
@@ -572,6 +488,140 @@ function getopencontainers()
 	return conts
 end
 
+--[[
+ * Toggles a setting. If it's set to `a`, sets it to `b` and the other way
+ * around.
+ *
+ * @since     0.1.1
+ *
+ * @param     {string}       setting        - The setting to be toggled
+ * @param     {string}       a              - One of the values used on toggle
+ * @param     {string}       b              - The other value used on toggle
+--]]
+function toggle(setting, a, b)
+	a, b = a or 'no', b or 'yes'
+	set(setting, tern(get(setting) == a, b, a))
+end
+
+--[[
+ * Converts any variable to a boolean representation.
+ *
+ * @since     0.1.1
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {boolean}                     - Boolean representation
+--]]
+function tobool(value, strict)
+	strict = strict or false
+
+	local valType = type(value)
+
+	if valType == 'nil' then
+		return false
+	elseif valType == 'userdata' then
+		return true
+	elseif valType == 'number' then
+		return value ~= 0
+	elseif valType == 'string' then
+		return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
+	elseif valType == 'table' then
+		return table.size(value) == 0
+	end
+end
+
+--[[
+ * Handles talking to a NPC. Takes care of all waiting times and checks if NPCs
+ * channel is open. By default, it uses a waiting method that waits until it
+ * sees the the message was actually sent. Optionally, you can opt for the
+ * original waitping() solution, passing `normalWait` as true.
+ *
+ * @since     0.1.0
+ *
+ * @param     {string...}    messages       - Messages to be said
+ * @param     {boolean}      [normalWait]   - If waitping should be used as
+ *                                            waiting method; defaults to false
+--]]
+function npctalk(...)
+	local args = {...}
+
+	-- Checks for aditional parameters
+	local normalWait = false
+	if type(table.last(args)) == 'boolean' then
+		normalWait = table.remove(args)
+	end
+
+	-- Use specified waiting method
+	local waitFunction = waitmessage
+	if normalWait then
+		waitFunction = function()
+			waitping()
+			return true
+		end
+	end
+
+	-- We gotta convert all args to strings because there may be some numbers
+	-- in between and those wouldn't be correctly said by the bot.
+	table.map(args, tostring)
+
+	local msgSuccess = false
+
+	-- Open NPCs channel if needed
+	if not ischannel('NPCs') then
+		while not msgSuccess do
+			say(args[1])
+			msgSuccess = waitFunction($name, args[1], 3000, true, MSG_DEFAULT)
+		end
+
+		table.remove(args, 1)
+		wait(400, 600)
+	end
+
+	for k, v in ipairs(args) do
+		msgSuccess = false
+		while not msgSuccess do
+			say('NPCs', v)
+			msgSuccess = waitFunction($name, v, 3000, true, MSG_SENT)
+			if not msgSuccess then
+				if not ischannel('NPCs') then
+					npctalk(select(k, ...))
+					return
+				end
+			end
+		end
+	end
+end
+
+--[[
+ * Handles pressing specific keys in the given sentence. It reads the `keys`
+ * argument and presses the keys as if a human was writing it. For special
+ * keys, make use of brackets. For instance, to press delete, use [DELETE].
+ *
+ * @since     0.1.0
+ *
+ * @param     {string}       keys           - Keys to be pressed
+--]]
+function press(keys)
+	keys = keys:upper()
+
+	for i, j, k in string.gmatch(keys .. '[]', '([^%[]-)%[(.-)%]([^%[]-)') do
+		for n = 1, #i do
+			keyevent(KEYS[i:at(n)])
+		end
+
+		if #j then
+			keyevent(KEYS[j])
+		end
+
+		for n = 1, #k do
+			keyevent(KEYS[k:at(n)])
+		end
+	end
+end
+
 
 
 
@@ -644,6 +694,68 @@ function string.capitalizeall(self) -- Working
 	return table.concat(t, ' ')
 end
 
+--[[
+ * Makes sure the given string fits in the given size. If set, adds `trailing`
+ * to end of it. If `trueSize` is set to false, the comparison is made using
+ * the string length; if it's set to true, the comparison is made using the
+ * actual string width, in pixels, gathered by using `measurestring`.
+ *
+ * @since     0.1.1
+ *
+ * @param     {string}       self           - The target string
+ * @param     {number}       size           - The maximum size
+ * @param     {string}       [trailing]     - The trailing string
+ * @param     {boolean}      [trueSize]     - Whether the comparison should be
+ *                                          - made using real pixel measures.
+ *
+ * @returns   {string}                      - The final string
+--]]
+function string.fit(self, size, trailing, trueSize)
+	trailing = trailing or '...'
+
+	-- Use the actual pixels measurement if required
+	local sizeFunction = string.len
+	if trueSize then
+		sizeFunction = measurestring
+	end
+
+	if sizeFunction(self) <= size then
+		return self
+	elseif not trueSize then
+		return self:sub(0, size - #trailing) .. trailing
+	end
+
+	-- Assuming the order of the letters doesn't matter, we'll just append the
+	-- trailing text to the beginning, so we don't have to worry about it when
+	-- cutting the string for measurements later
+	local trailedText = trailing .. self
+
+	-- Helper function
+	local function attempt(n)
+		return sizeFunction(trailedText:sub(0, n)) <= size
+	end
+
+	local ratio = size / sizeFunction(trailedText)
+	local suggestedSize = math.round(#trailedText * ratio)
+	local firstAttempt = attempt(suggestedSize)
+
+	-- If the first attempt failed, we should start decrementing; if it was
+	-- successful, we should start incrementing
+	local upDown = tern(firstAttempt, 1, -1)
+
+	-- Keep attempting until we know the result is different; this will mean
+	-- that we just reached the turning point, so we can know we have the best
+	-- solution for our problem, or the longest string that fits the required
+	-- size
+	repeat
+		suggestedSize = suggestedSize + upDown
+		print('Attempting again at ' .. suggestedSize)
+	until attempt(suggestedSize) ~= firstAttempt
+
+	return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+end
+
+
 
 
 
@@ -659,6 +771,7 @@ end
  * multiples, rounds up.
  *
  * @since     0.1.0
+ * @modified  0.1.1
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
@@ -668,7 +781,7 @@ end
 function math.round(self, mult)
 	div = div or 1
 
-	if self % 1 >= 0.5 then
+	if self % div >= 0.5 * div then
 		return math.ceil(self, mult)
 	else
 		return math.floor(self, mult)
@@ -679,6 +792,7 @@ end
  * Rounds up to the nearest multiple of mult.
  *
  * @since     0.1.0
+ * @overrides
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
@@ -695,6 +809,7 @@ end
  * Rounds down to the nearest multiple of mult.
  *
  * @since     0.1.0
+ * @overrides
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
