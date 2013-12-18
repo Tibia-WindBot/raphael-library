@@ -5,9 +5,6 @@ math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)) * (os.clock()) 
 table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
--- Used by hasproperty
-GLOBAL_OBJ = nil
-
 -- Some aliases
 set = setsetting
 get = getsetting
