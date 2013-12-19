@@ -329,6 +329,7 @@ end
  * Converts any variable to a boolean representation.
  *
  * @since     0.1.1
+ * @modified  0.1.3
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -342,7 +343,9 @@ function tobool(value, strict)
 
 	local valType = type(value)
 
-	if valType == 'nil' then
+	if valType == 'boolean' then
+		return value
+	elseif valType == 'nil' then
 		return false
 	elseif valType == 'userdata' then
 		return true
