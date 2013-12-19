@@ -357,3 +357,51 @@ function tobool(value, strict)
 		return table.size(value) == 0
 	end
 end
+
+--[[
+ * Converts any variable to a numeric representation; that means one or zero.
+ *
+ * @since     0.1.3
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {number}                      - Numeric representation
+--]]
+function toonezero(value, strict)
+	return tern(tobool(value, strict), 1, 0)
+end
+
+--[[
+ * Converts any variable to a yes/no representation.
+ *
+ * @since     0.1.3
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {string}                      - Yes/no representation
+--]]
+function toyesno(value, strict)
+	return tern(tobool(value, strict), 'yes', 'no')
+end
+
+--[[
+ * Converts any variable to a on/off representation.
+ *
+ * @since     0.1.3
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {string}                      - On/off representation
+--]]
+function toonoff(value, strict)
+	return tern(tobool(value, strict), 'on', 'off')
+end
