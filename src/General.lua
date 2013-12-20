@@ -84,29 +84,6 @@ function expatlvl(level)
 end
 
 --[[
- * Gets the creature's name color based on its hppc.
- *
- * @since     0.1.0
- *
- * @param     {number}       hppc           - The creature's hppc
- *
- * @returns   {color}                       - The color at the specified hppc
---]]
-function getnamecolor(hppc)
-	if hppc == 100 then
-		return HPPC_COLOR_LIME_GREEN
-	elseif hppc >= 60 then
-		return HPPC_COLOR_GREEN
-	elseif hppc >= 30 then
-		return HPPC_COLOR_YELLOW
-	elseif hppc >= 4 then
-		return HPPC_COLOR_RED
-	else
-		return HPPC_COLOR_DARK_RED
-	end
-end
-
---[[
  * Gets the variable's classes, looking for the __class index on their
  * metatables.
  *

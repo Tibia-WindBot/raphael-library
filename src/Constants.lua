@@ -1,10 +1,3 @@
--- Nick colors based on HPPC
-HPPC_COLOR_FULL       = 0x006800 -- 100%
-HPPC_COLOR_HIGH       = 0x376F37 -- 60 ~ 99%
-HPPC_COLOR_MEDIUM     = 0x6C6C00 -- 30 ~ 59%
-HPPC_COLOR_LOW        = 0x6F1B1B -- 04 ~ 29%
-HPPC_COLOR_VERY_LOW   = 0x370000 -- 00 ~ 03%
-
 -- Vocation IDs used by $voc
 VOC_NONE        = 0
 VOC_UNKNOWN     = 0
