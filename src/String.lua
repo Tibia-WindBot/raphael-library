@@ -127,3 +127,64 @@ function string.fit(self, size, trailing, trueSize)
 		return ''
 	end
 end
+
+--[[
+ * Checks whether a given string starts with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The starting substring
+ *
+ * @returns   {boolean}                     - Whether it starts or not with the
+ *                                            given substring
+--]]
+function string.starts(self, substr)
+	return self:sub(1, #substr) == substr
+end
+
+--[[
+ * Checks whether a given string ends with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The ending substring
+ *
+ * @returns   {boolean}                     - Whether it ends or not with the
+ *                                            given substring
+--]]
+function string.ends(self, substr)
+	return self:sub(-#substr) == substr
+end
+
+--[[
+ * Forces a given string to begin with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The starting substring
+ *
+ * @returns   {boolean}                     - The string starting with the
+ *                                            substring
+--]]
+function string.begin(self, substr)
+	return tern(self:starts(substr), self, substr .. self)
+end
+
+
+--[[
+ * Forces a given string to end with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The ending substring
+ *
+ * @returns   {boolean}                     - The string ending with the
+ *                                            substring
+--]]
+function string.finish(self, substr)
+	return tern(self:ends(substr), self, self .. substr)
+end
