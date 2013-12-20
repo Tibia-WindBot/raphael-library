@@ -382,3 +382,35 @@ end
 function toonoff(value, strict)
 	return tern(tobool(value, strict), 'on', 'off')
 end
+
+--[[
+ * Verifies that certain requirements, such as libraries and bot version, are
+ * met. Throws an error if it doesn't.
+ *
+ * @since     0.1.3
+ *
+ * @param     {table}        reqs           - Requirements in a table, in the
+ *                                            pattern of {curVer, neededVer,
+ *                                            reqName}
+--]]
+function requires(reqs)
+	local failedRequirements = {}
+
+	for _, v in ipairs(reqs) do
+		if not versionhigherorequal(v[1], v[2]) then
+			table.insert(failedRequirements, v)
+		end
+	end
+
+	if #failedRequirements > 0 then
+		local errorMsg = 'Your current setup does not meet the following ' ..
+		                 'minimum requirements:\n'
+
+		for _, v in ipairs(failedRequirements) do
+			errorMsg = errorMsg .. '\n' ..
+			           '- ' .. v[3] .. ': v' .. v[2]
+		end
+
+		printerror(errorMsg)
+	end
+end
