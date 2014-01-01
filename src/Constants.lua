@@ -27,7 +27,7 @@ REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
 
 -- Custom Types properties
 CUSTOM_TYPE = {
-	CREATURE     = {'name', 'id', 'hppc', 'posx', 'posy', 'posz', 'dir', 'speed', 'iswalking', 'outfit', 'headcolor', 'chestcolor', 'legscolor', 'feetcolor', 'addon', 'mount', 'lightintensity', 'lightcolor', 'lastattacked', 'walkblock', 'skull', 'party', 'warbanner', 'updated', 'aggressortype', 'isshootable', 'isreachable', 'dist', 'ignored', 'ismonster', 'isplayer', 'isnpc', 'issummon', 'isownsummon'. 'hpcolor', },
+	CREATURE     = {'name', 'id', 'hppc', 'posx', 'posy', 'posz', 'dir', 'speed', 'iswalking', 'outfit', 'headcolor', 'chestcolor', 'legscolor', 'feetcolor', 'addon', 'mount', 'lightintensity', 'lightcolor', 'lastattacked', 'walkblock', 'skull', 'party', 'warbanner', 'updated', 'aggressortype', 'isshootable', 'isreachable', 'dist', 'ignored', 'ismonster', 'isplayer', 'isnpc', 'issummon', 'isownsummon', 'hpcolor'},
 	ITEM         = {'id', 'count', 'special'},
 	CONTAINER    = {'name', 'itemid', 'itemcount', 'maxcount', 'isopen', 'ispage', 'hashigher'},
 	TILE         = {'itemcount'},
