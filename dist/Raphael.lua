@@ -1,15 +1,22 @@
--- Raphael's Library v0.1.2
--- Last Updated: 18/12/2013 - 21:50 UTC
--- Released for WindBot v1.1.2
+-- Raphael's Library v1.0.0
+-- Last Updated: 01/01/2014 - 23:40 UTC
+-- Released for WindBot v1.2.2
 
-RAPHAEL_LIB = '0.1.2'
+RAPHAEL_LIB = '1.0.0'
 print("Raphael's Library Version: " .. RAPHAEL_LIB)
 
 
 --[[
- * Changelog v0.1.2
+ * Changelog v1.0.0
  *
- * - Fix string.fit.
+ * - Added tostring.
+ * - Added userdatastringformat.
+ * - Added requires.
+ * - Added toyesno, toonezero and toonoff.
+ * - Added string.starts, string.ends, string.begin and string.finish.
+ * - Added some useful patterns.
+ * - Removed getnamecolor.
+ * - Minor internal changes.
  *
 --]]
 
@@ -21,21 +28,18 @@ math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)) * (os.clock()) 
 table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
+-- Used by userdatastringformat
+GLOBAL_USERDATA = nil
+
 -- Some aliases
 set = setsetting
 get = getsetting
 
 -- Handle overwrriten functions
+_TOSTRING   = _TOSTRING   or tostring
 _TYPE       = _TYPE       or type
 math._CEIL  = math._CEIL  or math.ceil
 math._FLOOR = math._FLOOR or math.floor
-
--- Nick colors based on HPPC
-HPPC_COLOR_FULL       = 0x006800 -- 100%
-HPPC_COLOR_HIGH       = 0x376F37 -- 60 ~ 99%
-HPPC_COLOR_MEDIUM     = 0x6C6C00 -- 30 ~ 59%
-HPPC_COLOR_LOW        = 0x6F1B1B -- 04 ~ 29%
-HPPC_COLOR_VERY_LOW   = 0x370000 -- 00 ~ 03%
 
 -- Vocation IDs used by $voc
 VOC_NONE        = 0
@@ -45,6 +49,46 @@ VOC_KNIGHT      = 2
 VOC_PALADIN     = 4
 VOC_SORCERER    = 8
 VOC_DRUID       = 16
+
+
+-- Some useful regexes
+REGEX_DMG_TAKEN     = '^You lose (%d+) (%l+) due to an attack by ?a?n? (.-)%.$'
+REGEX_DMG_DEALT     = '^A?n? (.+) loses (%d+) (%l+) due to your attack%.$'
+REGEX_HEAL_RECEIVED = '^You were healed by (.+) for (%d+) hitpoints%.$'
+REGEX_HEAL_SELF     = '^(.+) healed (%l%l%l%l?)self for (%d+) hitpoints%.$'
+REGEX_ADVANCE_LVL   = '^You advanced from Level (%d+) to Level (%d+)%.$'
+REGEX_ADVANCE_SKILL = '^You advanced to (.-) level (%d+)%.$'
+REGEX_LOOT          = '^Loot of ?a?n? (.-): (.+)$'
+REGEX_ITEM_CHARGES  = '^You see an? (.-) %(?.- that has (%d+) charges? left%.'
+REGEX_ITEM_DURATION = '^You see an? (.-) that will expire in (.-)%.'
+REGEX_PLAYER_BASIC  = '^You see (.-) %(Level (%d+)%)%. (%a+) is an? (.-)%.'
+REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which has (%d+) members, (%d+) of them online%.$'
+REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes. Please .+%.$'
+REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
+REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
+
+
+-- Custom Types properties
+CUSTOM_TYPE = {
+	CREATURE     = {'name', 'id', 'hppc', 'posx', 'posy', 'posz', 'dir', 'speed', 'iswalking', 'outfit', 'headcolor', 'chestcolor', 'legscolor', 'feetcolor', 'addon', 'mount', 'lightintensity', 'lightcolor', 'lastattacked', 'walkblock', 'skull', 'party', 'warbanner', 'updated', 'aggressortype', 'isshootable', 'isreachable', 'dist', 'ignored', 'ismonster', 'isplayer', 'isnpc', 'issummon', 'isownsummon', 'hpcolor'},
+	ITEM         = {'id', 'count', 'special'},
+	CONTAINER    = {'name', 'itemid', 'itemcount', 'maxcount', 'isopen', 'ispage', 'hashigher'},
+	TILE         = {'itemcount'},
+	MESSAGE      = {'content', 'level', 'sender', 'type'},
+	PROJECTILE   = {'type', 'fromx', 'fromy', 'tox', 'toy', 'time'},
+	EFFECT       = {'type', 'posx', 'posy', 'time'},
+	ANIMATEDTEXT = {'type', 'content', 'posx', 'posy', 'time'},
+	RECTANGLE    = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
+	POINT        = {'x', 'y'},
+	ITEMDATA     = {},
+	SUPPLYITEM   = {},
+	LOOTINGITEM  = {},
+	VIPNODE      = {},
+	MOUSEINFO    = {},
+	DEATHTIMER   = {},
+	PLAYERINFO   = {}
+}
+
 
 -- Key codes
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
@@ -255,29 +299,6 @@ end
 --]]
 function expatlvl(level)
 	return 50 / 3 * (level ^ 3 - 6 * level ^ 2 + 17 * level - 12)
-end
-
---[[
- * Gets the creature's name color based on its hppc.
- *
- * @since     0.1.0
- *
- * @param     {number}       hppc           - The creature's hppc
- *
- * @returns   {color}                       - The color at the specified hppc
---]]
-function getnamecolor(hppc)
-	if hppc == 100 then
-		return HPPC_COLOR_LIME_GREEN
-	elseif hppc >= 60 then
-		return HPPC_COLOR_GREEN
-	elseif hppc >= 30 then
-		return HPPC_COLOR_YELLOW
-	elseif hppc >= 4 then
-		return HPPC_COLOR_RED
-	else
-		return HPPC_COLOR_DARK_RED
-	end
 end
 
 --[[
@@ -503,6 +524,7 @@ end
  * Converts any variable to a boolean representation.
  *
  * @since     0.1.1
+ * @modified  0.1.3
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -516,7 +538,9 @@ function tobool(value, strict)
 
 	local valType = type(value)
 
-	if valType == 'nil' then
+	if valType == 'boolean' then
+		return value
+	elseif valType == 'nil' then
 		return false
 	elseif valType == 'userdata' then
 		return true
@@ -526,6 +550,136 @@ function tobool(value, strict)
 		return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
 	elseif valType == 'table' then
 		return table.size(value) == 0
+	end
+end
+
+--[[
+ * Converts any variable to a numeric representation; that means one or zero.
+ *
+ * @since     0.1.3
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {number}                      - Numeric representation
+--]]
+function toonezero(value, strict)
+	return tern(tobool(value, strict), 1, 0)
+end
+
+--[[
+ * Converts any variable to a yes/no representation.
+ *
+ * @since     0.1.3
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {string}                      - Yes/no representation
+--]]
+function toyesno(value, strict)
+	return tern(tobool(value, strict), 'yes', 'no')
+end
+
+--[[
+ * Converts any variable to a on/off representation.
+ *
+ * @since     0.1.3
+ *
+ * @param     {any}          value          - The value to be converted
+ * @param     {string}       property       - Whether the conversion should be
+ *                                            strict; this means 'no' and 'off'
+ *                                            are considered true.
+ *
+ * @return    {string}                      - On/off representation
+--]]
+function toonoff(value, strict)
+	return tern(tobool(value, strict), 'on', 'off')
+end
+
+--[[
+ * Verifies that certain requirements, such as libraries and bot version, are
+ * met. Throws an error if it doesn't.
+ *
+ * @since     0.1.3
+ *
+ * @param     {table}        reqs           - Requirements in a table, in the
+ *                                            pattern of {curVer, neededVer,
+ *                                            reqName}
+--]]
+function requires(reqs)
+	local failedRequirements = {}
+
+	for _, v in ipairs(reqs) do
+		if not versionhigherorequal(v[1], v[2]) then
+			table.insert(failedRequirements, v)
+		end
+	end
+
+	if #failedRequirements > 0 then
+		local errorMsg = 'Your current setup does not meet the following ' ..
+		                 'minimum requirements:\n'
+
+		for _, v in ipairs(failedRequirements) do
+			errorMsg = errorMsg .. '\n' ..
+			           '- ' .. v[3] .. ': v' .. v[2]
+		end
+
+		printerror(errorMsg)
+	end
+end
+
+--[[
+ * Converts a userdata into a string reprensentation.
+ *
+ * @since     0.1.3
+ *
+ * @param     {userdata}     userdata       - The userdata to be converted
+ *
+ * @returns   {string}                      - The String reprensentation
+--]]
+function userdatastringformat(userdata)
+	local obj = {}
+	local props = CUSTOM_TYPE[userdata.objtype:upper()]
+	GLOBAL_USERDATA = userdata
+
+	for _, v in ipairs(props) do
+		-- Very, very dirty hack.
+		obj[v] = exec('return GLOBAL_USERDATA.' .. v)
+	end
+
+	if userdata.objtype == 'tile' or userdata.objtype == 'container' then
+		obj.item = {}
+
+		for i = 1, userdata.itemcount do
+			table.insert(obj.item, userdata.item[i])
+		end
+	end
+
+	return table.stringformat(obj)
+end
+
+--[[
+ * Converts any value into a string. Handles tables and userdatas specially.
+ *
+ * @since     0.1.3
+ * @overrides
+ *
+ * @param     {any}          value          - The variable to be converted
+ *
+ * @returns   {string}                      - The converted value
+--]]
+function tostring(value)
+	if type(value) == 'table' then
+		return table.stringformat(value)
+	elseif type(value) == 'userdata' then
+		return userdatastringformat(value)
+	else
+		return _TOSTRING(value)
 	end
 end
 
@@ -756,6 +910,67 @@ function string.fit(self, size, trailing, trueSize)
 	else
 		return ''
 	end
+end
+
+--[[
+ * Checks whether a given string starts with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The starting substring
+ *
+ * @returns   {boolean}                     - Whether it starts or not with the
+ *                                            given substring
+--]]
+function string.starts(self, substr)
+	return self:sub(1, #substr) == substr
+end
+
+--[[
+ * Checks whether a given string ends with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The ending substring
+ *
+ * @returns   {boolean}                     - Whether it ends or not with the
+ *                                            given substring
+--]]
+function string.ends(self, substr)
+	return self:sub(-#substr) == substr
+end
+
+--[[
+ * Forces a given string to begin with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The starting substring
+ *
+ * @returns   {boolean}                     - The string starting with the
+ *                                            substring
+--]]
+function string.begin(self, substr)
+	return tern(self:starts(substr), self, substr .. self)
+end
+
+
+--[[
+ * Forces a given string to end with a given substring.
+ *
+ * @since     0.1.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string}       substr         - The ending substring
+ *
+ * @returns   {boolean}                     - The string ending with the
+ *                                            substring
+--]]
+function string.finish(self, substr)
+	return tern(self:ends(substr), self, self .. substr)
 end
 
 
@@ -1159,14 +1374,51 @@ end
 -- /_/  \___/_/ /_/ /_/ .___/\____/_/   \__,_/_/   \__, /  /_/   /_/_/|_|\___/____/
 --                   /_/                          /____/
 
--- Temporary fix for Lucas Terra's Library's color function.
--- It needs to round the color values, else it gets messed up.
-_COLOR = _COLOR or color
-function color(...)
-	local args = {...}
-	if type(args[1]) ~= 'string' then
-		table.map(args, math.round)
+-- Temporary fix for Lucas' table.stringformat
+-- Now handles userdatas and booleans correctly
+function table.stringformat(self, tablename, separator)
+	if type(self) ~= 'table' then
+		return ''
 	end
-
-	return _COLOR(table.unpack(args))
+	separator = separator or ''
+	tablename = tablename or ''
+	local ret
+	if tablename == '' then
+		ret = '{'
+	else
+		ret = tablename..' = {'
+	end
+	local count = 0
+	for i,j in ipairs(self) do
+		count = count+1
+		local type = type(j)
+		if type == 'string' then
+			ret = ret..'"'..j..'", '..separator
+		elseif type == 'number' then
+			ret = ret..j..', '..separator
+		elseif type == 'boolean' then
+			ret = ret..tostring(j)..', '..separator
+		elseif type == 'table' then
+			ret = ret..table.stringformat(j)..', '..separator
+		elseif type == 'userdata' then
+			ret = ret..userdatastringformat(j)..', '..separator
+		end
+	end
+	if count == 0 then
+		for i,j in pairs(self) do
+			local type = type(j)
+			if type == 'string' then
+				ret = ret..i..' = "'..j..'", '..separator
+			elseif type == 'number' then
+				ret = ret..i..' = '..j..', '..separator
+			elseif type == 'boolean' then
+				ret = ret..i..' = '..tostring(j)..', '..separator
+			elseif type == 'table' then
+				ret = ret..i..' = '..table.stringformat(j)..', '..separator
+			elseif type == 'userdata' then
+				ret = ret..i..' = '..userdatastringformat(j)..', '..separator
+			end
+		end
+	end
+	return ret:sub(1,#ret-2)..'}'
 end
