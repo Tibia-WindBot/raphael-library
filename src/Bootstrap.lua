@@ -13,6 +13,7 @@ set = setsetting
 get = getsetting
 
 -- Handle overwrriten functions
+_TOSTRING   = _TOSTRING   or tostring
 _TYPE       = _TYPE       or type
 math._CEIL  = math._CEIL  or math.ceil
 math._FLOOR = math._FLOOR or math.floor

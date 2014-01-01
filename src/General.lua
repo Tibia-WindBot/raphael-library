@@ -444,3 +444,23 @@ function userdatastringformat(userdata)
 
 	return table.stringformat(obj)
 end
+
+--[[
+ * Converts any value into a string. Handles tables and userdatas specially.
+ *
+ * @since     0.1.3
+ * @overrides
+ *
+ * @param     {any}          value          - The variable to be converted
+ *
+ * @returns   {string}                      - The converted value
+--]]
+function tostring(value)
+	if type(value) == 'table' then
+		return table.stringformat(value)
+	elseif type(value) == 'userdata' then
+		return userdatastringformat(value)
+	else
+		return _TOSTRING(value)
+	end
+end
