@@ -25,6 +25,28 @@ REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
 REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
 
 
+-- Custom Types properties
+CUSTOM_TYPE = {
+	CREATURE     = {'name', 'id', 'hppc', 'posx', 'posy', 'posz', 'dir', 'speed', 'iswalking', 'outfit', 'headcolor', 'chestcolor', 'legscolor', 'feetcolor', 'addon', 'mount', 'lightintensity', 'lightcolor', 'lastattacked', 'walkblock', 'skull', 'party', 'warbanner', 'updated', 'aggressortype', 'isshootable', 'isreachable', 'dist', 'ignored', 'ismonster', 'isplayer', 'isnpc', 'issummon', 'isownsummon'. 'hpcolor', },
+	ITEM         = {'id', 'count', 'special'},
+	CONTAINER    = {'name', 'itemid', 'itemcount', 'maxcount', 'isopen', 'ispage', 'hashigher'},
+	TILE         = {'itemcount'},
+	MESSAGE      = {'content', 'level', 'sender', 'type'},
+	PROJECTILE   = {'type', 'fromx', 'fromy', 'tox', 'toy', 'time'},
+	EFFECT       = {'type', 'posx', 'posy', 'time'},
+	ANIMATEDTEXT = {'type', 'content', 'posx', 'posy', 'time'},
+	RECTANGLE    = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
+	POINT        = {'x', 'y'},
+	ITEMDATA     = {},
+	SUPPLYITEM   = {},
+	LOOTINGITEM  = {},
+	VIPNODE      = {},
+	MOUSEINFO    = {},
+	DEATHTIMER   = {},
+	PLAYERINFO   = {}
+}
+
+
 -- Key codes
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
 local KEYS = {

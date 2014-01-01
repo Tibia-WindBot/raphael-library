@@ -414,3 +414,33 @@ function requires(reqs)
 		printerror(errorMsg)
 	end
 end
+
+--[[
+ * Converts a userdata into a string reprensentation.
+ *
+ * @since     0.1.3
+ *
+ * @param     {userdata}     userdata       - The userdata to be converted
+ *
+ * @returns   {string}                      - The String reprensentation
+--]]
+function userdatastringformat(userdata)
+	local obj = {}
+	local props = CUSTOM_TYPE[userdata.objtype:upper()]
+	GLOBAL_USERDATA = userdata
+
+	for _, v in ipairs(props) do
+		-- Very, very dirty hack.
+		obj[v] = exec('return GLOBAL_USERDATA.' .. v)
+	end
+
+	if userdata.objtype == 'tile' or userdata.objtype == 'container' then
+		obj.item = {}
+
+		for i = 1, userdata.itemcount do
+			table.insert(obj.item, userdata.item[i])
+		end
+	end
+
+	return table.stringformat(obj)
+end
