@@ -7,6 +7,24 @@ VOC_PALADIN     = 4
 VOC_SORCERER    = 8
 VOC_DRUID       = 16
 
+
+-- Some useful regexes
+REGEX_DMG_TAKEN     = '^You lose (%d+) (%l+) due to an attack by ?a?n? (.-)%.$'
+REGEX_DMG_DEALT     = '^A?n? (.+) loses (%d+) (%l+) due to your attack%.$'
+REGEX_HEAL_RECEIVED = '^You were healed by (.+) for (%d+) hitpoints%.$'
+REGEX_HEAL_SELF     = '^(.+) healed (%l%l%l%l?)self for (%d+) hitpoints%.$'
+REGEX_ADVANCE_LVL   = '^You advanced from Level (%d+) to Level (%d+)%.$'
+REGEX_ADVANCE_SKILL = '^You advanced to (.-) level (%d+)%.$'
+REGEX_LOOT          = '^Loot of ?a?n? (.-): (.+)$'
+REGEX_ITEM_CHARGES  = '^You see an? (.-) %(?.- that has (%d+) charges? left%.'
+REGEX_ITEM_DURATION = '^You see an? (.-) that will expire in (.-)%.'
+REGEX_PLAYER_BASIC  = '^You see (.-) %(Level (%d+)%)%. (%a+) is an? (.-)%.'
+REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which has (%d+) members, (%d+) of them online%.$'
+REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes. Please .+%.$'
+REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
+REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
+
+
 -- Key codes
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
 local KEYS = {
