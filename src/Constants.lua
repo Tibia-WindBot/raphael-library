@@ -34,16 +34,18 @@ CUSTOM_TYPE = {
 	MESSAGE      = {'content', 'level', 'sender', 'type'},
 	PROJECTILE   = {'type', 'fromx', 'fromy', 'tox', 'toy', 'time'},
 	EFFECT       = {'type', 'posx', 'posy', 'time'},
-	ANIMATEDTEXT = {'type', 'content', 'posx', 'posy', 'time'},
-	RECTANGLE    = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
+	ANIMTEXT     = {'type', 'content', 'posx', 'posy', 'time'},
+	RECT         = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
 	POINT        = {'x', 'y'},
-	ITEMDATA     = {},
-	SUPPLYITEM   = {},
-	LOOTINGITEM  = {},
-	VIPNODE      = {},
-	MOUSEINFO    = {},
-	DEATHTIMER   = {},
-	PLAYERINFO   = {}
+	ITEMDATA     = {'name', 'id', 'sellprice', 'buyprice', 'weight', 'isbank', 'isclip', 'isbottom', 'istop', 'iscontainer', 'iscumulative', 'isforceuse', 'ismultiuse', 'iswrite', 'iswriteonce', 'isliquidcontainer', 'isliquidpool', 'isunpass', 'isunmove', 'isunsight', 'isavoid', 'isnomovementanimation ', 'istake', 'ishang', 'ishooksouth', 'ishookeast', 'isrotate', 'islight', 'isdonthide', 'istranslucent', 'isfloorchange', 'isshift', 'isheight', 'islyingobject', 'isanimatealways', 'isautomap', 'islenshelp', 'isfullbank', 'isignorelook', 'isclothes', 'ismarket', 'ismount', 'isdefaultaction', 'isusable', 'ignoreextradata', 'enchantable', 'destructible', 'hasextradata', 'height', 'sizeinpixels', 'layers', 'patternx', 'patterny', 'patterndepth', 'phase', 'walkspeed', 'textlimit', 'lightradius', 'lightcolor', 'shiftx', 'shifty', 'walkheight', 'automapcolor', 'lenshelp', 'defaultaction', 'clothslot', 'marketcategory', 'markettradeas', 'marketshowas', 'marketrestrictprofession', 'marketrestrictlevel', 'durationtotalinmsecs', 'specialeffect', 'specialeffectgain', 'category', 'attack', 'attackmod', 'hitpercentmod', 'defense', 'defensemod', 'armor', 'holyresistmod', 'deathresistmod', 'earthresistmod', 'fireresistmod', 'iceresistmod', 'energyresistmod', 'physicalresistmod', 'lifedrainresistmod', 'manadrainresistmod', 'itemlossmod', 'mindmg', 'maxdmg', 'dmgtype', 'range', 'mana'},
+	SUPPLYDATA   = {'name', 'id', 'weight', 'buyprice', 'leaveat', 'count', 'rule', 'rulevalue', 'destination', 'category', 'uptocount', 'downtocap', 'amountbought', 'amounttobuy', 'amountused'},
+	LOOTINGDATA  = {'name' ,'id' ,'weight' ,'sellprice' ,'count' ,'action' ,'alert' ,'condition' ,'conditionvalue' ,'destination' ,'category' ,'amountlooted' ,'haslessthan' ,'caphigherthan'},
+	VIP          = {'name', 'id', 'icon', 'isonline', 'notify'},
+	MOUSEINFO    = {'x', 'y', 'z', 'id', 'count'},
+	DEATHTIMER   = {'timeofdeath', 'target', 'killer', 'time'},
+	PLAYERINFO   = {'name', 'guild', 'voc', 'vocation', 'vocshort', 'priority', 'status', 'time', 'level', 'comment'},
+	NAVPING      = {'time', 'color', 'glowcolor', 'posx', 'posy', 'posz'},
+	NAVTARGET    = {'name', 'posx', 'posy', 'posz', 'time', 'color', 'glowcolor', 'isleader', 'isfriend', 'isenemy', 'isneutral', 'team', 'teamname', 'creature', 'realname', 'id', 'mp', 'maxmp', 'voc', 'icon'}
 }
 
 
