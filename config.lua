@@ -1,6 +1,6 @@
 config = {
 	name    = 'Raphael\'s Library',
-	version = '1.0.1',
+	version = '1.0.2',
 	windbot = '1.2.2',
 
 	files = {

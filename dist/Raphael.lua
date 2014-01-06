@@ -1,16 +1,15 @@
--- Raphael's Library v1.0.1
--- Last Updated: 06/01/2014 - 01:35 UTC
+-- Raphael's Library v1.0.2
+-- Last Updated: 06/01/2014 - 23:13 UTC
 -- Released for WindBot v1.2.2
 
-RAPHAEL_LIB = '1.0.1'
+RAPHAEL_LIB = '1.0.2'
 print("Raphael's Library Version: " .. RAPHAEL_LIB)
 
 
 --[[
- * Changelog v1.0.1
+ * Changelog v1.0.2
  *
- * - Fixed typos.
- * - Completed CUSTOM_TYPES constant.
+ * - Fixed sstime().
  *
 --]]
 
@@ -431,11 +430,12 @@ end
  * Returns the current time of day, in seconds, on CET timezone.
  *
  * @since     0.1.0
+ * @modified  1.0.2
  *
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-	return tosec(os.date('!%X')) - tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
+	return tosec(os.date('!%X')) + tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
 end
 
 --[[
