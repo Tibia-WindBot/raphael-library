@@ -1,22 +1,16 @@
--- Raphael's Library v1.0.0
--- Last Updated: 01/01/2014 - 23:40 UTC
+-- Raphael's Library v1.0.1
+-- Last Updated: 06/01/2014 - 01:35 UTC
 -- Released for WindBot v1.2.2
 
-RAPHAEL_LIB = '1.0.0'
+RAPHAEL_LIB = '1.0.1'
 print("Raphael's Library Version: " .. RAPHAEL_LIB)
 
 
 --[[
- * Changelog v1.0.0
+ * Changelog v1.0.1
  *
- * - Added tostring.
- * - Added userdatastringformat.
- * - Added requires.
- * - Added toyesno, toonezero and toonoff.
- * - Added string.starts, string.ends, string.begin and string.finish.
- * - Added some useful patterns.
- * - Removed getnamecolor.
- * - Minor internal changes.
+ * - Fixed typos.
+ * - Completed CUSTOM_TYPES constant.
  *
 --]]
 
@@ -77,16 +71,18 @@ CUSTOM_TYPE = {
 	MESSAGE      = {'content', 'level', 'sender', 'type'},
 	PROJECTILE   = {'type', 'fromx', 'fromy', 'tox', 'toy', 'time'},
 	EFFECT       = {'type', 'posx', 'posy', 'time'},
-	ANIMATEDTEXT = {'type', 'content', 'posx', 'posy', 'time'},
-	RECTANGLE    = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
+	ANIMTEXT     = {'type', 'content', 'posx', 'posy', 'time'},
+	RECT         = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
 	POINT        = {'x', 'y'},
-	ITEMDATA     = {},
-	SUPPLYITEM   = {},
-	LOOTINGITEM  = {},
-	VIPNODE      = {},
-	MOUSEINFO    = {},
-	DEATHTIMER   = {},
-	PLAYERINFO   = {}
+	ITEMDATA     = {'name', 'id', 'sellprice', 'buyprice', 'weight', 'isbank', 'isclip', 'isbottom', 'istop', 'iscontainer', 'iscumulative', 'isforceuse', 'ismultiuse', 'iswrite', 'iswriteonce', 'isliquidcontainer', 'isliquidpool', 'isunpass', 'isunmove', 'isunsight', 'isavoid', 'isnomovementanimation', 'istake', 'ishang', 'ishooksouth', 'ishookeast', 'isrotate', 'islight', 'isdonthide', 'istranslucent', 'isfloorchange', 'isshift', 'isheight', 'islyingobject', 'isanimatealways', 'isautomap', 'islenshelp', 'isfullbank', 'isignorelook', 'isclothes', 'ismarket', 'ismount', 'isdefaultaction', 'isusable', 'ignoreextradata', 'enchantable', 'destructible', 'hasextradata', 'height', 'sizeinpixels', 'layers', 'patternx', 'patterny', 'patterndepth', 'phase', 'walkspeed', 'textlimit', 'lightradius', 'lightcolor', 'shiftx', 'shifty', 'walkheight', 'automapcolor', 'lenshelp', 'defaultaction', 'clothslot', 'marketcategory', 'markettradeas', 'marketshowas', 'marketrestrictprofession', 'marketrestrictlevel', 'durationtotalinmsecs', 'specialeffect', 'specialeffectgain', 'category', 'attack', 'attackmod', 'hitpercentmod', 'defense', 'defensemod', 'armor', 'holyresistmod', 'deathresistmod', 'earthresistmod', 'fireresistmod', 'iceresistmod', 'energyresistmod', 'physicalresistmod', 'lifedrainresistmod', 'manadrainresistmod', 'itemlossmod', 'mindmg', 'maxdmg', 'dmgtype', 'range', 'mana'},
+	SUPPLYDATA   = {'name', 'id', 'weight', 'buyprice', 'leaveat', 'count', 'rule', 'rulevalue', 'destination', 'category', 'uptocount', 'downtocap', 'amountbought', 'amounttobuy', 'amountused'},
+	LOOTINGDATA  = {'name' ,'id' ,'weight' ,'sellprice' ,'count' ,'action' ,'alert' ,'condition' ,'conditionvalue' ,'destination' ,'category' ,'amountlooted' ,'haslessthan' ,'caphigherthan'},
+	VIP          = {'name', 'id', 'icon', 'isonline', 'notify'},
+	MOUSEINFO    = {'x', 'y', 'z', 'id', 'count'},
+	DEATHTIMER   = {'timeofdeath', 'target', 'killer', 'time'},
+	PLAYERINFO   = {'name', 'guild', 'voc', 'vocation', 'vocshort', 'priority', 'status', 'time', 'level', 'comment'},
+	NAVPING      = {'time', 'color', 'glowcolor', 'posx', 'posy', 'posz'},
+	NAVTARGET    = {'name', 'posx', 'posy', 'posz', 'time', 'color', 'glowcolor', 'isleader', 'isfriend', 'isenemy', 'isneutral', 'team', 'teamname', 'creature', 'realname', 'id', 'mp', 'maxmp', 'voc', 'icon'}
 }
 
 
@@ -117,7 +113,7 @@ local KEYS = {
 	DOWNARROW   = 0x28,
 	SELECT      = 0x29,
 	PRINT       = 0x2A,
-	ExECUTE     = 0x2B,
+	EXECUTE     = 0x2B,
 	PRINTSCREEN = 0x2C,
 	INSERT      = 0x2D,
 	DELETE      = 0x2E,
