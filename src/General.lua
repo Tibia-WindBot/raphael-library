@@ -217,11 +217,12 @@ end
  * Returns the current time of day, in seconds, on CET timezone.
  *
  * @since     0.1.0
+ * @modified  1.0.2
  *
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-	return tosec(os.date('!%X')) - tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
+	return tosec(os.date('!%X')) + tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
 end
 
 --[[
