@@ -131,7 +131,7 @@ end
 --[[
  * Checks whether a given string starts with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The starting substring
@@ -146,7 +146,7 @@ end
 --[[
  * Checks whether a given string ends with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The ending substring
@@ -161,7 +161,7 @@ end
 --[[
  * Forces a given string to begin with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The starting substring
@@ -177,7 +177,7 @@ end
 --[[
  * Forces a given string to end with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The ending substring

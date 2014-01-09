@@ -307,7 +307,7 @@ end
  * Converts any variable to a boolean representation.
  *
  * @since     0.1.1
- * @modified  0.1.3
+ * @modified  1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -339,7 +339,7 @@ end
 --[[
  * Converts any variable to a numeric representation; that means one or zero.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -355,7 +355,7 @@ end
 --[[
  * Converts any variable to a yes/no representation.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -371,7 +371,7 @@ end
 --[[
  * Converts any variable to a on/off representation.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -388,7 +388,7 @@ end
  * Verifies that certain requirements, such as libraries and bot version, are
  * met. Throws an error if it doesn't.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {table}        reqs           - Requirements in a table, in the
  *                                            pattern of {curVer, neededVer,
@@ -419,7 +419,7 @@ end
 --[[
  * Converts a userdata into a string reprensentation.
  *
- * @since     0.1.3
+ * @since     1.0.0
  * @modified  1.0.3
  *
  * @param     {userdata}     userdata       - The userdata to be converted
@@ -448,7 +448,7 @@ end
 --[[
  * Converts any value into a string. Handles tables and userdatas specially.
  *
- * @since     0.1.3
+ * @since     1.0.0
  * @overrides
  *
  * @param     {any}          value          - The variable to be converted
