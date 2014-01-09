@@ -420,6 +420,7 @@ end
  * Converts a userdata into a string reprensentation.
  *
  * @since     0.1.3
+ * @modified  1.0.3
  *
  * @param     {userdata}     userdata       - The userdata to be converted
  *
@@ -428,11 +429,9 @@ end
 function userdatastringformat(userdata)
 	local obj = {}
 	local props = CUSTOM_TYPE[userdata.objtype:upper()]
-	GLOBAL_USERDATA = userdata
 
 	for _, v in ipairs(props) do
-		-- Very, very dirty hack.
-		obj[v] = exec('return GLOBAL_USERDATA.' .. v)
+		obj[v] = userdata[v]
 	end
 
 	if userdata.objtype == 'tile' or userdata.objtype == 'container' then

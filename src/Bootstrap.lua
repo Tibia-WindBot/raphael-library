@@ -5,9 +5,6 @@ math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)) * (os.clock()) 
 table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
--- Used by userdatastringformat
-GLOBAL_USERDATA = nil
-
 -- Some aliases
 set = setsetting
 get = getsetting
