@@ -188,3 +188,16 @@ end
 function string.finish(self, substr)
 	return tern(self:ends(substr), self, self .. substr)
 end
+
+--[[
+ * Removes whitespaces from beginning and ending of given string.
+ *
+ * @since     1.0.3
+ *
+ * @param     {string}       self           - The target string
+ *
+ * @returns   {boolean}                     - The trimmed string
+--]]
+function string.trim(self)
+	return self:gsub('^%s*(.-)%s*$', '%1')
+end
