@@ -171,7 +171,7 @@ function maxcap()
 	end
 
 	local vocs = {10, 30, 20, 10, 10}
-	return vocs[math.log($voc * 4)] * ($level - 8) + 470
+	return vocs[math.log($voc * 2, 2)] * ($level - 8) + 470
 end
 
 --[[
