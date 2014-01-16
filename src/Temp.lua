@@ -15,31 +15,35 @@ function table.stringformat(self, tablename, separator)
 	local count = 0
 	for i,j in ipairs(self) do
 		count = count+1
-		local type = type(j)
-		if type == 'string' then
+		local valType = type(j)
+		if valType == 'string' then
 			ret = ret..'"'..j..'", '..separator
-		elseif type == 'number' then
+		elseif valType == 'number' then
 			ret = ret..j..', '..separator
-		elseif type == 'boolean' then
+		elseif valType == 'boolean' then
 			ret = ret..tostring(j)..', '..separator
-		elseif type == 'table' then
+		elseif valType == 'nil' then
+			ret = ret..'nil, '..separator
+		elseif valType == 'table' then
 			ret = ret..table.stringformat(j)..', '..separator
-		elseif type == 'userdata' then
+		elseif valType == 'userdata' then
 			ret = ret..userdatastringformat(j)..', '..separator
 		end
 	end
 	if count == 0 then
 		for i,j in pairs(self) do
-			local type = type(j)
-			if type == 'string' then
+			local valType = type(j)
+			if valType == 'string' then
 				ret = ret..i..' = "'..j..'", '..separator
-			elseif type == 'number' then
+			elseif valType == 'number' then
 				ret = ret..i..' = '..j..', '..separator
-			elseif type == 'boolean' then
+			elseif valType == 'boolean' then
 				ret = ret..i..' = '..tostring(j)..', '..separator
-			elseif type == 'table' then
+			elseif valType == 'nil' then
+				ret = ret..i..' = nil, '..separator
+			elseif valType == 'table' then
 				ret = ret..i..' = '..table.stringformat(j)..', '..separator
-			elseif type == 'userdata' then
+			elseif valType == 'userdata' then
 				ret = ret..i..' = '..userdatastringformat(j)..', '..separator
 			end
 		end
