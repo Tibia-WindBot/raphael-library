@@ -464,3 +464,26 @@ function tostring(value)
 		return _TOSTRING(value)
 	end
 end
+
+--[[
+ * Calls the firs item in the t table passing the other items as arguments.
+ * Optionally, extra arguments can be included by passing them after the table;
+ * these are passed as arguments before the items of the array.
+ *
+ * @since     1.0.3
+ *
+ * @param     {table}        t              - The table with the function to be
+ *                                            called and its arguments
+ * @param     {any}          [...]          - Extra arguments
+ *
+ * @returns   {string}                      - The converted value
+--]]
+function calltable(t, ...)
+	local f = t[1]
+	local args = {...}
+	for i = 2, #t do
+		table.insert(args, i - 1, t[i])
+	end
+
+	return f(table.unpack(args))
+end
