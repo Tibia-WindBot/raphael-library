@@ -1,0 +1,2 @@
+set = setsetting
+get = getsetting

@@ -5,10 +5,6 @@ math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)) * (os.clock()) 
 table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
--- Some aliases
-set = setsetting
-get = getsetting
-
 -- Handle overwrriten functions
 _TOSTRING   = _TOSTRING   or tostring
 _TYPE       = _TYPE       or type
