@@ -77,9 +77,9 @@ end
  * @param     {function}     f              - Routine to be ran on each element
 --]]
 function table.map(self, f)
-		for k, v in pairs(self) do
-				self[k] = f(v, k)
-		end
+	for k, v in pairs(self) do
+		self[k] = f(v, k)
+	end
 end
 
 --[[
