@@ -20,7 +20,7 @@ REGEX_ITEM_CHARGES  = '^You see an? (.-) %(?.- that has (%d+) charges? left%.'
 REGEX_ITEM_DURATION = '^You see an? (.-) that will expire in (.-)%.'
 REGEX_PLAYER_BASIC  = '^You see (.-) %(Level (%d+)%)%. (%a+) is an? (.-)%.'
 REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which has (%d+) members, (%d+) of them online%.$'
-REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes. Please .+%.$'
+REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes?. Please .+%.$'
 REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
 REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
 
