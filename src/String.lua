@@ -190,14 +190,56 @@ function string.finish(self, substr)
 end
 
 --[[
- * Removes whitespaces from beginning and ending of given string.
+ * Removes given characters from beginning of given string.
  *
  * @since     1.0.3
  *
  * @param     {string}       self           - The target string
+ * @param     {string|table} [chars]        - Characters to trim; defaults to
+ *                                            whitespaces
  *
  * @returns   {boolean}                     - The trimmed string
 --]]
-function string.trim(self)
-	return self:gsub('^%s*(.-)%s*$', '%1')
+function string.ltrim(self, chars)
+	chars = chars or '%s'
+	if type(chars) == 'table' then
+		chars = '[' .. table.concat(chars, '') .. ']'
+	end
+
+	return self:gsub('^' .. chars .. '*(.-)$', '%1')
+end
+
+--[[
+ * Removes given characters from ending of given string.
+ *
+ * @since     1.0.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string|table} [chars]        - Characters to trim; defaults to
+ *                                            whitespaces
+ *
+ * @returns   {boolean}                     - The trimmed string
+--]]
+function string.rtrim(self, chars)
+	chars = chars or '%s'
+	if type(chars) == 'table' then
+		chars = '[' .. table.concat(chars, '') .. ']'
+	end
+
+	return self:gsub('^(.-)' .. chars .. '*$', '%1')
+end
+
+--[[
+ * Removes given characters from beginning and ending of given string.
+ *
+ * @since     1.0.3
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string|table} [chars]        - Characters to trim; defaults to
+ *                                            whitespaces
+ *
+ * @returns   {boolean}                     - The trimmed string
+--]]
+function string.trim(self, chars)
+	return self:ltrim(chars):rtrim(chars)
 end
