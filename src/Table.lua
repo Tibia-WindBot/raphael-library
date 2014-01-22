@@ -172,3 +172,44 @@ function table.filter(self, f)
 		end
 	end
 end
+
+--[[
+ * Merges the items of the given tables to a single table.
+ *
+ * @since     1.0.3
+ *
+ * @param     {table}        [table1], ...  - Tables to be merged
+ * @param     {boolean}      [forceKey]     - Whether to assure the filtered
+ *                                            items have the same key they had
+ *                                            on the original array; defaults
+ *                                            to false
+ *
+ * @returns  {table}                        - A table with all items on the
+ *                                            given tables
+--]]
+function table.merge(...)
+	local args = {...}
+	local r = {}
+	local forceKey, f
+
+	if (type(table.last(args)) == 'boolean') then
+		forceKey = table.remove(args)
+	end
+
+	if forceKey then
+		function f (v, k)
+			r[k] = v
+		end
+	else
+		function f(v)
+			local rv = v
+			table.insert(r, rv)
+		end
+	end
+
+	table.each(args, function(v)
+		table.each(v, f)
+	end)
+
+	return r
+end
