@@ -134,3 +134,18 @@ function table.copy(self) -- Adapted from http://lua-users.org/wiki/CopyTable
     end
     return copy
 end
+
+--[[
+ * Normalizes the given table, removing nil values and rearranging the indexes.
+ *
+ * @since     0.1.3
+ *
+ * @param     {table}        self           - The target table
+--]]
+function table.normalize(self)
+	for i = #self, 1, -1 do
+		if self[i] == nil then
+			table.remove(self, i)
+		end
+	end
+end
