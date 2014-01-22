@@ -107,3 +107,30 @@ end
 function table.last(self)
 	return self[#self]
 end
+
+--[[
+ * Makes a deep, by value, copy of a table. This solves referencing problems.
+ * This may be slow for big, complex tables; use carefully.
+ *
+ * @since     0.1.3
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {table}                       - The copy of the table
+--]]
+function table.copy(self) -- Adapted from http://lua-users.org/wiki/CopyTable
+    local origType, copy = type(self)
+
+    if origType == 'table' then
+        copy = {}
+
+        for origKey, origValue in next, self, nil do
+            copy[table.copy(origKey)] = table.copy(origValue)
+        end
+
+        setmetatable(copy, table.copy(getmetatable(self)))
+    else
+        copy = self
+    end
+    return copy
+end
