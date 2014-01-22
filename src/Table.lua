@@ -149,3 +149,26 @@ function table.normalize(self)
 		end
 	end
 end
+
+--[[
+ * Runs a routine through every item in the given table and remove it from the
+ * table if the routine returns false.
+ *
+ * @since     0.1.3
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - Routine to be ran as filter;
+ *                                            default removes falsy values
+--]]
+function table.filter(self, f)
+	if not f then
+		f = tobool
+		table.normalize(self)
+	end
+
+	for k, v in pairs(self) do
+		if not f(v, k) then
+			table.remove(self, k)
+		end
+	end
+end
