@@ -95,4 +95,4 @@ print("{{ name }} Version: " .. RAPHAEL_LIB)
 -- /_/  |_/_/_/\__,_/____/\___/____/
 --
 
-@include(src/Alises.lua)
+@include(src/Aliases.lua)
