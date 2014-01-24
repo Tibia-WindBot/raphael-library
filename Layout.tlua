@@ -3,7 +3,9 @@
 -- Released for WindBot v{{ windbot }}
 
 RAPHAEL_LIB = '{{ version }}'
-print("{{ name }} Version: " .. RAPHAEL_LIB)
+
+LIBS = LIBS or {}
+LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 --[[
@@ -96,3 +98,5 @@ print("{{ name }} Version: " .. RAPHAEL_LIB)
 --
 
 @include(src/Aliases.lua)
+
+print("{{ name }} Version: " .. RAPHAEL_LIB)
