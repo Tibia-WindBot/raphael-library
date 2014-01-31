@@ -192,7 +192,7 @@ end
 --[[
  * Removes given characters from beginning of given string.
  *
- * @since     1.0.3
+ * @since     1.1.0
  *
  * @param     {string}       self           - The target string
  * @param     {string|table} [chars]        - Characters to trim; defaults to
@@ -212,7 +212,7 @@ end
 --[[
  * Removes given characters from ending of given string.
  *
- * @since     1.0.3
+ * @since     1.1.0
  *
  * @param     {string}       self           - The target string
  * @param     {string|table} [chars]        - Characters to trim; defaults to
@@ -232,7 +232,7 @@ end
 --[[
  * Removes given characters from beginning and ending of given string.
  *
- * @since     1.0.3
+ * @since     1.1.0
  *
  * @param     {string}       self           - The target string
  * @param     {string|table} [chars]        - Characters to trim; defaults to

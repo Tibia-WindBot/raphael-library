@@ -420,7 +420,7 @@ end
  * Converts a userdata into a string reprensentation.
  *
  * @since     1.0.0
- * @modified  1.0.3
+ * @modified  1.1.0
  *
  * @param     {userdata}     userdata       - The userdata to be converted
  *
@@ -470,7 +470,7 @@ end
  * Optionally, extra arguments can be included by passing them after the table;
  * these are passed as arguments before the items of the array.
  *
- * @since     1.0.3
+ * @since     1.1.0
  *
  * @param     {table}        t              - The table with the function to be
  *                                            called and its arguments
@@ -492,7 +492,7 @@ end
  * This is basically an improvement of setsetting(). It handles using the first
  * parameter as a userdata for lootingdata and supplydata.
  *
- * @since     1.0.3
+ * @since     1.1.0
  * @overrides
  *
  * @param     {table}        t              - The table with the function to be
@@ -519,7 +519,7 @@ end
  * a table, as the `fArgs` parameter. If the condition fulfills in the given
  * time, true is returned, else false.
  *
- * @since     1.0.3
+ * @since     1.1.0
  *
  * @param     {function}     f              - The condition function
  * @param     {number}       time           - The maximum time to wait in ms

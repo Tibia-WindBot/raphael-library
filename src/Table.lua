@@ -112,7 +112,7 @@ end
  * Makes a deep, by value, copy of a table. This solves referencing problems.
  * This may be slow for big, complex tables; use carefully.
  *
- * @since     0.1.3
+ * @since     1.1.0
  *
  * @param     {table}        self           - The target table
  *
@@ -138,7 +138,7 @@ end
 --[[
  * Normalizes the given table, removing nil values and rearranging the indexes.
  *
- * @since     0.1.3
+ * @since     1.1.0
  *
  * @param     {table}        self           - The target table
 --]]
@@ -154,7 +154,7 @@ end
  * Runs a routine through every item in the given table and remove it from the
  * table if the routine returns false.
  *
- * @since     0.1.3
+ * @since     1.1.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran as filter;
@@ -176,7 +176,7 @@ end
 --[[
  * Merges the items of the given tables to a single table.
  *
- * @since     1.0.3
+ * @since     1.1.0
  *
  * @param     {table}        [table1], ...  - Tables to be merged
  * @param     {boolean}      [forceKey]     - Whether to assure the filtered
