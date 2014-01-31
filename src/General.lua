@@ -512,3 +512,33 @@ function setsetting(obj, property, value)
 
 	return _SETSETTING(obj, property, value)
 end
+
+--[[
+ * Waits until a condition is satisfied for a maximum time of `time`. Condition
+ * must be passed as the `f` argument and any extra parameters and be passed as
+ * a table, as the `fArgs` parameter. If the condition fulfills in the given
+ * time, true is returned, else false.
+ *
+ * @since     1.0.3
+ *
+ * @param     {function}     f              - The condition function
+ * @param     {number}       time           - The maximum time to wait in ms
+ * @param     {table}        [fArgs]        - Arguments for the `f` condition
+ *
+ * @returns   {boolean}                     - Whether the condition was
+ *                                            fulfilled or not
+--]]
+function waitcondition(f, time, fArgs)
+	fArgs = fArgs or {}
+
+	local t = math.round(time / 100)
+	for i = 1, t do
+		if f(table.unpack(fArgs)) then
+			return true
+		end
+
+		wait(100)
+	end
+
+	return false
+end
