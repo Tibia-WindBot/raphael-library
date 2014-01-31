@@ -206,6 +206,9 @@ function string.ltrim(self, chars)
 		chars = '[' .. table.concat(chars, '') .. ']'
 	end
 
+	-- This protects it from matching all characters if '.' is passed
+	chars = chars:gsub('%.', '%%.')
+
 	return self:gsub('^' .. chars .. '*(.-)$', '%1')
 end
 
@@ -225,6 +228,9 @@ function string.rtrim(self, chars)
 	if type(chars) == 'table' then
 		chars = '[' .. table.concat(chars, '') .. ']'
 	end
+
+	-- This protects it from matching all characters if '.' is passed
+	chars = chars:gsub('%.', '%%.')
 
 	return self:gsub('^(.-)' .. chars .. '*$', '%1')
 end
