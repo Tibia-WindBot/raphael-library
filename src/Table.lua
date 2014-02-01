@@ -213,3 +213,31 @@ function table.merge(...)
 
 	return r
 end
+
+--[[
+ * Returns the sum of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {number}                      - The sum of all items
+--]]
+function table.sum(self)
+	local s = 0
+	table.each(self, function(v) s = s + v end)
+	return s
+end
+
+--[[
+ * Returns the average of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {number}                      - The average of all items
+--]]
+function table.average(self)
+	return table.sum(self) / #self
+end
