@@ -241,3 +241,29 @@ end
 function table.average(self)
 	return table.sum(self) / #self
 end
+
+--[[
+ * Returns the maximum value of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The maximum value of all items
+--]]
+function table.max(self)
+	return math.max(table.unpack(self))
+end
+
+--[[
+ * Returns the minimum value of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {number}                      - The minimum value of all items
+--]]
+function table.min(self)
+	return math.min(table.unpack(self))
+end
