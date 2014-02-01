@@ -1,15 +1,26 @@
--- Raphael's Library v1.0.2
--- Last Updated: 06/01/2014 - 23:13 UTC
--- Released for WindBot v1.2.2
+-- Raphael's Library v1.1.0
+-- Last Updated: 01/02/2014 - 23:42 UTC
+-- Released for WindBot v1.3.3
 
-RAPHAEL_LIB = '1.0.2'
-print("Raphael's Library Version: " .. RAPHAEL_LIB)
+RAPHAEL_LIB = '1.1.0'
+
+LIBS = LIBS or {}
+LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 --[[
- * Changelog v1.0.2
+ * Changelog v1.1.0
  *
- * - Fixed sstime().
+ * - Added string.rtrim, string.ltrim and string.trim.
+ * - Added table.copy, table.filter and table.merge.
+ * - Added table.sum, table.average, table.min and table.max.
+ * - Added calltable, setsetting and waitcondition.
+ * - Added Point class.
+ * - Added HUD class.
+ * - Updated userdatastringformat.
+ * - Fixed maxcap.
+ * - Fixed table.stringformat.
+ * - Fixed REGEX_SERVER_SAVE.
  *
 --]]
 
@@ -21,18 +32,13 @@ math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)) * (os.clock()) 
 table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
--- Used by userdatastringformat
-GLOBAL_USERDATA = nil
-
--- Some aliases
-set = setsetting
-get = getsetting
-
 -- Handle overwrriten functions
+_SETSETTING = _SETSETTING or setsetting
 _TOSTRING   = _TOSTRING   or tostring
 _TYPE       = _TYPE       or type
 math._CEIL  = math._CEIL  or math.ceil
 math._FLOOR = math._FLOOR or math.floor
+
 
 -- Vocation IDs used by $voc
 VOC_NONE        = 0
@@ -56,7 +62,7 @@ REGEX_ITEM_CHARGES  = '^You see an? (.-) %(?.- that has (%d+) charges? left%.'
 REGEX_ITEM_DURATION = '^You see an? (.-) that will expire in (.-)%.'
 REGEX_PLAYER_BASIC  = '^You see (.-) %(Level (%d+)%)%. (%a+) is an? (.-)%.'
 REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which has (%d+) members, (%d+) of them online%.$'
-REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes. Please .+%.$'
+REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes?. Please .+%.$'
 REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
 REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
 
@@ -207,6 +213,7 @@ local KEYS = {
 	BAR         = 0xBF,
 	SINGLEQUOTE = 0xD3
 }
+
 
 
 
@@ -384,7 +391,7 @@ function maxcap()
 	end
 
 	local vocs = {10, 30, 20, 10, 10}
-	return vocs[math.log($voc * 4)] * ($level - 8) + 470
+	return vocs[math.log($voc * 2, 2)] * ($level - 8) + 470
 end
 
 --[[
@@ -520,7 +527,7 @@ end
  * Converts any variable to a boolean representation.
  *
  * @since     0.1.1
- * @modified  0.1.3
+ * @modified  1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -552,7 +559,7 @@ end
 --[[
  * Converts any variable to a numeric representation; that means one or zero.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -568,7 +575,7 @@ end
 --[[
  * Converts any variable to a yes/no representation.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -584,7 +591,7 @@ end
 --[[
  * Converts any variable to a on/off representation.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -601,7 +608,7 @@ end
  * Verifies that certain requirements, such as libraries and bot version, are
  * met. Throws an error if it doesn't.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {table}        reqs           - Requirements in a table, in the
  *                                            pattern of {curVer, neededVer,
@@ -632,7 +639,8 @@ end
 --[[
  * Converts a userdata into a string reprensentation.
  *
- * @since     0.1.3
+ * @since     1.0.0
+ * @modified  1.1.0
  *
  * @param     {userdata}     userdata       - The userdata to be converted
  *
@@ -641,11 +649,9 @@ end
 function userdatastringformat(userdata)
 	local obj = {}
 	local props = CUSTOM_TYPE[userdata.objtype:upper()]
-	GLOBAL_USERDATA = userdata
 
 	for _, v in ipairs(props) do
-		-- Very, very dirty hack.
-		obj[v] = exec('return GLOBAL_USERDATA.' .. v)
+		obj[v] = userdata[v]
 	end
 
 	if userdata.objtype == 'tile' or userdata.objtype == 'container' then
@@ -662,7 +668,7 @@ end
 --[[
  * Converts any value into a string. Handles tables and userdatas specially.
  *
- * @since     0.1.3
+ * @since     1.0.0
  * @overrides
  *
  * @param     {any}          value          - The variable to be converted
@@ -677,6 +683,84 @@ function tostring(value)
 	else
 		return _TOSTRING(value)
 	end
+end
+
+--[[
+ * Calls the firs item in the t table passing the other items as arguments.
+ * Optionally, extra arguments can be included by passing them after the table;
+ * these are passed as arguments before the items of the array.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        t              - The table with the function to be
+ *                                            called and its arguments
+ * @param     {any}          [...]          - Extra arguments
+ *
+ * @returns   {string}                      - The converted value
+--]]
+function calltable(t, ...)
+	local f = t[1]
+	local args = {...}
+	for i = 2, #t do
+		table.insert(args, i - 1, t[i])
+	end
+
+	return f(table.unpack(args))
+end
+
+--[[
+ * This is basically an improvement of setsetting(). It handles using the first
+ * parameter as a userdata for lootingdata and supplydata.
+ *
+ * @since     1.1.0
+ * @overrides
+ *
+ * @param     {table}        t              - The table with the function to be
+ *                                            called and its arguments
+ * @param     {any}          [...]          - Extra arguments
+ *
+ * @returns   {string}                      - The converted value
+--]]
+function setsetting(obj, property, value)
+	if type(obj) == 'userdata' then
+		if obj.objtype == 'lootingdata' then
+			return _SETSETTING('Looting/LootList/' .. obj.name .. '/' .. property, value)
+		elseif obj.objtype == 'supplydata' then
+			return _SETSETTING('Supplies/Items/' .. obj.name .. '/' .. property, value)
+		end
+	end
+
+	return _SETSETTING(obj, property, value)
+end
+
+--[[
+ * Waits until a condition is satisfied for a maximum time of `time`. Condition
+ * must be passed as the `f` argument and any extra parameters and be passed as
+ * a table, as the `fArgs` parameter. If the condition fulfills in the given
+ * time, true is returned, else false.
+ *
+ * @since     1.1.0
+ *
+ * @param     {function}     f              - The condition function
+ * @param     {number}       time           - The maximum time to wait in ms
+ * @param     {table}        [fArgs]        - Arguments for the `f` condition
+ *
+ * @returns   {boolean}                     - Whether the condition was
+ *                                            fulfilled or not
+--]]
+function waitcondition(f, time, fArgs)
+	fArgs = fArgs or {}
+
+	local t = math.round(time / 100)
+	for i = 1, t do
+		if f(table.unpack(fArgs)) then
+			return true
+		end
+
+		wait(100)
+	end
+
+	return false
 end
 
 --[[
@@ -767,6 +851,7 @@ function press(keys)
 		end
 	end
 end
+
 
 
 
@@ -911,7 +996,7 @@ end
 --[[
  * Checks whether a given string starts with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The starting substring
@@ -926,7 +1011,7 @@ end
 --[[
  * Checks whether a given string ends with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The ending substring
@@ -941,7 +1026,7 @@ end
 --[[
  * Forces a given string to begin with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The starting substring
@@ -957,7 +1042,7 @@ end
 --[[
  * Forces a given string to end with a given substring.
  *
- * @since     0.1.3
+ * @since     1.0.0
  *
  * @param     {string}       self           - The target string
  * @param     {string}       substr         - The ending substring
@@ -968,6 +1053,68 @@ end
 function string.finish(self, substr)
 	return tern(self:ends(substr), self, self .. substr)
 end
+
+--[[
+ * Removes given characters from beginning of given string.
+ *
+ * @since     1.1.0
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string|table} [chars]        - Characters to trim; defaults to
+ *                                            whitespaces
+ *
+ * @returns   {boolean}                     - The trimmed string
+--]]
+function string.ltrim(self, chars)
+	chars = chars or '%s'
+	if type(chars) == 'table' then
+		chars = '[' .. table.concat(chars, '') .. ']'
+	end
+
+	-- This protects it from matching all characters if '.' is passed
+	chars = chars:gsub('%.', '%%.')
+
+	return self:gsub('^' .. chars .. '*(.-)$', '%1')
+end
+
+--[[
+ * Removes given characters from ending of given string.
+ *
+ * @since     1.1.0
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string|table} [chars]        - Characters to trim; defaults to
+ *                                            whitespaces
+ *
+ * @returns   {boolean}                     - The trimmed string
+--]]
+function string.rtrim(self, chars)
+	chars = chars or '%s'
+	if type(chars) == 'table' then
+		chars = '[' .. table.concat(chars, '') .. ']'
+	end
+
+	-- This protects it from matching all characters if '.' is passed
+	chars = chars:gsub('%.', '%%.')
+
+	return self:gsub('^(.-)' .. chars .. '*$', '%1')
+end
+
+--[[
+ * Removes given characters from beginning and ending of given string.
+ *
+ * @since     1.1.0
+ *
+ * @param     {string}       self           - The target string
+ * @param     {string|table} [chars]        - Characters to trim; defaults to
+ *                                            whitespaces
+ *
+ * @returns   {boolean}                     - The trimmed string
+--]]
+function string.trim(self, chars)
+	return self:ltrim(chars):rtrim(chars)
+end
+
 
 
 
@@ -1034,6 +1181,7 @@ function math.floor(self, mult)
 
 	return math._FLOOR(self / mult) * mult
 end
+
 
 
 
@@ -1124,9 +1272,9 @@ end
  * @param     {function}     f              - Routine to be ran on each element
 --]]
 function table.map(self, f)
-		for k, v in pairs(self) do
-				self[k] = f(v, k)
-		end
+	for k, v in pairs(self) do
+		self[k] = f(v, k)
+	end
 end
 
 --[[
@@ -1154,6 +1302,167 @@ end
 function table.last(self)
 	return self[#self]
 end
+
+--[[
+ * Makes a deep, by value, copy of a table. This solves referencing problems.
+ * This may be slow for big, complex tables; use carefully.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {table}                       - The copy of the table
+--]]
+function table.copy(self) -- Adapted from http://lua-users.org/wiki/CopyTable
+    local origType, copy = type(self)
+
+    if origType == 'table' then
+        copy = {}
+
+        for origKey, origValue in next, self, nil do
+            copy[table.copy(origKey)] = table.copy(origValue)
+        end
+
+        setmetatable(copy, table.copy(getmetatable(self)))
+    else
+        copy = self
+    end
+    return copy
+end
+
+--[[
+ * Normalizes the given table, removing nil values and rearranging the indexes.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+--]]
+function table.normalize(self)
+	for i = #self, 1, -1 do
+		if self[i] == nil then
+			table.remove(self, i)
+		end
+	end
+end
+
+--[[
+ * Runs a routine through every item in the given table and remove it from the
+ * table if the routine returns false.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - Routine to be ran as filter;
+ *                                            default removes falsy values
+--]]
+function table.filter(self, f)
+	if not f then
+		f = tobool
+		table.normalize(self)
+	end
+
+	for k, v in pairs(self) do
+		if not f(v, k) then
+			table.remove(self, k)
+		end
+	end
+end
+
+--[[
+ * Merges the items of the given tables to a single table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        [table1], ...  - Tables to be merged
+ * @param     {boolean}      [forceKey]     - Whether to assure the filtered
+ *                                            items have the same key they had
+ *                                            on the original array; defaults
+ *                                            to false
+ *
+ * @returns  {table}                        - A table with all items on the
+ *                                            given tables
+--]]
+function table.merge(...)
+	local args = {...}
+	local r = {}
+	local forceKey, f
+
+	if (type(table.last(args)) == 'boolean') then
+		forceKey = table.remove(args)
+	end
+
+	if forceKey then
+		function f (v, k)
+			r[k] = v
+		end
+	else
+		function f(v)
+			local rv = v
+			table.insert(r, rv)
+		end
+	end
+
+	table.each(args, function(v)
+		table.each(v, f)
+	end)
+
+	return r
+end
+
+--[[
+ * Returns the sum of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {number}                      - The sum of all items
+--]]
+function table.sum(self)
+	local s = 0
+	table.each(self, function(v) s = s + v end)
+	return s
+end
+
+--[[
+ * Returns the average of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {number}                      - The average of all items
+--]]
+function table.average(self)
+	return table.sum(self) / #self
+end
+
+--[[
+ * Returns the maximum value of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param	{table}		self	- The target table
+ *
+ * @returns {number}			- The maximum value of all items
+--]]
+function table.max(self)
+	return math.max(table.unpack(self))
+end
+
+--[[
+ * Returns the minimum value of all items in the given table.
+ *
+ * @since     1.1.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {number}                      - The minimum value of all items
+--]]
+function table.min(self)
+	return math.min(table.unpack(self))
+end
+
 
 
 
@@ -1363,6 +1672,7 @@ end
 
 
 
+
 --   ______                                                    _______
 --  /_  __/__  ____ ___  ____  ____  _________ ________  __   / ____(_)  _____  _____
 --   / / / _ \/ __ `__ \/ __ \/ __ \/ ___/ __ `/ ___/ / / /  / /_  / / |/_/ _ \/ ___/
@@ -1387,34 +1697,235 @@ function table.stringformat(self, tablename, separator)
 	local count = 0
 	for i,j in ipairs(self) do
 		count = count+1
-		local type = type(j)
-		if type == 'string' then
+		local valType = type(j)
+		if valType == 'string' then
 			ret = ret..'"'..j..'", '..separator
-		elseif type == 'number' then
+		elseif valType == 'number' then
 			ret = ret..j..', '..separator
-		elseif type == 'boolean' then
+		elseif valType == 'boolean' then
 			ret = ret..tostring(j)..', '..separator
-		elseif type == 'table' then
+		elseif valType == 'nil' then
+			ret = ret..'nil, '..separator
+		elseif valType == 'table' then
 			ret = ret..table.stringformat(j)..', '..separator
-		elseif type == 'userdata' then
+		elseif valType == 'userdata' then
 			ret = ret..userdatastringformat(j)..', '..separator
 		end
 	end
 	if count == 0 then
 		for i,j in pairs(self) do
-			local type = type(j)
-			if type == 'string' then
+			local valType = type(j)
+			if valType == 'string' then
 				ret = ret..i..' = "'..j..'", '..separator
-			elseif type == 'number' then
+			elseif valType == 'number' then
 				ret = ret..i..' = '..j..', '..separator
-			elseif type == 'boolean' then
+			elseif valType == 'boolean' then
 				ret = ret..i..' = '..tostring(j)..', '..separator
-			elseif type == 'table' then
+			elseif valType == 'nil' then
+				ret = ret..i..' = nil, '..separator
+			elseif valType == 'table' then
 				ret = ret..i..' = '..table.stringformat(j)..', '..separator
-			elseif type == 'userdata' then
+			elseif valType == 'userdata' then
 				ret = ret..i..' = '..userdatastringformat(j)..', '..separator
 			end
 		end
 	end
 	return ret:sub(1,#ret-2)..'}'
 end
+
+
+
+
+
+--     ___    ___
+--    /   |  / (_)___ _________  _____
+--   / /| | / / / __ `/ ___/ _ \/ ___/
+--  / ___ |/ / / /_/ (__  )  __(__  )
+-- /_/  |_/_/_/\__,_/____/\___/____/
+--
+
+set = setsetting
+get = getsetting
+
+
+
+
+
+--    ______           __                     ________
+--   / ____/_  _______/ /_____  ____ ___     / ____/ /___ ______________  _____
+--  / /   / / / / ___/ __/ __ \/ __ `__ \   / /   / / __ `/ ___/ ___/ _ \/ ___/
+-- / /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /___/ / /_/ (__  |__  )  __(__  )
+-- \____/\__,_/____/\__/\____/_/ /_/ /_/   \____/_/\__,_/____/____/\___/____/
+--
+
+Point = { __class = 'Point' }
+PointMT = { __index = Point }
+
+function Point:new(x, y)
+	local X, Y = x, y
+	if type(x) == 'Point' then
+		return x
+	elseif type(x) == 'table' then
+		if x.x ~= nil then
+			x, y = x.x, x.y
+		else
+			x, y = x[1], x[2]
+		end
+	elseif type(x) == 'userdata' then
+		if x.hasproperty('x') then
+			x, y = x.x, x.y
+		end
+	elseif y == nil then
+		y = x
+	end
+
+	x, y = math.round(x), math.round(y)
+
+	local newObj = {x = x, y = y}
+	setmetatable(newObj, PointMT)
+	return newObj
+end
+
+function PointMT:__add(value)
+	self = Point:new(self)
+	value = Point:new(value)
+
+	return Point:new(self.x + value.x, self.y + value.y)
+end
+
+function PointMT:__sub(value)
+	self = Point:new(self)
+	value = Point:new(value)
+
+	return Point:new(self.x - value.x, self.y - value.y)
+end
+
+function PointMT:__mul(value)
+	self = Point:new(self)
+	value = Point:new(value)
+
+	return Point:new(self.x * value.x, self.y * value.y)
+end
+
+function PointMT:__div(value)
+	self = Point:new(self)
+	value = Point:new(value)
+
+	return Point:new(self.x / value.x, self.y / value.y)
+end
+
+function PointMT:__unm()
+	return self * -1
+end
+
+function PointMT:__eq(value)
+	return self.x == value.x and self.y == value.y
+end
+
+function PointMT:__tostring()
+	return '{x = ' .. self.x .. ', y = ' .. self.y .. '}'
+end
+
+
+HUD = { __class = 'HUD' }
+HUDMT = { __index = HUD }
+
+function HUD:new(options)
+	newObj = {
+		uniqueId      = nil,
+		draggable     = false,
+		dragEvent     = IEVENT_MMOUSEDOWN,
+		dragStopEvent = IEVENT_MMOUSEUP,
+		dragTarget    = nil,
+		savePosition  = false,
+		startPosition = Point:new(0),
+		posRelativeTo = function() return Point:new(0) end,
+		database      = $botdb,
+
+		dragging      = false
+	}
+
+	newObj = table.merge(newObj, options, true)
+
+	if newObj.savePosition then
+		if newObj.uniqueId == nil then
+			error('The uniqueId attribute is required when savePosition is enabled.')
+		end
+
+		local oldPos = newObj.database:getvalue('HUDs Info', newObj.uniqueId .. '.position')
+		if oldPos ~= nil then
+			newObj.startPosition = Point:new(oldPos:explode(';'))
+		end
+	end
+
+	setmetatable(newObj, HUDMT)
+	return newObj
+end
+
+function HUD:bootstrap()
+	filterinput(false, self.draggable, false, false)
+	self:setPosition(self.startPosition)
+end
+
+function HUD:setPosition(x, y)
+	local p = Point:new(x, y)
+	setposition(p.x, p.y)
+
+	if self.savePosition then
+		self:updateSavedPosition()
+	end
+end
+
+function HUD:handleInput(e)
+	if self.draggable and (self.dragTarget == nil or self.dragTarget == e.elementid) then
+		if e.type == self.dragEvent then
+			self:startDragging()
+		elseif e.type == self.dragStopEvent then
+			self:stopDragging()
+		end
+	end
+end
+
+function HUD:run()
+	if self.draggable then
+		self:drag()
+	end
+end
+
+function HUD:startDragging()
+	self.dragging = true
+	self.mousePos = Point:new($cursor)
+end
+
+function HUD:stopDragging()
+	self.dragging = false
+
+	-- Had to move it to HUD:drag(), because apparently getposition() doesn't
+	-- work inside inputevents()
+	--[[ if self.savePosition then
+		self:updateSavedPosition()
+	end ]]--
+end
+
+function HUD:updateSavedPosition()
+	local relativePos = Point:new(getposition()) - self.posRelativeTo()
+	self.database:setvalue('HUDs Info', self.uniqueId .. '.position', relativePos.x .. ';' .. relativePos.y)
+end
+
+function HUD:drag()
+	if self.dragging then
+		auto(10)
+
+		local curMouse = Point:new($cursor)
+
+		self:setPosition((curMouse - self.mousePos) + getposition())
+		self.mousePos = curMouse
+
+		if self.savePosition then
+			self:updateSavedPosition()
+		end
+	end
+end
+
+
+print("Raphael's Library Version: " .. RAPHAEL_LIB)

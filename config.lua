@@ -1,7 +1,7 @@
 config = {
 	name    = 'Raphael\'s Library',
-	version = '1.0.2',
-	windbot = '1.2.2',
+	version = '1.1.0',
+	windbot = '1.3.3',
 
 	files = {
 		layout = 'Layout.tlua',
