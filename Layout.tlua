@@ -111,4 +111,6 @@ LIBS.RAPHAEL = RAPHAEL_LIB
 
 @include(src/Point Class.lua)
 
+@include(src/HUD Class.lua)
+
 print("{{ name }} Version: " .. RAPHAEL_LIB)
