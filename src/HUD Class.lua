@@ -25,7 +25,7 @@ function HUD:new(options)
 
 		local oldPos = newObj.database:getvalue('HUDs Info', newObj.uniqueId .. '.position')
 		if oldPos ~= nil then
-			newObj.startPosition = Point:new(oldPos:explode(';'))
+			newObj.startPosition = newObj.posRelativeTo() + Point:new(oldPos:explode(';'))
 		end
 	end
 
@@ -91,9 +91,5 @@ function HUD:drag()
 
 		self:setPosition((curMouse - self.mousePos) + getposition())
 		self.mousePos = curMouse
-
-		if self.savePosition then
-			self:updateSavedPosition()
-		end
 	end
 end
