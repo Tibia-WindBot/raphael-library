@@ -1,26 +1,17 @@
--- Raphael's Library v1.1.0
--- Last Updated: 01/02/2014 - 23:42 UTC
+-- Raphael's Library v1.1.1
+-- Last Updated: 02/02/2014 - 00:05 UTC
 -- Released for WindBot v1.3.3
 
-RAPHAEL_LIB = '1.1.0'
+RAPHAEL_LIB = '1.1.1'
 
 LIBS = LIBS or {}
 LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 --[[
- * Changelog v1.1.0
+ * Changelog v1.1.1
  *
- * - Added string.rtrim, string.ltrim and string.trim.
- * - Added table.copy, table.filter and table.merge.
- * - Added table.sum, table.average, table.min and table.max.
- * - Added calltable, setsetting and waitcondition.
- * - Added Point class.
- * - Added HUD class.
- * - Updated userdatastringformat.
- * - Fixed maxcap.
- * - Fixed table.stringformat.
- * - Fixed REGEX_SERVER_SAVE.
+ * - Minor fixes for HUD class.
  *
 --]]
 
@@ -1854,7 +1845,7 @@ function HUD:new(options)
 
 		local oldPos = newObj.database:getvalue('HUDs Info', newObj.uniqueId .. '.position')
 		if oldPos ~= nil then
-			newObj.startPosition = Point:new(oldPos:explode(';'))
+			newObj.startPosition = newObj.posRelativeTo() + Point:new(oldPos:explode(';'))
 		end
 	end
 
@@ -1920,10 +1911,6 @@ function HUD:drag()
 
 		self:setPosition((curMouse - self.mousePos) + getposition())
 		self.mousePos = curMouse
-
-		if self.savePosition then
-			self:updateSavedPosition()
-		end
 	end
 end
 
