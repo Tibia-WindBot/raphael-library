@@ -489,31 +489,6 @@ function calltable(t, ...)
 end
 
 --[[
- * This is basically an improvement of setsetting(). It handles using the first
- * parameter as a userdata for lootingdata and supplydata.
- *
- * @since     1.1.0
- * @overrides
- *
- * @param     {table}        t              - The table with the function to be
- *                                            called and its arguments
- * @param     {any}          [...]          - Extra arguments
- *
- * @returns   {string}                      - The converted value
---]]
-function setsetting(obj, property, value)
-	if type(obj) == 'userdata' then
-		if obj.objtype == 'lootingdata' then
-			return _SETSETTING('Looting/LootList/' .. obj.name .. '/' .. property, value)
-		elseif obj.objtype == 'supplydata' then
-			return _SETSETTING('Supplies/Items/' .. obj.name .. '/' .. property, value)
-		end
-	end
-
-	return _SETSETTING(obj, property, value)
-end
-
---[[
  * Waits until a condition is satisfied for a maximum time of `time`. Condition
  * must be passed as the `f` argument and any extra parameters and be passed as
  * a table, as the `fArgs` parameter. If the condition fulfills in the given
