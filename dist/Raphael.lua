@@ -1,17 +1,17 @@
--- Raphael's Library v1.1.1
--- Last Updated: 02/02/2014 - 00:05 UTC
+-- Raphael's Library v1.1.2
+-- Last Updated: 05/02/2014 - 19:34 UTC
 -- Released for WindBot v1.3.3
 
-RAPHAEL_LIB = '1.1.1'
+RAPHAEL_LIB = '1.1.2'
 
 LIBS = LIBS or {}
 LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 --[[
- * Changelog v1.1.1
+ * Changelog v1.1.2
  *
- * - Minor fixes for HUD class.
+ * - Removed setsettings as a hotfix.
  *
 --]]
 
@@ -697,31 +697,6 @@ function calltable(t, ...)
 	end
 
 	return f(table.unpack(args))
-end
-
---[[
- * This is basically an improvement of setsetting(). It handles using the first
- * parameter as a userdata for lootingdata and supplydata.
- *
- * @since     1.1.0
- * @overrides
- *
- * @param     {table}        t              - The table with the function to be
- *                                            called and its arguments
- * @param     {any}          [...]          - Extra arguments
- *
- * @returns   {string}                      - The converted value
---]]
-function setsetting(obj, property, value)
-	if type(obj) == 'userdata' then
-		if obj.objtype == 'lootingdata' then
-			return _SETSETTING('Looting/LootList/' .. obj.name .. '/' .. property, value)
-		elseif obj.objtype == 'supplydata' then
-			return _SETSETTING('Supplies/Items/' .. obj.name .. '/' .. property, value)
-		end
-	end
-
-	return _SETSETTING(obj, property, value)
 end
 
 --[[
