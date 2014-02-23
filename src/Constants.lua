@@ -21,8 +21,12 @@ REGEX_ITEM_DURATION = '^You see an? (.-) that will expire in (.-)%.'
 REGEX_PLAYER_BASIC  = '^You see (.-) %(Level (%d+)%)%. (%a+) is an? (.-)%.'
 REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which has (%d+) members, (%d+) of them online%.$'
 REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes?. Please .+%.$'
-REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
-REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
+REGEX_COORDS        = '^x:(%d+), y:(%d+), z:(%d+)$'
+REGEX_RANGE         = '^(%d+) x (%d+)$'
+
+-- Deprecated regexes
+REGEX_SPA_COORDS = REGEX_COORDS
+REGEX_SPA_SIZE   = REGEX_RANGE
 
 
 -- Custom Types properties
