@@ -69,6 +69,7 @@ CUSTOM_TYPE = {
 
 -- Key codes
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
+-- CAUTION: This list if fucked up, for some reason
 local KEYS = {
 	MOUSELEFT   = 0x01,
 	MOUSERIGHT  = 0x02,
