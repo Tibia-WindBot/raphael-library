@@ -493,6 +493,7 @@ end
  * parameter as a userdata for lootingdata and supplydata.
  *
  * @since     1.1.0
+ * @updated   1.2.0
  * @overrides
  *
  * @param     {table}        t              - The table with the function to be
