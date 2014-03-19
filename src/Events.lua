@@ -5,13 +5,32 @@
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
+ * @updated   1.2.0
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as
  *                                            waiting method; defaults to false
+ *
+ * @returns   {boolean}                     - A value indicating whether all
+ *                                            messages were correctly said
 --]]
 function npctalk(...)
 	local args = {...}
+
+	-- Checks for NPCs around
+	-- Blatantly (almost) copied from @Colandus' lib
+	local npcFound = false
+	foreach creature c 'nfs' do
+		if c.dist <= 3 then
+			npcFound = true
+			break
+		end
+	end
+
+	if not npcFound then
+		return false
+	end
+
 
 	-- Checks for aditional parameters
 	local normalWait = false
@@ -52,12 +71,13 @@ function npctalk(...)
 			msgSuccess = waitFunction($name, v, 3000, true, MSG_SENT)
 			if not msgSuccess then
 				if not ischannel('NPCs') then
-					npctalk(select(k, ...))
-					return
+					return npctalk(select(k, ...))
 				end
 			end
 		end
 	end
+
+	return true
 end
 
 --[[
