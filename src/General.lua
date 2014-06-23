@@ -489,33 +489,6 @@ function calltable(t, ...)
 end
 
 --[[
- * This is basically an improvement of setsetting(). It handles using the first
- * parameter as a userdata for lootingdata and supplydata.
- *
- * @since     1.1.0
- * @updated   1.2.0
- * @overrides
- *
- * @param     {table}        t              - The table with the function to be
- *                                            called and its arguments
- * @param     {any}          [...]          - Extra arguments
- *
- * @returns   {string}                      - The converted value
---]]
-function setsetting(...)
-	local args = {...}
-	if type(args[1]) == 'userdata' then
-		if args[1].objtype == 'lootingdata' then
-			args[1] = 'Looting/LootList/' .. args[1].name .. '/' .. table.remove(args, 2)
-		elseif args[1].objtype == 'supplydata' then
-			args[1] = 'Supplies/Items/' .. obj.name .. '/' .. table.remove(args, 2)
-		end
-	end
-
-	return _SETSETTING(table.unpack(args))
-end
-
---[[
  * Waits until a condition is satisfied for a maximum time of `time`. Condition
  * must be passed as the `f` argument and any extra parameters and be passed as
  * a table, as the `fArgs` parameter. If the condition fulfills in the given

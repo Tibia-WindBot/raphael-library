@@ -6,7 +6,6 @@ table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
 -- Handle overwrriten functions
-_SETSETTING = _SETSETTING or setsetting
 _TOSTRING   = _TOSTRING   or tostring
 _TYPE       = _TYPE       or type
 math._CEIL  = math._CEIL  or math.ceil
