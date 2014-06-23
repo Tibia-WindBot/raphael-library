@@ -112,13 +112,31 @@ end
  * Gets the total amount of visible gold you're carrying.
  *
  * @since     0.1.0
+ * @updated   1.2.0
+ *
+ * @param     {string}       [coin]         - Coin type to consider; defaults to
+ *                                          - all
+ * @param     {string}       [location]     - Where to look for gold; defaults
+ *                                          - to any
  *
  * @returns   {number}                      - Total amount of gold
 --]]
-function gold()
-	return itemcount('gold coin') +
-	       itemcount('platinum coin') * 100 +
-	       itemcount('crystal coin') * 10000
+function gold(coin, location)
+	local coins = {'gold coin', 'platinum coin', 'crystal coin'}
+
+	-- Allows us to count only a specific coin type
+	if coin and table.find(coins, coin:lower()) then
+		coins = {coin}
+	else
+		location = coin
+	end
+
+	local totalGold = 0
+	for _, v in ipairs(coins) do
+		totalGold = totalGold + itemcount(v, location) * itemvalue(v)
+	end
+
+	return totalGold
 end
 
 --[[
