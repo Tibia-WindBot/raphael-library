@@ -535,3 +535,24 @@ function waitcondition(f, time, fArgs)
 
 	return false
 end
+
+--[[
+ * Given a waypoint's label, gives its ID. Only works on the current section. If
+ * no waypoint with that label is found, nothing is returned.
+ *
+ * @since     1.2.0
+ *
+ * @param     {string}       label          - The waypoint's label
+ *
+ * @returns   {number}                      - The waypoint's ID
+--]]
+function getwptid(label)
+	local id = 0
+	foreach settingsentry s 'Cavebot/Waypoints' do
+		if get(s, 'Label') == label then
+			return id
+		end
+
+		id = id + 1
+	end
+end
