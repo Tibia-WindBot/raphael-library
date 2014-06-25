@@ -1,21 +1,17 @@
--- Raphael's Library v1.2.0
--- Last Updated: 25/06/2014 - 19:23 UTC
+-- Raphael's Library v1.2.1
+-- Last Updated: 25/06/2014 - 20:10 UTC
 -- Released for WindBot v2.2.3
 
-RAPHAEL_LIB = '1.2.0'
+RAPHAEL_LIB = '1.2.1'
 
 LIBS = LIBS or {}
 LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 --[[
- * Changelog v1.2.0
+ * Changelog v1.2.1
  *
- * - Added getwptid.
- * - Improved gold, as suggested by @pvzin.
- * - Improved npctalk to check for NPCs around.
- * - Added constants for items bought by some NPCs.
- * - Deprecated REGEX_SPA_COORDS and REGEX_SPA_SIZE in favor of REGEX_COORDS and REGEX_RANGE.
+ * - Minor version bump; apparently @Lucas Terra had already updated it to 1.2.0.
  *
 --]]
 
