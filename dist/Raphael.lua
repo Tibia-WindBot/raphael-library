@@ -1,17 +1,21 @@
--- Raphael's Library v1.1.2
--- Last Updated: 05/02/2014 - 19:34 UTC
--- Released for WindBot v1.3.3
+-- Raphael's Library v1.2.0
+-- Last Updated: 25/06/2014 - 19:23 UTC
+-- Released for WindBot v2.2.3
 
-RAPHAEL_LIB = '1.1.2'
+RAPHAEL_LIB = '1.2.0'
 
 LIBS = LIBS or {}
 LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 --[[
- * Changelog v1.1.2
+ * Changelog v1.2.0
  *
- * - Removed setsettings as a hotfix.
+ * - Added getwptid.
+ * - Improved gold, as suggested by @pvzin.
+ * - Improved npctalk to check for NPCs around.
+ * - Added constants for items bought by some NPCs.
+ * - Deprecated REGEX_SPA_COORDS and REGEX_SPA_SIZE in favor of REGEX_COORDS and REGEX_RANGE.
  *
 --]]
 
@@ -24,12 +28,25 @@ table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
 -- Handle overwrriten functions
-_SETSETTING = _SETSETTING or setsetting
 _TOSTRING   = _TOSTRING   or tostring
 _TYPE       = _TYPE       or type
 math._CEIL  = math._CEIL  or math.ceil
 math._FLOOR = math._FLOOR or math.floor
 
+
+-- Items bought by npcs
+ITEMS_ASNARUS     = {283, 284, 285, 2874, 3277, 3349, 3350, 20183, 20184, 20198, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
+ITEMS_BLUE_DJINN  = {660, 674, 679, 693, 779, 793, 794, 810, 3046, 3049, 3050, 3056, 3060, 3061, 3062, 3071, 3072, 3073, 3074, 3075, 3079, 3081, 3082, 3083, 3091, 3092, 3093, 3271, 3279, 3280, 3284, 3301, 3302, 3313, 3320, 3380, 3381, 3382, 3385, 3391, 3392, 3415, 3416, 3418, 3419, 3439, 3567, 7391, 7410, 7412, 7436, 7451, 7454, 8092, 8093, 8094, 16096, 16115}
+ITEMS_ESRIK       = {3264, 3265, 3266, 3267, 3268, 3269, 3270, 3272, 3273, 3274, 3275, 3276, 3282, 3283, 3285, 3286, 3293, 3294, 3298, 3300, 3304, 3305, 3316, 3336, 3337, 3338, 3351, 3352, 3353, 3354, 3355, 3357, 3358, 3359, 3361, 3362, 3367, 3372, 3374, 3375, 3376, 3377, 3378, 3379, 3409, 3410, 3411, 3412, 3413, 3425, 3426, 3430, 3431, 3462, 3552, 3557, 3558, 3559, 3561, 3562, 4033, 10323, 10384, 10385, 10386, 10387, 10388, 10389, 10390, 10391, 10392, 10404, 10405, 10406, 10408, 10410, 10412, 10414, 10416, 10418, 11651, 11657, 11659, 11660, 11661, 17824}
+ITEMS_FIONA       = {5879, 5881, 5882, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5898, 5899, 5902, 5904, 5905, 5906, 5920, 5921, 5922, 5925, 5930, 5954, 7439, 7440, 7443, 9053, 9054, 9055, 9636, 9642, 9644, 9647, 9649, 9660, 9661, 9665, 9666, 10275, 10276, 10277, 10278, 10280, 10304, 10312, 10397, 10444, 11454, 11457, 11463, 11464, 11465, 11474, 11512, 11658, 11702, 11703, 14008, 14009, 14013, 16131, 16139, 16140, 17809, 17817, 17826, 17827, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18928}
+ITEMS_GREEN_DJINN = {666, 685, 785, 802, 3045, 3048, 3051, 3052, 3053, 3054, 3065, 3066, 3067, 3069, 3070, 3077, 3078, 3084, 3085, 3097, 3098, 3281, 3297, 3299, 3307, 3318, 3322, 3324, 3369, 3370, 3371, 3373, 3383, 3384, 3428, 3429, 3432, 3434, 3574, 7407, 7411, 7413, 7419, 7421, 7428, 8082, 8083, 8084, 16117, 16118}
+ITEMS_GRIZZLY     = {7393, 7394, 7396, 7397, 7398, 7399, 7400, 7401, 9631, 9633, 9648, 9657, 9662, 10244, 10272, 10273, 10282, 10297, 10311, 10398, 10419, 10421, 10452, 10454, 10455, 10456, 11487, 11488, 11489, 11490, 11491, 11514, 11539, 12039, 12040, 12172, 12309, 12312, 12313, 12314, 12315, 12316, 12317, 17461, 17462, 17818, 18993, 18994}
+ITEMS_IRMANA      = {3568, 5876, 5877, 5878, 5883, 5886, 5909, 5910, 5911, 5912, 5913, 5914, 5948, 8923, 9045, 9658, 9684, 9689, 9690, 9691, 9694, 10274, 10279, 10292, 10293, 10295, 10299, 10307, 10317, 10318, 10319, 10407, 11448, 11456, 11458, 11470, 11473, 11475, 11486, 11492, 11493, 11684, 17819}
+ITEMS_MALUNGA     = {8031, 8143, 9634, 9637, 9640, 9641, 9643, 9651, 9659, 9663, 9667, 9668, 9683, 9693, 10281, 10283, 10291, 10301, 10306, 10308, 10309, 10313, 10411, 10420, 10449, 10450, 11446, 11467, 11475, 11481, 11484, 11485, 11513, 11666, 11671, 11672, 11673, 11680, 12541, 12601, 12730, 12742, 12805, 14011, 14012, 14017, 14041, 14044, 14076, 14078, 14079, 14080, 14081, 14082, 14083, 16132, 16134, 17458, 17463, 17822, 17823, 17830, 18924, 18925, 18926, 18927, 18929, 18930, 18995, 18996, 18997, 19110, 19111}
+ITEMS_TAMORIL     = {2903, 3036, 3037, 3038, 3039, 3041}
+ITEMS_TELAS       = {5887, 5888, 5889, 5892, 8775, 9027, 9028, 9063, 9064, 9065, 9066, 9067, 9632, 9654, 9655, 9656, 9664, 10298, 10310, 10315, 11447, 12600, 12806, 16130, 16133, 16135, 16137, 16138}
+ITEMS_RASHID      = {661, 662, 664, 667, 668, 669, 672, 673, 680, 681, 682, 683, 686, 687, 688, 691, 692, 780, 781, 783, 786, 787, 788, 791, 792, 795, 796, 798, 803, 804, 805, 808, 809, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 2958, 2991, 3002, 3006, 3007, 3008, 3010, 3016, 3017, 3018, 3019, 3025, 3055, 3063, 3290, 3314, 3315, 3326, 3327, 3328, 3330, 3332, 3333, 3334, 3339, 3340, 3342, 3344, 3356, 3360, 3364, 3366, 3386, 3397, 3404, 3408, 3414, 3420, 3421, 3435, 3436, 3440, 3441, 3442, 3550, 3554, 3556, 5461, 5710, 5741, 5810, 5917, 5918, 6095, 6096, 6131, 6299, 6553, 7379, 7380, 7381, 7382, 7383, 7384, 7386, 7387, 7388, 7389, 7390, 7392, 7402, 7403, 7404, 7406, 7408, 7414, 7415, 7418, 7422, 7424, 7425, 7426, 7427, 7429, 7430, 7432, 7434, 7437, 7438, 7449, 7452, 7456, 7457, 7460, 7461, 7462, 7463, 7464, 8022, 8027, 8045, 8049, 8050, 8052, 8057, 8061, 8063, 9013, 9014, 9015, 9017, 9302, 9303, 9304, 9653, 10457, 11674, 12683, 16163, 16164, 17828, 17829, 17852}
+ITEMS_YASIR       = {647, 2933, 3044, 3058, 3735, 3736, 3741, 5479, 5804, 5809, 5875, 5876, 5877, 5878, 5879, 5880, 5881, 5882, 5883, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5896, 5897, 5898, 5899, 5901, 5902, 5904, 5905, 5906, 5909, 5910, 5911, 5912, 5913, 5914, 5919, 5920, 5921, 5922, 5925, 5930, 5948, 5954, 6491, 6525, 6534, 6535, 6536, 6537, 6539, 6540, 6546, 8031, 8143, 9035, 9053, 9054, 9055, 9631, 9633, 9634, 9635, 9636, 9637, 9638, 9639, 9640, 9641, 9642, 9643, 9644, 9645, 9646, 9647, 9648, 9649, 9650, 9651, 9652, 9657, 9658, 9659, 9660, 9661, 9662, 9663, 9665, 9666, 9667, 9668, 9683, 9684, 9685, 9686, 9688, 9689, 9690, 9691, 9692, 9693, 9694, 10196, 10272, 10273, 10274, 10275, 10276, 10277, 10278, 10279, 10280, 10281, 10282, 10283, 10291, 10292, 10293, 10295, 10296, 10297, 10299, 10300, 10301, 10302, 10303, 10304, 10305, 10306, 10307, 10308, 10309, 10311, 10312, 10313, 10314, 10316, 10317, 10318, 10319, 10320, 10321, 10397, 10404, 10405, 10407, 10408, 10409, 10410, 10411, 10413, 10414, 10415, 10416, 10417, 10418, 10420, 10444, 10449, 10450, 10452, 10453, 10454, 10455, 10456, 11443, 11444, 11445, 11446, 11448, 11449, 11450, 11451, 11452, 11453, 11454, 11455, 11456, 11457, 11458, 11463, 11464, 11465, 11466, 11467, 11469, 11470, 11471, 11472, 11473, 11474, 11475, 11476, 11477, 11478, 11479, 11480, 11481, 11482, 11483, 11484, 11485, 11486, 11487, 11488, 11489, 11490, 11491, 11492, 11493, 11510, 11511, 11512, 11513, 11514, 11515, 11539, 11652, 11658, 11659, 11660, 11661, 11666, 11671, 11672, 11673, 11680, 11684, 11702, 11703, 12541, 12730, 12737, 12742, 14008, 14009, 14010, 14011, 14012, 14013, 14017, 14041, 14044, 14076, 14077, 14078, 14079, 14080, 14081, 14082, 14083, 14225, 16131, 16132, 16134, 16139, 16140, 17458, 17461, 17462, 17463, 17809, 17817, 17818, 17819, 17822, 17823, 17826, 17827, 17830, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18924, 18925, 18926, 18927, 18928, 18929, 18930, 18993, 18994, 18995, 18996, 18997, 19110, 19111, 20183, 20184, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
 
 -- Vocation IDs used by $voc
 VOC_NONE        = 0
@@ -54,8 +71,12 @@ REGEX_ITEM_DURATION = '^You see an? (.-) that will expire in (.-)%.'
 REGEX_PLAYER_BASIC  = '^You see (.-) %(Level (%d+)%)%. (%a+) is an? (.-)%.'
 REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which has (%d+) members, (%d+) of them online%.$'
 REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes?. Please .+%.$'
-REGEX_SPA_COORDS    = '^x:(%d+), y:(%d+), z:(%d+)$'
-REGEX_SPA_SIZE      = '^(%d+) x (%d+)$'
+REGEX_COORDS        = '^x:(%d+), y:(%d+), z:(%d+)$'
+REGEX_RANGE         = '^(%d+) x (%d+)$'
+
+-- Deprecated regexes
+REGEX_SPA_COORDS = REGEX_COORDS
+REGEX_SPA_SIZE   = REGEX_RANGE
 
 
 -- Custom Types properties
@@ -84,6 +105,7 @@ CUSTOM_TYPE = {
 
 -- Key codes
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
+-- CAUTION: This list if fucked up, for some reason
 local KEYS = {
 	MOUSELEFT   = 0x01,
 	MOUSERIGHT  = 0x02,
@@ -323,13 +345,31 @@ end
  * Gets the total amount of visible gold you're carrying.
  *
  * @since     0.1.0
+ * @updated   1.2.0
+ *
+ * @param     {string}       [coin]         - Coin type to consider; defaults to
+ *                                          - all
+ * @param     {string}       [location]     - Where to look for gold; defaults
+ *                                          - to any
  *
  * @returns   {number}                      - Total amount of gold
 --]]
-function gold()
-	return itemcount('gold coin') +
-	       itemcount('platinum coin') * 100 +
-	       itemcount('crystal coin') * 10000
+function gold(coin, location)
+	local coins = {'gold coin', 'platinum coin', 'crystal coin'}
+
+	-- Allows us to count only a specific coin type
+	if coin and table.find(coins, coin:lower()) then
+		coins = {coin}
+	else
+		location = coin
+	end
+
+	local totalGold = 0
+	for _, v in ipairs(coins) do
+		totalGold = totalGold + itemcount(v, location) * itemvalue(v)
+	end
+
+	return totalGold
 end
 
 --[[
@@ -730,19 +770,59 @@ function waitcondition(f, time, fArgs)
 end
 
 --[[
+ * Given a waypoint's label, gives its ID. Only works on the current section. If
+ * no waypoint with that label is found, nothing is returned.
+ *
+ * @since     1.2.0
+ *
+ * @param     {string}       label          - The waypoint's label
+ *
+ * @returns   {number}                      - The waypoint's ID
+--]]
+function getwptid(label)
+	local id = 0
+	foreach settingsentry s 'Cavebot/Waypoints' do
+		if get(s, 'Label') == label then
+			return id
+		end
+
+		id = id + 1
+	end
+end
+
+--[[
  * Handles talking to a NPC. Takes care of all waiting times and checks if NPCs
  * channel is open. By default, it uses a waiting method that waits until it
  * sees the the message was actually sent. Optionally, you can opt for the
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
+ * @updated   1.2.0
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as
  *                                            waiting method; defaults to false
+ *
+ * @returns   {boolean}                     - A value indicating whether all
+ *                                            messages were correctly said
 --]]
 function npctalk(...)
 	local args = {...}
+
+	-- Checks for NPCs around
+	-- Blatantly (almost) copied from @Colandus' lib
+	local npcFound = false
+	foreach creature c 'nfs' do
+		if c.dist <= 3 then
+			npcFound = true
+			break
+		end
+	end
+
+	if not npcFound then
+		return false
+	end
+
 
 	-- Checks for aditional parameters
 	local normalWait = false
@@ -783,12 +863,13 @@ function npctalk(...)
 			msgSuccess = waitFunction($name, v, 3000, true, MSG_SENT)
 			if not msgSuccess then
 				if not ischannel('NPCs') then
-					npctalk(select(k, ...))
-					return
+					return npctalk(select(k, ...))
 				end
 			end
 		end
 	end
+
+	return true
 end
 
 --[[

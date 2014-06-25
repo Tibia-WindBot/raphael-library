@@ -1,0 +1,5 @@
+ * - Added getwptid.
+ * - Improved gold, as suggested by @pvzin.
+ * - Improved npctalk to check for NPCs around.
+ * - Added constants for items bought by some NPCs.
+ * - Deprecated REGEX_SPA_COORDS and REGEX_SPA_SIZE in favor of REGEX_COORDS and REGEX_RANGE.
