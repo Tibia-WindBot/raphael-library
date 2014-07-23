@@ -556,3 +556,60 @@ function getwptid(label)
 		id = id + 1
 	end
 end
+
+--[[
+ * Calculates the amount of time needed to advance to the specified level, if
+ * the current experience rate is kept. If `extraPrecision` is enabled, the time
+ * is returned in seconds, otherwise, in minutes.
+ *
+ * @since     1.3.0
+ * @overrides
+ *
+ * @param     {boolean}     [extraPrecision]- If enabled, the resulting time
+ *                                            will be calculated in seconds and
+ *                                            will also countdown every second,
+ *                                            until changing; defaults to false
+ * @param     {number}       [level]        - The level to calculate the time
+ *                                            needed to advance to; defaults to
+ *                                            $level + 1
+ *
+ * @returns   {number}                      - Amount of time
+--]]
+function timetolevel(extraPrecision, level)
+	-- If not extra precision is wanted, just return the regular old value in
+	-- minutes
+	if not (extraPrecision == true) then
+		return _TIMETOLEVEL(extraPrecision or level)
+	end
+
+	-- The reason we use this instead of $timems is because you'll almost always
+	-- show the time to next level beside the current played time, for which the
+	-- majority of HUDs use $charactertime. Also, this is exactly how it's done
+	-- in sirmate's MMH, the most used HUD around. So, if we do this, we get to
+	-- see both values changing simultaneously and this makes me feel better.
+	local curTime = math.floor($charactertime / 1000)
+
+	-- If the experience per hour change, the time to level also changes
+	if $exphour ~= _Tracker.lastExpHour then
+		_Tracker.timeToLevelChanged = curTime
+		_Tracker.lastExpHour = $exphour
+	end
+
+	-- If the current experience changes, the experience need to advance to the
+	-- level also changes and this, in turn, changes the time to level; One
+	-- argue that when the current experience changes, the experience per hour
+	-- also does, because effectively you're gaining experience. This, however,
+	-- cannot be verified over a non instantaneous period of time and since this
+	-- function might be called at long intervals, specially because it is
+	-- commonly used in HUDs, we will assume otherwise.
+	if $exp ~= _Tracker.lastExp then
+		_Tracker.timeToLevelChanged = curTime
+		_Tracker.lastExp = $exp
+	end
+
+	local timeToLevel = (exptolevel(level) / $exphour) * 3600
+	local timeOffset = (curTime - _Tracker.timeToLevelChanged)
+
+	-- Don't really want to return negative values; what would that even mean?
+	return math.max(math.round(timeToLevel - timeOffset), 1)
+end

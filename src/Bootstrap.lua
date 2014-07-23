@@ -6,7 +6,11 @@ table.unpack = table.unpack or unpack
 unpack = unpack or table.unpack
 
 -- Handle overwrriten functions
-_TOSTRING   = _TOSTRING   or tostring
-_TYPE       = _TYPE       or type
-math._CEIL  = math._CEIL  or math.ceil
-math._FLOOR = math._FLOOR or math.floor
+_TIMETOLEVEL = _TIMETOLEVEL or timetolevel
+_TOSTRING    = _TOSTRING    or tostring
+_TYPE        = _TYPE        or type
+math._CEIL   = math._CEIL   or math.ceil
+math._FLOOR  = math._FLOOR  or math.floor
+
+-- Global object to keep track of stuff by our functions
+_Tracker = _Tracker or {}
