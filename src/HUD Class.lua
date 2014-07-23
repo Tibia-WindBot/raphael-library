@@ -71,8 +71,8 @@ end
 function HUD:stopDragging()
 	self.dragging = false
 
-	-- Had to move it to HUD:drag(), because apparently getposition() doesn't
-	-- work inside inputevents()
+	-- Had to move it to HUD:setPosition(), because apparently getposition()
+	-- doesn't work inside inputevents()
 	--[[ if self.savePosition then
 		self:updateSavedPosition()
 	end ]]--
