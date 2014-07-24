@@ -5,7 +5,7 @@
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
- * @updated   1.2.0
+ * @updated   1.3.0
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as
@@ -39,11 +39,31 @@ function npctalk(...)
 	end
 
 	-- Use specified waiting method
-	local waitFunction = waitmessage
+	local waitFunction
 	if normalWait then
 		waitFunction = function()
 			waitping()
 			return true
+		end
+	else
+		if $fasthotkeys then
+			-- When we have fast hotkeys enabled, the bot sends the messages way
+			-- too fast and this ends up causing a huge problem because the
+			-- server can't properly read them. So we simulate the time it would
+			-- take to actually type the text.
+			waitFunction = function(_, msg)
+				local minWait, maxWait = get('Settings/TypeWaitTime'):match(REGEX_RANGE)
+				local waitTime = 0
+
+				for i = 1, #msg do
+					waitTime = waitTime + math.random(minWait, maxWait)
+				end
+
+				wait(waitTime)
+				return true
+			end
+		else
+			waitFunction = waitmessage
 		end
 	end
 
