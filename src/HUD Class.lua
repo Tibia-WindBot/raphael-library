@@ -9,8 +9,8 @@ function HUD:new(options)
 		dragStopEvent = IEVENT_MMOUSEUP,
 		dragTarget    = nil,
 		savePosition  = false,
-		startPosition = Point:new(0),
-		posRelativeTo = function() return Point:new(0) end,
+		startPosition = Point:new(0, 0),
+		posRelativeTo = function() return Point:new(0, 0) end,
 		database      = $botdb,
 
 		dragging      = false

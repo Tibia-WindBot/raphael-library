@@ -2,21 +2,18 @@ Point = { __class = 'Point' }
 PointMT = { __index = Point }
 
 function Point:new(x, y)
-	local X, Y = x, y
 	if type(x) == 'Point' then
 		return x
-	elseif type(x) == 'table' then
+	elseif type(x) == 'table' or type(x) == 'userdata' then
 		if x.x ~= nil then
 			x, y = x.x, x.y
 		else
 			x, y = x[1], x[2]
 		end
-	elseif type(x) == 'userdata' then
-		if x.hasproperty('x') then
-			x, y = x.x, x.y
-		end
-	elseif y == nil then
-		y = x
+	end
+
+	if type(x) ~= 'number' or type(y) ~= 'number' then
+		return nil
 	end
 
 	x, y = math.round(x), math.round(y)
