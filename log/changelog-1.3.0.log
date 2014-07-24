@@ -1,0 +1,5 @@
+ * - Added special handling for npctalk() when fast hotkeys is enabled.
+ * - Added timetolevel.
+ * - Added Area Class.
+ * - Added JSON Class.
+ * - Updated Point Class constructor.
