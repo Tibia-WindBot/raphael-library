@@ -5,6 +5,6 @@ config = {
 
 	files = {
 		layout = 'Layout.tlua',
-		dest = 'dist/Raphael.lua'
+		dest   = 'dist/Raphael.lua'
 	}
 }
