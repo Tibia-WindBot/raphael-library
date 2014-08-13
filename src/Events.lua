@@ -5,7 +5,7 @@
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
- * @updated   1.3.0
+ * @updated   1.3.1
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as
@@ -76,12 +76,22 @@ function npctalk(...)
 				local minWait, maxWait = get('Settings/TypeWaitTime'):match(REGEX_RANGE)
 				minWait, maxWait = tonumber(minWait), tonumber(maxWait)
 
+				-- Even though values can go as low as 10 x 10 ms, there's a
+				-- physical cap at about 30 x 30 ms.
+				minWait, maxWait = math.max(minWait, 30), math.max(maxWait, 30)
+
 				local waitTime = 0
 
-				-- We start at 0 because we're considering the enter key press
-				for i = 0, #v do
+				for i = 1, #v do
 					waitTime = waitTime + math.random(minWait, maxWait)
 				end
+
+				-- My measurements indicate at least 15% extra time to actually
+				-- press the keys then it should take, even with relatively
+				-- high settings. However, the measurements go relatively high
+				-- when using extremely short strings. So I made up this weird
+				-- formula with the help of Wolfram Alpha.
+				waitTime = waitTime * (1 + (3 * (1.15 / #v)^1.15))
 
 				wait(waitTime)
 			end
