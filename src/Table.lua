@@ -193,12 +193,11 @@ end
  * Merges the items of the given tables to a single table.
  *
  * @since     1.1.0
+ * @updated   1.3.1
  *
  * @param     {table}        [table1], ...  - Tables to be merged
- * @param     {boolean}      [forceKey]     - Whether to assure the filtered
- *                                            items have the same key they had
- *                                            on the original array; defaults
- *                                            to false
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be merged; defaults to false
  *
  * @returns  {table}                        - A table with all items on the
  *                                            given tables
@@ -206,15 +205,19 @@ end
 function table.merge(...)
 	local args = {...}
 	local r = {}
-	local forceKey, f
+	local recursive, f
 
 	if (type(table.last(args)) == 'boolean') then
-		forceKey = table.remove(args)
+		recursive = table.remove(args)
 	end
 
-	if forceKey then
-		function f (v, k)
-			r[k] = v
+	if #args[1] ~= table.size(args[1]) then
+		function f(v, k)
+			if recursive and type(r[k]) == 'table' and type(v) == 'table' then
+				r[k] = table.merge(r[k], v, true)
+			else
+				r[k] = v
+			end
 		end
 	else
 		function f(v)
@@ -224,7 +227,7 @@ function table.merge(...)
 	end
 
 	table.each(args, function(v)
-		table.each(v, f)
+		table.each(v, f, recursive)
 	end)
 
 	return r
