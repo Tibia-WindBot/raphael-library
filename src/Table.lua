@@ -126,13 +126,15 @@ end
  * Makes a deep, by value, copy of a table. This solves referencing problems.
  * This may be slow for big, complex tables; use carefully.
  *
+ * Adapted from http://lua-users.org/wiki/CopyTable
+ *
  * @since     1.1.0
  *
  * @param     {table}        self           - The target table
  *
  * @returns   {table}                       - The copy of the table
 --]]
-function table.copy(self) -- Adapted from http://lua-users.org/wiki/CopyTable
+function table.copy(self)
     local origType, copy = type(self)
 
     if origType == 'table' then
