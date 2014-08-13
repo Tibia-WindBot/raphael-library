@@ -49,18 +49,25 @@ end
  * will receive as arguments, for each item, it's value and correspondet index.
  *
  * @since     0.1.0
+ * @updated   1.3.1
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be iterated; defaults to false
  *
  * @returns   {table}                       - A table with the returning values
  *                                            for each item
 --]]
-function table.each(self, f)
+function table.each(self, f, recursive)
 	local r = {}
 
 	for k, v in pairs(self) do
-		r[k] = f(v, k)
+		if recursive and type(v) == 'table' then
+			r[k] = table.each(v, f, recursive)
+		else
+			r[k] = f(v, k)
+		end
 	end
 
 	return r
@@ -72,13 +79,20 @@ end
  * arguments, for each item, it's value and correspondet index.
  *
  * @since     0.1.0
+ * @updated   1.3.1
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be iterated; defaults to false
 --]]
-function table.map(self, f)
+function table.map(self, f, recursive)
 	for k, v in pairs(self) do
-		self[k] = f(v, k)
+		if recursive and type(v) == 'table' then
+			table.map(v, f, true)
+		else
+			self[k] = f(v, k)
+		end
 	end
 end
 
