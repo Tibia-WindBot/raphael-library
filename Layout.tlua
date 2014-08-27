@@ -109,11 +109,11 @@ LIBS.RAPHAEL = RAPHAEL_LIB
 -- \____/\__,_/____/\__/\____/_/ /_/ /_/   \____/_/\__,_/____/____/\___/____/
 --
 
-@include(src/Point Class.lua)
+@include(src/Classes/Point Class.lua)
 
-@include(src/Area Class.lua)
+@include(src/Classes/Area Class.lua)
 
-@include(src/HUD Class.lua)
+@include(src/Classes/HUD Class.lua)
 
 
 
