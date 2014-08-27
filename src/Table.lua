@@ -286,3 +286,33 @@ end
 function table.min(self)
 	return math.min(table.unpack(self))
 end
+
+--[[
+ * Flattens the table, removing any other tables inside `self` and inserting the
+ * values inside those tables.
+ *
+ * @since     1.3.1
+ *
+ * @param     {table}        self           - The target table
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be flattened; defaults to false
+--]]
+function table.flatten(self, recursive)
+	-- I would have liked to use ipairs() here, but since we'll need to skip
+	-- added indexes, I couldn't =/
+	for i = 1, #self do
+		if type(self[i]) == 'table' then
+			if recursive then
+				table.flatten(self[i])
+			end
+
+			for j, v in ipairs(self[i]) do
+				table.insert(self, i + j, v)
+			end
+
+			tableIndex = i
+			i = i + #self[i] - 1
+			table.remove(self, tableIndex)
+		end
+	end
+end
