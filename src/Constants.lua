@@ -54,6 +54,8 @@ REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which
 REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes?. Please .+%.$'
 REGEX_COORDS        = '^x:(%d+), y:(%d+), z:(%d+)$'
 REGEX_RANGE         = '^(%d+) x (%d+)$'
+REGEX_ITEMS_SOLD    = '^Sold (%d+)x (.-) for (%d+) gold%.$'
+REGEX_ITEMS_BOUGHT  = '^Bought (%d+)x (.-) for (%d+) gold%.$'
 
 -- Deprecated regexes
 REGEX_SPA_COORDS = REGEX_COORDS
