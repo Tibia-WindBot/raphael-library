@@ -636,3 +636,18 @@ function getvalue(value, ...)
 		return value
 	end
 end
+
+--[[
+ * Returns the currently opened channel userdata.
+ *
+ * @since 1.3.1
+ *
+ * @returns   {userdata}                    - The currently opened channel
+--]]
+function curchannel()
+	foreach channel c do
+		if c.iscurrent then
+			return c
+		end
+	end
+end
