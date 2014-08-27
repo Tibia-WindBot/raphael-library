@@ -613,3 +613,26 @@ function timetolevel(extraPrecision, level)
 	-- Don't really want to return negative values; what would that even mean?
 	return math.max(math.round(timeToLevel - timeOffset), 1)
 end
+
+--[[
+ * If `value` is a function, executes it passing the extra parameters as its
+ * parameters, returning the value returned by it; otherwise, simply returns
+ * `value`.
+ *
+ * @since 1.3.1
+ *
+ * @param     {any}          value          - The variable to be checked
+ * @param     {any}          [...]          - Any extra arguments you want to be
+ *                                            passed to `value` in case it's a
+ *                                            function
+ *
+ * @returns   {any}                         - The value returned by `value` or
+ *                                            `value` itself
+--]]
+function getvalue(value, ...)
+	if type(value) == 'function' then
+		return value(...)
+	else
+		return value
+	end
+end
