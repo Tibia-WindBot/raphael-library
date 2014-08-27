@@ -52,7 +52,7 @@ function PointMT:__div(value)
 end
 
 function PointMT:__unm()
-	return self * -1
+	return self * {-1, -1}
 end
 
 function PointMT:__eq(value)
