@@ -213,11 +213,24 @@ end
  * CET timezone.
  *
  * @since     0.1.0
+ * @updated   1.3.1
  *
  * @returns   {number}                      - CET offset in seconds
 --]]
 function cetoffset()
-	return utcoffset() - tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
+	-- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
+	local daylightDates = {
+		[2013] = {90, 300},
+		[2014] = {89, 299},
+		[2015] = {88, 298},
+		[2016] = {87, 304},
+		[2017] = {85, 302}
+	}
+
+	local now = os.date('!*t')
+	local daylightDate = daylightDates[now.year]
+
+	return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
 end
 
 --[[
@@ -235,12 +248,12 @@ end
  * Returns the current time of day, in seconds, on CET timezone.
  *
  * @since     0.1.0
- * @modified  1.0.2
+ * @updated   1.3.1
  *
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-	return tosec(os.date('!%X')) + tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
+	return utctime() - utcoffset() + cetoffset()
 end
 
 --[[
