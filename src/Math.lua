@@ -3,7 +3,7 @@
  * multiples, rounds up.
  *
  * @since     0.1.0
- * @modified  0.1.1
+ * @updated   0.1.1
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1

@@ -338,7 +338,7 @@ end
  * Converts any variable to a boolean representation.
  *
  * @since     0.1.1
- * @modified  1.0.0
+ * @updated   1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -451,7 +451,7 @@ end
  * Converts a userdata into a string reprensentation.
  *
  * @since     1.0.0
- * @modified  1.1.0
+ * @updated   1.1.0
  *
  * @param     {userdata}     userdata       - The userdata to be converted
  *
