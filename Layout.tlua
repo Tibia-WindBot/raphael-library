@@ -4,16 +4,15 @@
 
 RAPHAEL_LIB = '{{ version }}'
 
-LIBS = LIBS or {}
-LIBS.RAPHAEL = RAPHAEL_LIB
-
-
 --[[
  * Changelog v{{ version }}
  *
 @include(log/changelog-{{ version }}.log)
  *
 --]]
+
+LIBS = LIBS or {}
+LIBS.RAPHAEL = RAPHAEL_LIB
 
 
 @include(src/Bootstrap.lua)
