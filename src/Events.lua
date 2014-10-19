@@ -5,7 +5,7 @@
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as

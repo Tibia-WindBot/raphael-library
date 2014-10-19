@@ -49,7 +49,7 @@ end
  * will receive as arguments, for each item, it's value and correspondet index.
  *
  * @since     0.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
@@ -79,7 +79,7 @@ end
  * arguments, for each item, it's value and correspondet index.
  *
  * @since     0.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
@@ -193,7 +193,7 @@ end
  * Merges the items of the given tables to a single table.
  *
  * @since     1.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @param     {table}        [table1], ...  - Tables to be merged
  * @param     {boolean}      [recursive]    - Whether inner tables should also
@@ -291,7 +291,7 @@ end
  * Flattens the table, removing any other tables inside `self` and inserting the
  * values inside those tables.
  *
- * @since     1.3.1
+ * @since     1.4.0
  *
  * @param     {table}        self           - The target table
  * @param     {boolean}      [recursive]    - Whether inner tables should also

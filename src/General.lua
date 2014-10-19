@@ -213,7 +213,7 @@ end
  * CET timezone.
  *
  * @since     0.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @returns   {number}                      - CET offset in seconds
 --]]
@@ -248,7 +248,7 @@ end
  * Returns the current time of day, in seconds, on CET timezone.
  *
  * @since     0.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @returns   {number}                      - CET time of day in seconds
 --]]
@@ -632,7 +632,7 @@ end
  * parameters, returning the value returned by it; otherwise, simply returns
  * `value`.
  *
- * @since 1.3.1
+ * @since 1.4.0
  *
  * @param     {any}          value          - The variable to be checked
  * @param     {any}          [...]          - Any extra arguments you want to be
@@ -653,7 +653,7 @@ end
 --[[
  * Returns the currently opened channel userdata.
  *
- * @since 1.3.1
+ * @since 1.4.0
  *
  * @returns   {userdata}                    - The currently opened channel
 --]]
