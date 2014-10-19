@@ -40,6 +40,10 @@ function Area:createFromSpecialArea(specialArea)
 	return Area:new(topLeft, width, height)
 end
 
+function Area:createFromAreaTable(areaTable)
+	return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.width, areaTable.height)
+end
+
 function Area:extend(top, right, bottom, left)
 	-- This gives us a CSS-like workflow; the one that usually works in margin
 	-- and padding shorthands
