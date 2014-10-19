@@ -1,23 +1,28 @@
--- Raphael's Library v1.3.0
--- Last Updated: 24/07/2014 - 22:47 UTC
--- Released for WindBot v2.3.4
+-- Raphael's Library v1.4.0
+-- Last Updated: 19/10/2014 - 22:26 UTC
+-- Released for WindBot v2.4.9
 
-RAPHAEL_LIB = '1.3.0'
+RAPHAEL_LIB = '1.4.0'
+
+--[[
+ * Changelog v1.4.0
+ *
+ * - Added table.flatten.
+ * - Added getvalue and curchannel.
+ * - Added Expander Class.
+ * - Added composition mode constants.
+ * - Added REGEX_ITEMS_SOLD and REGEX_ITEMS_BOUGHT.
+ * - Updated cetoffset and cettime; this should fix problems with sstime.
+ * - Updated npctalk to better emulate time taken to write message when fast hotkeys is enabled.
+ * - Updated table.each and table.map to allow for recursive behavior.
+ * - Updated table.merge to allow for recursive behavior and remove forceKey parameter.
+ * - Updated Area Class to include extra functionality.
+ * - Fixed some other minor bugs.
+ *
+--]]
 
 LIBS = LIBS or {}
 LIBS.RAPHAEL = RAPHAEL_LIB
-
-
---[[
- * Changelog v1.3.0
- *
- * - Added special handling for npctalk() when fast hotkeys is enabled.
- * - Added timetolevel.
- * - Added Area Class.
- * - Added JSON Class.
- * - Updated Point Class constructor.
- *
---]]
 
 
 -- Setting a good random seed
@@ -37,6 +42,22 @@ math._FLOOR  = math._FLOOR  or math.floor
 -- Global object to keep track of stuff by our functions
 _Tracker = _Tracker or {}
 
+-- Composition modes; BECAUSE CONSTANTS SHOULD BE IN ALL CAPS
+COMPOSITION_AUTOMATIC        = CompositionMode_Automatic
+COMPOSITION_SOURCE           = CompositionMode_Source
+COMPOSITION_DESTINATION      = CompositionMode_Destination
+COMPOSITION_SOURCE_OVER      = CompositionMode_Source_Over
+COMPOSITION_DESTINATION_OVER = CompositionMode_DestinationOver
+COMPOSITION_SOURCE_IN        = CompositionMode_SourceIn
+COMPOSITION_DESTINATION_IN   = CompositionMode_DestinationIn
+COMPOSITION_SOURCE_OUT       = CompositionMode_SourceOut
+COMPOSITION_DESTINATION_OUT  = CompositionMode_DestinationOut
+COMPOSITION_SOURCE_ATOP      = CompositionMode_SourceAtop
+COMPOSITION_DESTINATION_ATOP = CompositionMode_DestinationAtop
+COMPOSITION_CLEAR            = CompositionMode_Clear
+COMPOSITION_XOR              = CompositionMode_Xor
+
+
 -- Items bought by npcs
 ITEMS_ASNARUS     = {283, 284, 285, 2874, 3277, 3349, 3350, 20183, 20184, 20198, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
 ITEMS_BLUE_DJINN  = {660, 674, 679, 693, 779, 793, 794, 810, 3046, 3049, 3050, 3056, 3060, 3061, 3062, 3071, 3072, 3073, 3074, 3075, 3079, 3081, 3082, 3083, 3091, 3092, 3093, 3271, 3279, 3280, 3284, 3301, 3302, 3313, 3320, 3380, 3381, 3382, 3385, 3391, 3392, 3415, 3416, 3418, 3419, 3439, 3567, 7391, 7410, 7412, 7436, 7451, 7454, 8092, 8093, 8094, 16096, 16115}
@@ -50,6 +71,7 @@ ITEMS_TAMORIL     = {2903, 3036, 3037, 3038, 3039, 3041}
 ITEMS_TELAS       = {5887, 5888, 5889, 5892, 8775, 9027, 9028, 9063, 9064, 9065, 9066, 9067, 9632, 9654, 9655, 9656, 9664, 10298, 10310, 10315, 11447, 12600, 12806, 16130, 16133, 16135, 16137, 16138}
 ITEMS_RASHID      = {661, 662, 664, 667, 668, 669, 672, 673, 680, 681, 682, 683, 686, 687, 688, 691, 692, 780, 781, 783, 786, 787, 788, 791, 792, 795, 796, 798, 803, 804, 805, 808, 809, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 2958, 2991, 3002, 3006, 3007, 3008, 3010, 3016, 3017, 3018, 3019, 3025, 3055, 3063, 3290, 3314, 3315, 3326, 3327, 3328, 3330, 3332, 3333, 3334, 3339, 3340, 3342, 3344, 3356, 3360, 3364, 3366, 3386, 3397, 3404, 3408, 3414, 3420, 3421, 3435, 3436, 3440, 3441, 3442, 3550, 3554, 3556, 5461, 5710, 5741, 5810, 5917, 5918, 6095, 6096, 6131, 6299, 6553, 7379, 7380, 7381, 7382, 7383, 7384, 7386, 7387, 7388, 7389, 7390, 7392, 7402, 7403, 7404, 7406, 7408, 7414, 7415, 7418, 7422, 7424, 7425, 7426, 7427, 7429, 7430, 7432, 7434, 7437, 7438, 7449, 7452, 7456, 7457, 7460, 7461, 7462, 7463, 7464, 8022, 8027, 8045, 8049, 8050, 8052, 8057, 8061, 8063, 9013, 9014, 9015, 9017, 9302, 9303, 9304, 9653, 10457, 11674, 12683, 16163, 16164, 17828, 17829, 17852}
 ITEMS_YASIR       = {647, 2933, 3044, 3058, 3735, 3736, 3741, 5479, 5804, 5809, 5875, 5876, 5877, 5878, 5879, 5880, 5881, 5882, 5883, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5896, 5897, 5898, 5899, 5901, 5902, 5904, 5905, 5906, 5909, 5910, 5911, 5912, 5913, 5914, 5919, 5920, 5921, 5922, 5925, 5930, 5948, 5954, 6491, 6525, 6534, 6535, 6536, 6537, 6539, 6540, 6546, 8031, 8143, 9035, 9053, 9054, 9055, 9631, 9633, 9634, 9635, 9636, 9637, 9638, 9639, 9640, 9641, 9642, 9643, 9644, 9645, 9646, 9647, 9648, 9649, 9650, 9651, 9652, 9657, 9658, 9659, 9660, 9661, 9662, 9663, 9665, 9666, 9667, 9668, 9683, 9684, 9685, 9686, 9688, 9689, 9690, 9691, 9692, 9693, 9694, 10196, 10272, 10273, 10274, 10275, 10276, 10277, 10278, 10279, 10280, 10281, 10282, 10283, 10291, 10292, 10293, 10295, 10296, 10297, 10299, 10300, 10301, 10302, 10303, 10304, 10305, 10306, 10307, 10308, 10309, 10311, 10312, 10313, 10314, 10316, 10317, 10318, 10319, 10320, 10321, 10397, 10404, 10405, 10407, 10408, 10409, 10410, 10411, 10413, 10414, 10415, 10416, 10417, 10418, 10420, 10444, 10449, 10450, 10452, 10453, 10454, 10455, 10456, 11443, 11444, 11445, 11446, 11448, 11449, 11450, 11451, 11452, 11453, 11454, 11455, 11456, 11457, 11458, 11463, 11464, 11465, 11466, 11467, 11469, 11470, 11471, 11472, 11473, 11474, 11475, 11476, 11477, 11478, 11479, 11480, 11481, 11482, 11483, 11484, 11485, 11486, 11487, 11488, 11489, 11490, 11491, 11492, 11493, 11510, 11511, 11512, 11513, 11514, 11515, 11539, 11652, 11658, 11659, 11660, 11661, 11666, 11671, 11672, 11673, 11680, 11684, 11702, 11703, 12541, 12730, 12737, 12742, 14008, 14009, 14010, 14011, 14012, 14013, 14017, 14041, 14044, 14076, 14077, 14078, 14079, 14080, 14081, 14082, 14083, 14225, 16131, 16132, 16134, 16139, 16140, 17458, 17461, 17462, 17463, 17809, 17817, 17818, 17819, 17822, 17823, 17826, 17827, 17830, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18924, 18925, 18926, 18927, 18928, 18929, 18930, 18993, 18994, 18995, 18996, 18997, 19110, 19111, 20183, 20184, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
+
 
 -- Vocation IDs used by $voc
 VOC_NONE        = 0
@@ -76,6 +98,8 @@ REGEX_PLAYER_FULL   = REGEX_PLAYER_BASIC .. ' %u%l%l? is (.-) of the (.+), which
 REGEX_SERVER_SAVE   = '^Server is saving game in (%d+) minutes?. Please .+%.$'
 REGEX_COORDS        = '^x:(%d+), y:(%d+), z:(%d+)$'
 REGEX_RANGE         = '^(%d+) x (%d+)$'
+REGEX_ITEMS_SOLD    = '^Sold (%d+)x (.-) for (%d+) gold%.$'
+REGEX_ITEMS_BOUGHT  = '^Bought (%d+)x (.-) for (%d+) gold%.$'
 
 -- Deprecated regexes
 REGEX_SPA_COORDS = REGEX_COORDS
@@ -449,11 +473,24 @@ end
  * CET timezone.
  *
  * @since     0.1.0
+ * @updated   1.4.0
  *
  * @returns   {number}                      - CET offset in seconds
 --]]
 function cetoffset()
-	return utcoffset() - tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
+	-- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
+	local daylightDates = {
+		[2013] = {90, 300},
+		[2014] = {89, 299},
+		[2015] = {88, 298},
+		[2016] = {87, 304},
+		[2017] = {85, 302}
+	}
+
+	local now = os.date('!*t')
+	local daylightDate = daylightDates[now.year]
+
+	return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
 end
 
 --[[
@@ -471,12 +508,12 @@ end
  * Returns the current time of day, in seconds, on CET timezone.
  *
  * @since     0.1.0
- * @modified  1.0.2
+ * @updated   1.4.0
  *
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-	return tosec(os.date('!%X')) + tern(math.abs(os.date('*t').yday - 187) < 46, 7200, 3600)
+	return utctime() - utcoffset() + cetoffset()
 end
 
 --[[
@@ -561,7 +598,7 @@ end
  * Converts any variable to a boolean representation.
  *
  * @since     0.1.1
- * @modified  1.0.0
+ * @updated   1.0.0
  *
  * @param     {any}          value          - The value to be converted
  * @param     {string}       property       - Whether the conversion should be
@@ -674,7 +711,7 @@ end
  * Converts a userdata into a string reprensentation.
  *
  * @since     1.0.0
- * @modified  1.1.0
+ * @updated   1.1.0
  *
  * @param     {userdata}     userdata       - The userdata to be converted
  *
@@ -851,13 +888,51 @@ function timetolevel(extraPrecision, level)
 end
 
 --[[
+ * If `value` is a function, executes it passing the extra parameters as its
+ * parameters, returning the value returned by it; otherwise, simply returns
+ * `value`.
+ *
+ * @since 1.4.0
+ *
+ * @param     {any}          value          - The variable to be checked
+ * @param     {any}          [...]          - Any extra arguments you want to be
+ *                                            passed to `value` in case it's a
+ *                                            function
+ *
+ * @returns   {any}                         - The value returned by `value` or
+ *                                            `value` itself
+--]]
+function getvalue(value, ...)
+	if type(value) == 'function' then
+		return value(...)
+	else
+		return value
+	end
+end
+
+--[[
+ * Returns the currently opened channel userdata.
+ *
+ * @since 1.4.0
+ *
+ * @returns   {userdata}                    - The currently opened channel
+--]]
+function curchannel()
+	foreach channel c do
+		if c.iscurrent then
+			return c
+		end
+	end
+end
+
+--[[
  * Handles talking to a NPC. Takes care of all waiting times and checks if NPCs
  * channel is open. By default, it uses a waiting method that waits until it
  * sees the the message was actually sent. Optionally, you can opt for the
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
- * @updated   1.3.0
+ * @updated   1.3.1
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as
@@ -928,12 +1003,22 @@ function npctalk(...)
 				local minWait, maxWait = get('Settings/TypeWaitTime'):match(REGEX_RANGE)
 				minWait, maxWait = tonumber(minWait), tonumber(maxWait)
 
+				-- Even though values can go as low as 10 x 10 ms, there's a
+				-- physical cap at about 30 x 30 ms.
+				minWait, maxWait = math.max(minWait, 30), math.max(maxWait, 30)
+
 				local waitTime = 0
 
-				-- We start at 0 because we're considering the enter key press
-				for i = 0, #v do
+				for i = 1, #v do
 					waitTime = waitTime + math.random(minWait, maxWait)
 				end
+
+				-- My measurements indicate at least 15% extra time to actually
+				-- press the keys then it should take, even with relatively
+				-- high settings. However, the measurements go relatively high
+				-- when using extremely short strings. So I made up this weird
+				-- formula with the help of Wolfram Alpha.
+				waitTime = waitTime * (1 + (3 * (1.15 / #v)^1.15))
 
 				wait(waitTime)
 			end
@@ -1257,7 +1342,7 @@ end
  * multiples, rounds up.
  *
  * @since     0.1.0
- * @modified  0.1.1
+ * @updated   0.1.1
  *
  * @param     {number}       self           - The number to be rounded
  * @param     {number}       mult           - The multiple base; defaults to 1
@@ -1370,18 +1455,25 @@ end
  * will receive as arguments, for each item, it's value and correspondet index.
  *
  * @since     0.1.0
+ * @updated   1.4.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be iterated; defaults to false
  *
  * @returns   {table}                       - A table with the returning values
  *                                            for each item
 --]]
-function table.each(self, f)
+function table.each(self, f, recursive)
 	local r = {}
 
 	for k, v in pairs(self) do
-		r[k] = f(v, k)
+		if recursive and type(v) == 'table' then
+			r[k] = table.each(v, f, recursive)
+		else
+			r[k] = f(v, k)
+		end
 	end
 
 	return r
@@ -1393,13 +1485,20 @@ end
  * arguments, for each item, it's value and correspondet index.
  *
  * @since     0.1.0
+ * @updated   1.4.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be iterated; defaults to false
 --]]
-function table.map(self, f)
+function table.map(self, f, recursive)
 	for k, v in pairs(self) do
-		self[k] = f(v, k)
+		if recursive and type(v) == 'table' then
+			table.map(v, f, true)
+		else
+			self[k] = f(v, k)
+		end
 	end
 end
 
@@ -1433,13 +1532,15 @@ end
  * Makes a deep, by value, copy of a table. This solves referencing problems.
  * This may be slow for big, complex tables; use carefully.
  *
+ * Adapted from http://lua-users.org/wiki/CopyTable
+ *
  * @since     1.1.0
  *
  * @param     {table}        self           - The target table
  *
  * @returns   {table}                       - The copy of the table
 --]]
-function table.copy(self) -- Adapted from http://lua-users.org/wiki/CopyTable
+function table.copy(self)
     local origType, copy = type(self)
 
     if origType == 'table' then
@@ -1498,12 +1599,11 @@ end
  * Merges the items of the given tables to a single table.
  *
  * @since     1.1.0
+ * @updated   1.4.0
  *
  * @param     {table}        [table1], ...  - Tables to be merged
- * @param     {boolean}      [forceKey]     - Whether to assure the filtered
- *                                            items have the same key they had
- *                                            on the original array; defaults
- *                                            to false
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be merged; defaults to false
  *
  * @returns  {table}                        - A table with all items on the
  *                                            given tables
@@ -1511,15 +1611,19 @@ end
 function table.merge(...)
 	local args = {...}
 	local r = {}
-	local forceKey, f
+	local recursive, f
 
 	if (type(table.last(args)) == 'boolean') then
-		forceKey = table.remove(args)
+		recursive = table.remove(args)
 	end
 
-	if forceKey then
-		function f (v, k)
-			r[k] = v
+	if #args[1] ~= table.size(args[1]) then
+		function f(v, k)
+			if recursive and type(r[k]) == 'table' and type(v) == 'table' then
+				r[k] = table.merge(r[k], v, true)
+			else
+				r[k] = v
+			end
 		end
 	else
 		function f(v)
@@ -1529,7 +1633,7 @@ function table.merge(...)
 	end
 
 	table.each(args, function(v)
-		table.each(v, f)
+		table.each(v, f, recursive)
 	end)
 
 	return r
@@ -1589,6 +1693,35 @@ function table.min(self)
 	return math.min(table.unpack(self))
 end
 
+--[[
+ * Flattens the table, removing any other tables inside `self` and inserting the
+ * values inside those tables.
+ *
+ * @since     1.4.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {boolean}      [recursive]    - Whether inner tables should also
+ *                                            be flattened; defaults to false
+--]]
+function table.flatten(self, recursive)
+	-- I would have liked to use ipairs() here, but since we'll need to skip
+	-- added indexes, I couldn't =/
+	for i = 1, #self do
+		if type(self[i]) == 'table' then
+			if recursive then
+				table.flatten(self[i])
+			end
+
+			for j, v in ipairs(self[i]) do
+				table.insert(self, i + j, v)
+			end
+
+			tableIndex = i
+			i = i + #self[i] - 1
+			table.remove(self, tableIndex)
+		end
+	end
+end
 
 
 
@@ -1938,7 +2071,7 @@ function PointMT:__div(value)
 end
 
 function PointMT:__unm()
-	return self * -1
+	return self * {-1, -1}
 end
 
 function PointMT:__eq(value)
@@ -1954,6 +2087,11 @@ Area = { __class = 'Area' }
 AreaMT = { __index = Area }
 
 function Area:new(firstCorner, width, height)
+	-- Special handling for rect
+	if type(firstCorner) == 'userdata' and firstCorner.objtype == 'rect' then
+		return Area:new(Point:new(firstCorner.left, firstCorner.top), firstCorner.width, firstCorner.height)
+	end
+
 	firstCorner = Point:new(firstCorner)
 
 	local secondCorner = Point:new(width)
@@ -1973,6 +2111,60 @@ function Area:new(firstCorner, width, height)
 	return newObj
 end
 
+function Area:createFromWaypoint(waypoint)
+	local topLeft = Point:new(get(waypoint, 'Coordinates'):match(REGEX_COORDS))
+	local width, height = get(waypoint, 'Range'):match(REGEX_RANGE)
+
+	return Area:new(topLeft, width, height)
+end
+
+function Area:createFromSpecialArea(specialArea)
+	local topLeft = Point:new(get(specialArea, 'Coordinates'):match(REGEX_COORDS))
+	local width, height = get(specialArea, 'Size'):match(REGEX_RANGE)
+
+	return Area:new(topLeft, width, height)
+end
+
+function Area:createFromAreaTable(areaTable)
+	return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.width, areaTable.height)
+end
+
+function Area:extend(top, right, bottom, left)
+	-- This gives us a CSS-like workflow; the one that usually works in margin
+	-- and padding shorthands
+	top    = top    or 0
+	right  = right  or top
+	bottom = bottom or top
+	left   = left   or right
+
+	self.topLeft = self.topLeft - Point:new(top, left)
+	self.botRight = self.botRight + Point:new(bottom, right)
+end
+
+function Area:getLeft()
+	return self.topLeft.x
+end
+
+function Area:getTop()
+	return self.topLeft.y
+end
+
+function Area:getRight()
+	return self.botRight.x
+end
+
+function Area:getBottom()
+	return self.botRight.y
+end
+
+function Area:getWidth()
+	return self.botRight.x - self.topLeft.x
+end
+
+function Area:getHeight()
+	return self.botRight.y - self.topLeft.y
+end
+
 function Area:hasPoint(point, y)
 	point = Point:new(point, y)
 
@@ -1980,6 +2172,13 @@ function Area:hasPoint(point, y)
 	       point.y >= self.topLeft.y  and
 	       point.x <= self.botRight.x and
 	       point.y <= self.botRight.y
+end
+
+function Area:move(point, y)
+	point = Point:new(point, y)
+
+	self.topLeft = self.topLeft + point
+	self.botRight = self.botRight + point
 end
 
 function AreaMT:__tostring()
