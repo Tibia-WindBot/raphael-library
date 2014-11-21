@@ -1,23 +1,13 @@
--- Raphael's Library v1.4.0
--- Last Updated: 19/10/2014 - 22:26 UTC
--- Released for WindBot v2.4.9
+-- Raphael's Library v1.4.1
+-- Last Updated: 21/11/2014 - 16:25 UTC
+-- Released for WindBot v2.5.4
 
-RAPHAEL_LIB = '1.4.0'
+RAPHAEL_LIB = '1.4.1'
 
 --[[
- * Changelog v1.4.0
+ * Changelog v1.4.1
  *
- * - Added table.flatten.
- * - Added getvalue and curchannel.
- * - Added Expander Class.
- * - Added composition mode constants.
- * - Added REGEX_ITEMS_SOLD and REGEX_ITEMS_BOUGHT.
- * - Updated cetoffset and cettime; this should fix problems with sstime.
- * - Updated npctalk to better emulate time taken to write message when fast hotkeys is enabled.
- * - Updated table.each and table.map to allow for recursive behavior.
- * - Updated table.merge to allow for recursive behavior and remove forceKey parameter.
- * - Updated Area Class to include extra functionality.
- * - Fixed some other minor bugs.
+ * - Fixed a small bug with the Point constructor.
  *
 --]]
 
@@ -932,7 +922,7 @@ end
  * original waitping() solution, passing `normalWait` as true.
  *
  * @since     0.1.0
- * @updated   1.3.1
+ * @updated   1.4.0
  *
  * @param     {string...}    messages       - Messages to be said
  * @param     {boolean}      [normalWait]   - If waitping should be used as
@@ -2029,6 +2019,9 @@ function Point:new(x, y)
 		else
 			x, y = x[1], x[2]
 		end
+	elseif type(x) == 'string' or type(x) == 'string' then
+		x = tonumber(x)
+		y = tonumber(y)
 	end
 
 	if type(x) ~= 'number' or type(y) ~= 'number' then
