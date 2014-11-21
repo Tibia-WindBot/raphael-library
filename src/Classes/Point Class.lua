@@ -10,6 +10,9 @@ function Point:new(x, y)
 		else
 			x, y = x[1], x[2]
 		end
+	elseif type(x) == 'string' or type(x) == 'string' then
+		x = tonumber(x)
+		y = tonumber(y)
 	end
 
 	if type(x) ~= 'number' or type(y) ~= 'number' then
