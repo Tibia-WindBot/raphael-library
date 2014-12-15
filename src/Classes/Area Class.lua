@@ -11,7 +11,7 @@ function Area:new(firstCorner, width, height)
 
 	local secondCorner = Point:new(width)
 	if secondCorner == nil then
-		secondCorner = firstCorner + Point:new(width, height)
+		secondCorner = firstCorner + Point:new(width - 1, height - 1)
 	end
 
 	if type(firstCorner) ~= 'Point' or type(secondCorner) ~= 'Point' then
