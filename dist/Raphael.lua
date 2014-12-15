@@ -1,13 +1,13 @@
--- Raphael's Library v1.4.1
--- Last Updated: 21/11/2014 - 16:25 UTC
--- Released for WindBot v2.5.4
+-- Raphael's Library v1.4.2
+-- Last Updated: 15/12/2014 - 05:56 UTC
+-- Released for WindBot v2.5.6
 
-RAPHAEL_LIB = '1.4.1'
+RAPHAEL_LIB = '1.4.2'
 
 --[[
- * Changelog v1.4.1
+ * Changelog v1.4.2
  *
- * - Fixed a small bug with the Point constructor.
+ * - Fixed a small bug with the Area constructor.
  *
 --]]
 
@@ -110,7 +110,7 @@ CUSTOM_TYPE = {
 	POINT        = {'x', 'y'},
 	ITEMDATA     = {'name', 'id', 'sellprice', 'buyprice', 'weight', 'isbank', 'isclip', 'isbottom', 'istop', 'iscontainer', 'iscumulative', 'isforceuse', 'ismultiuse', 'iswrite', 'iswriteonce', 'isliquidcontainer', 'isliquidpool', 'isunpass', 'isunmove', 'isunsight', 'isavoid', 'isnomovementanimation', 'istake', 'ishang', 'ishooksouth', 'ishookeast', 'isrotate', 'islight', 'isdonthide', 'istranslucent', 'isfloorchange', 'isshift', 'isheight', 'islyingobject', 'isanimatealways', 'isautomap', 'islenshelp', 'isfullbank', 'isignorelook', 'isclothes', 'ismarket', 'ismount', 'isdefaultaction', 'isusable', 'ignoreextradata', 'enchantable', 'destructible', 'hasextradata', 'height', 'sizeinpixels', 'layers', 'patternx', 'patterny', 'patterndepth', 'phase', 'walkspeed', 'textlimit', 'lightradius', 'lightcolor', 'shiftx', 'shifty', 'walkheight', 'automapcolor', 'lenshelp', 'defaultaction', 'clothslot', 'marketcategory', 'markettradeas', 'marketshowas', 'marketrestrictprofession', 'marketrestrictlevel', 'durationtotalinmsecs', 'specialeffect', 'specialeffectgain', 'category', 'attack', 'attackmod', 'hitpercentmod', 'defense', 'defensemod', 'armor', 'holyresistmod', 'deathresistmod', 'earthresistmod', 'fireresistmod', 'iceresistmod', 'energyresistmod', 'physicalresistmod', 'lifedrainresistmod', 'manadrainresistmod', 'itemlossmod', 'mindmg', 'maxdmg', 'dmgtype', 'range', 'mana'},
 	SUPPLYDATA   = {'name', 'id', 'weight', 'buyprice', 'leaveat', 'count', 'rule', 'rulevalue', 'destination', 'category', 'uptocount', 'downtocap', 'amountbought', 'amounttobuy', 'amountused'},
-	LOOTINGDATA  = {'name' ,'id' ,'weight' ,'sellprice' ,'count' ,'action' ,'alert' ,'condition' ,'conditionvalue' ,'destination' ,'category' ,'amountlooted' ,'haslessthan' ,'caphigherthan'},
+	LOOTINGDATA  = {'name' ,'id' ,'weight' ,'sellprice' ,'count' ,'action' ,'alert' ,'condition' ,'conditionvalue' ,'destination' ,'category' ,'amountlooted' ,'haslessthan' ,'caphigherthan', 'lootmessage'},
 	VIP          = {'name', 'id', 'icon', 'isonline', 'notify'},
 	MOUSEINFO    = {'x', 'y', 'z', 'id', 'count', 'crosshair'},
 	DEATHTIMER   = {'timeofdeath', 'target', 'killer', 'time'},
@@ -122,7 +122,7 @@ CUSTOM_TYPE = {
 
 -- Key codes
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
--- CAUTION: This list if fucked up, for some reason
+-- CAUTION: This list is fucked up, for some reason
 local KEYS = {
 	MOUSELEFT   = 0x01,
 	MOUSERIGHT  = 0x02,
@@ -1442,10 +1442,11 @@ end
 
 --[[
  * Runs a routine through every item in the given table. The routine to be ran
- * will receive as arguments, for each item, it's value and correspondet index.
+ * will receive as arguments, for each item, it's value and correspondent index
+ * and the whole table.
  *
  * @since     0.1.0
- * @updated   1.4.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
@@ -1462,7 +1463,7 @@ function table.each(self, f, recursive)
 		if recursive and type(v) == 'table' then
 			r[k] = table.each(v, f, recursive)
 		else
-			r[k] = f(v, k)
+			r[k] = f(v, k, self)
 		end
 	end
 
@@ -1472,10 +1473,11 @@ end
 --[[
  * Runs a routine through every item in the given table and replace the item
  * with the value returned by it. The routine to be ran will receive as
- * arguments, for each item, it's value and correspondet index.
+ * arguments, for each item, it's value and correspondent index and the whole
+ * table.
  *
  * @since     0.1.0
- * @updated   1.4.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
@@ -1487,7 +1489,7 @@ function table.map(self, f, recursive)
 		if recursive and type(v) == 'table' then
 			table.map(v, f, true)
 		else
-			self[k] = f(v, k)
+			self[k] = f(v, k, self)
 		end
 	end
 end
@@ -1564,9 +1566,12 @@ end
 
 --[[
  * Runs a routine through every item in the given table and remove it from the
- * table if the routine returns false.
+ * table if the routine returns false. The routine to be ran will receive as
+ * arguments, for each item, it's value and correspondent index and the whole
+ * table.
  *
  * @since     1.1.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran as filter;
@@ -1579,7 +1584,7 @@ function table.filter(self, f)
 	end
 
 	for k, v in pairs(self) do
-		if not f(v, k) then
+		if not f(v, k, self) then
 			table.remove(self, k)
 		end
 	end
@@ -1633,28 +1638,28 @@ end
  * Returns the sum of all items in the given table.
  *
  * @since     1.1.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  *
  * @returns   {number}                      - The sum of all items
 --]]
 function table.sum(self)
-	local s = 0
-	table.each(self, function(v) s = s + v end)
-	return s
+	return table.reduce(self, function (memo, v) return memo + v end)
 end
 
 --[[
  * Returns the average of all items in the given table.
  *
  * @since     1.1.0
+ * @since     1.5.0
  *
  * @param     {table}        self           - The target table
  *
  * @returns   {number}                      - The average of all items
 --]]
 function table.average(self)
-	return table.sum(self) / #self
+	return table.sum(self) / table.size(self)
 end
 
 --[[
@@ -1711,6 +1716,53 @@ function table.flatten(self, recursive)
 			table.remove(self, tableIndex)
 		end
 	end
+end
+
+function table.pick(self, ...)
+	local args = {...}
+	local r = {}
+
+	for _, v in ipairs(args) do
+		r[v] = self[v]
+	end
+
+	return r
+end
+
+function table.reduce(self, f, memo)
+	for k, v in pairs(self) do
+		if memo == nil then
+			memo = v
+		else
+			memo = f(memo, v, k, self)
+		end
+	end
+
+	return memo
+end
+
+function table.every(self, f)
+	for k, v in pairs(self) do
+		if not f(v, k, self) then
+			return false
+		end
+	end
+
+	return true
+end
+
+function table.any(self, f)
+	for k, v in pairs(self) do
+		if f(v, k, self) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function table.pluck(self, prop)
+	return table.each(self, function (v) return v[prop] end)
 end
 
 
@@ -2089,7 +2141,7 @@ function Area:new(firstCorner, width, height)
 
 	local secondCorner = Point:new(width)
 	if secondCorner == nil then
-		secondCorner = firstCorner + Point:new(width, height)
+		secondCorner = firstCorner + Point:new(width - 1, height - 1)
 	end
 
 	if type(firstCorner) ~= 'Point' or type(secondCorner) ~= 'Point' then
