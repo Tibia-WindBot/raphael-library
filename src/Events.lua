@@ -135,3 +135,15 @@ function press(keys)
 		end
 	end
 end
+
+--[[
+ * Closes the battle list.
+ *
+ * NOTE: This is pretty much an alias to openbattlelist(true), because I found
+ * that boolean parameter to be pretty stupid.
+ *
+ * @since     1.5.0
+--]]
+function closebattlelist()
+	openbattlelist(true)
+end
