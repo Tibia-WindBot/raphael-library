@@ -41,7 +41,11 @@ function Area:createFromSpecialArea(specialArea)
 end
 
 function Area:createFromAreaTable(areaTable)
-	return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.width, areaTable.height)
+	if areaTable.width ~= nil then
+		return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.width, areaTable.height)
+	else
+		return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.right - areaTable.left, areaTable.bottom - areaTable.top)
+	end
 end
 
 function Area:extend(top, right, bottom, left)
@@ -52,8 +56,11 @@ function Area:extend(top, right, bottom, left)
 	bottom = bottom or top
 	left   = left   or right
 
-	self.topLeft = self.topLeft - Point:new(top, left)
-	self.botRight = self.botRight + Point:new(bottom, right)
+	self.topLeft = self.topLeft - Point:new(left, top)
+	self.botRight = self.botRight + Point:new(right, bottom)
+
+	-- Allow chaining
+	return self
 end
 
 function Area:getLeft()
@@ -73,11 +80,11 @@ function Area:getBottom()
 end
 
 function Area:getWidth()
-	return self.botRight.x - self.topLeft.x
+	return self.botRight.x - self.topLeft.x + 1
 end
 
 function Area:getHeight()
-	return self.botRight.y - self.topLeft.y
+	return self.botRight.y - self.topLeft.y + 1
 end
 
 function Area:hasPoint(point, y)
@@ -94,6 +101,9 @@ function Area:move(point, y)
 
 	self.topLeft = self.topLeft + point
 	self.botRight = self.botRight + point
+
+	-- Allow chaining
+	return self
 end
 
 function AreaMT:__tostring()
