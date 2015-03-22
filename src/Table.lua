@@ -46,10 +46,11 @@ end
 
 --[[
  * Runs a routine through every item in the given table. The routine to be ran
- * will receive as arguments, for each item, it's value and correspondet index.
+ * will receive as arguments, for each item, its value and correspondent index
+ * and the whole table.
  *
  * @since     0.1.0
- * @updated   1.4.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
@@ -66,7 +67,7 @@ function table.each(self, f, recursive)
 		if recursive and type(v) == 'table' then
 			r[k] = table.each(v, f, recursive)
 		else
-			r[k] = f(v, k)
+			r[k] = f(v, k, self)
 		end
 	end
 
@@ -76,10 +77,11 @@ end
 --[[
  * Runs a routine through every item in the given table and replace the item
  * with the value returned by it. The routine to be ran will receive as
- * arguments, for each item, it's value and correspondet index.
+ * arguments, for each item, its value and correspondent index and the whole
+ * table.
  *
  * @since     0.1.0
- * @updated   1.4.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran on each element
@@ -91,7 +93,7 @@ function table.map(self, f, recursive)
 		if recursive and type(v) == 'table' then
 			table.map(v, f, true)
 		else
-			self[k] = f(v, k)
+			self[k] = f(v, k, self)
 		end
 	end
 end
@@ -168,9 +170,12 @@ end
 
 --[[
  * Runs a routine through every item in the given table and remove it from the
- * table if the routine returns false.
+ * table if the routine returns false. The routine to be ran will receive as
+ * arguments, for each item, its value and correspondent index and the whole
+ * table.
  *
  * @since     1.1.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  * @param     {function}     f              - Routine to be ran as filter;
@@ -183,7 +188,7 @@ function table.filter(self, f)
 	end
 
 	for k, v in pairs(self) do
-		if not f(v, k) then
+		if not f(v, k, self) then
 			table.remove(self, k)
 		end
 	end
@@ -237,28 +242,28 @@ end
  * Returns the sum of all items in the given table.
  *
  * @since     1.1.0
+ * @updated   1.5.0
  *
  * @param     {table}        self           - The target table
  *
  * @returns   {number}                      - The sum of all items
 --]]
 function table.sum(self)
-	local s = 0
-	table.each(self, function(v) s = s + v end)
-	return s
+	return table.reduce(self, function (memo, v) return memo + v end)
 end
 
 --[[
  * Returns the average of all items in the given table.
  *
  * @since     1.1.0
+ * @since     1.5.0
  *
  * @param     {table}        self           - The target table
  *
  * @returns   {number}                      - The average of all items
 --]]
 function table.average(self)
-	return table.sum(self) / #self
+	return table.sum(self) / table.size(self)
 end
 
 --[[
@@ -315,4 +320,138 @@ function table.flatten(self, recursive)
 			table.remove(self, tableIndex)
 		end
 	end
+end
+
+--[[
+ * Returns a copy of the table, filtered to only have values for the whitelisted
+ * keys.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {string}       key1, [...]    - The whitelisted keys
+ *
+ * @returns   {table}                       - The copy of the table, filtered
+--]]
+function table.pick(self, ...)
+	local args = {...}
+	local r = {}
+
+	for _, v in ipairs(args) do
+		r[v] = self[v]
+	end
+
+	return r
+end
+
+--[[
+ * Runs a routine through every item in the given table to reduce it to a single
+ * value. The routine to be ran will receive as arguments, for each item, its
+ * value and the result of the reduction of the previous elements of the table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - The routine used to reduce the
+ *                                            table
+ * @param     {any}          [memo]         - The initial value to be passed to
+ *                                            the routine as the second argument;
+ *                                            if none is passed, the first item
+ *                                            is used and iteration starts on the
+ *                                            second one instead
+ *
+ * @returns   {any}                         - The reduced value
+--]]
+function table.reduce(self, f, memo)
+	for k, v in pairs(self) do
+		if memo == nil then
+			memo = v
+		else
+			memo = f(memo, v, k, self)
+		end
+	end
+
+	return memo
+end
+
+--[[
+ * Runs a routine through every item in the given table and returns whether every
+ * item ran through the routine returns true. The routine to be ran will receive
+ * as arguments, for each item, its value and correspondent index and the whole
+ * table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - The routine ran through the table
+ *
+ * @returns   {boolean}                     - Whether all items passed the test
+ *                                            by the routine
+--]]
+function table.every(self, f)
+	for k, v in pairs(self) do
+		if not f(v, k, self) then
+			return false
+		end
+	end
+
+	return true
+end
+
+--[[
+ * Runs a routine through every item in the given table and returns whether any
+ * item ran through the routine returns true. The routine to be ran will receive
+ * as arguments, for each item, its value and correspondent index and the whole
+ * table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - The routine ran through the table
+ *
+ * @returns   {boolean}                     - Whether any items passed the test
+ *                                            by the routine
+--]]
+function table.any(self, f)
+	for k, v in pairs(self) do
+		if f(v, k, self) then
+			return true
+		end
+	end
+
+	return false
+end
+
+--[[
+ * Extracts a property from each item in the given table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {any}          prop           - The property to be extracted
+ *
+ * @returns   {table}                       - The table with the extracted
+ *                                            properties
+--]]
+function table.pluck(self, prop)
+	return table.each(self, function (v) return v[prop] end)
+end
+
+--[[
+ * Returns a copy of the table with the indexes reversed.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {table}                       - The table with the reversed indexes
+--]]
+function table.reverse(self)
+	local r = {}
+
+	for i, v in ipairs(self)
+		r[#self - i + 1] = v
+	do
+
+	return r
 end
