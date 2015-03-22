@@ -86,7 +86,8 @@ CUSTOM_TYPE = {
 	DEATHTIMER   = {'timeofdeath', 'target', 'killer', 'time'},
 	PLAYERINFO   = {'name', 'guild', 'voc', 'vocation', 'vocshort', 'priority', 'status', 'time', 'level', 'comment'},
 	NAVPING      = {'time', 'color', 'glowcolor', 'posx', 'posy', 'posz'},
-	NAVTARGET    = {'name', 'posx', 'posy', 'posz', 'time', 'color', 'glowcolor', 'isleader', 'isfriend', 'isenemy', 'isneutral', 'team', 'teamname', 'creature', 'realname', 'id', 'mp', 'maxmp', 'voc', 'icon'}
+	NAVTARGET    = {'name', 'posx', 'posy', 'posz', 'time', 'color', 'glowcolor', 'isleader', 'isfriend', 'isenemy', 'isneutral', 'team', 'teamname', 'creature', 'realname', 'id', 'mp', 'maxmp', 'voc', 'icon'},
+	SPELLINFO    = {'name', 'words', 'vocation', 'soul', 'level', 'mlevel', 'mp', 'price', 'premium', 'promotion', 'castarea', 'castmode', 'dmgtype', 'healtype', 'specialeffect', 'itemid', 'group', 'cooldownid', 'duration', 'iconid'},
 }
 
 
