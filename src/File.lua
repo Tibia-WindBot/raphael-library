@@ -10,13 +10,13 @@ file = {}
  * @returns   {boolean}                     - Whether it exists or not
 --]]
 function file.exists(filename)
-	local handler = io.open(filename)
+    local handler = io.open(filename)
 
-	if type(handler) ~= 'nil' then
-		handler:close()
-		return true
-	end
-	return false
+    if type(handler) ~= 'nil' then
+        handler:close()
+        return true
+    end
+    return false
 end
 
 --[[
@@ -29,14 +29,14 @@ end
  * @returns   {string}                      - File content
 --]]
 function file.content(filename)
-	if not file.exists(filename) then
-		return nil
-	end
+    if not file.exists(filename) then
+        return nil
+    end
 
-	local handler = io.open(filename, 'r')
-	local content = handler:read('*all')
-	handler:close()
-	return content
+    local handler = io.open(filename, 'r')
+    local content = handler:read('*all')
+    handler:close()
+    return content
 end
 
 --[[
@@ -49,16 +49,16 @@ end
  * @returns   {number}                      - File lines count
 --]]
 function file.linescount(filename)
-	if not file.exists(filename) then
-		return -1
-	end
+    if not file.exists(filename) then
+        return -1
+    end
 
-	local l = 0
-	for line in io.lines(filename) do
-		l = l + 1
-	end
+    local l = 0
+    for line in io.lines(filename) do
+        l = l + 1
+    end
 
-	return l
+    return l
 end
 
 --[[
@@ -72,20 +72,20 @@ end
  * @returns   {string}                      - Line content
 --]]
 function file.line(filename, linenum)
-	if not file.exists(filename) then
-			return nil
-	end
+    if not file.exists(filename) then
+            return nil
+    end
 
-	local l, linev = 0, ''
-	for line in io.lines(filename) do
-		l = l + 1
-		if l == linenum then
-			linev = line
-			break
-		end
-	end
+    local l, linev = 0, ''
+    for line in io.lines(filename) do
+        l = l + 1
+        if l == linenum then
+            linev = line
+            break
+        end
+    end
 
-	return linev
+    return linev
 end
 
 --[[
@@ -98,9 +98,9 @@ end
  * @param     {string}       content        - Content to be appended
 --]]
 function file.write(filename, content)
-	local handler = io.open(filename, 'a+')
-	handler:write(content)
-	handler:close()
+    local handler = io.open(filename, 'a+')
+    handler:write(content)
+    handler:close()
 end
 
 --[[
@@ -113,9 +113,9 @@ end
  * @param     {string}       content        - Content to be written
 --]]
 function file.rewrite(filename, content)
-	local handler = io.open(filename, 'w+')
-	handler:write(content)
-	handler:close()
+    local handler = io.open(filename, 'w+')
+    handler:write(content)
+    handler:close()
 end
 
 --[[
@@ -127,8 +127,8 @@ end
  * @param     {string}       filename       - File name to be cleared
 --]]
 function file.clear(filename)
-	local handler = io.open(filename, 'w+')
-	handler:close()
+    local handler = io.open(filename, 'w+')
+    handler:close()
 end
 
 --[[
@@ -141,12 +141,12 @@ end
  * @param     {string}       content        - Content to be appended
 --]]
 function file.writeline(filename, content)
-	local s = ''
-	if file.linescount(filename) > 0 then
-		s = '\n'
-	end
+    local s = ''
+    if file.linescount(filename) > 0 then
+        s = '\n'
+    end
 
-	file.write(filename, s .. content)
+    file.write(filename, s .. content)
 end
 
 --[[
@@ -161,19 +161,19 @@ end
  * @returns   {number}                      - Matching line number
 --]]
 function file.isline(filename, content)
-	if not file.exists(filename) then
-		return false
-	end
+    if not file.exists(filename) then
+        return false
+    end
 
-	local l = 0
-	for line in io.lines(filename) do
-		l = l + 1
-		if line == content then
-			return l
-		end
-	end
+    local l = 0
+    for line in io.lines(filename) do
+        l = l + 1
+        if line == content then
+            return l
+        end
+    end
 
-	return false
+    return false
 end
 
 --[[
@@ -186,9 +186,9 @@ end
  * @returns   {any}                         - Anything returned by the code ran
 --]]
 function file.exec(filename)
-	if not file.exists(filename) then
-		return nil
-	end
+    if not file.exists(filename) then
+        return nil
+    end
 
-	return exec(file.content(filename))
+    return exec(file.content(filename))
 end

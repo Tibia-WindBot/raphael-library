@@ -13,9 +13,9 @@
  *                                            splitting the string.
 --]]
 function string.explode(self, delimiter)
-	local result = {}
-	self:gsub('[^'.. delimiter ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
-	return result
+    local result = {}
+    self:gsub('[^'.. delimiter ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
+    return result
 end
 
 --[[
@@ -29,7 +29,7 @@ end
  * @returns   {string}                      - The nth character
 --]]
 function string.at(self, n)
-	return self:sub(n, n)
+    return self:sub(n, n)
 end
 
 --[[
@@ -42,7 +42,7 @@ end
  * @returns   {string}                      - The capitalized string
 --]]
 function string.capitalize(self) -- Working
-	return self:at(1):upper() .. self:sub(2):lower()
+    return self:at(1):upper() .. self:sub(2):lower()
 end
 
 --[[
@@ -55,9 +55,9 @@ end
  * @returns   {string}                      - The capitalized string
 --]]
 function string.capitalizeall(self) -- Working
-	local t = string.explode(self, ' ')
-	table.map(t, string.capitalize)
-	return table.concat(t, ' ')
+    local t = string.explode(self, ' ')
+    table.map(t, string.capitalize)
+    return table.concat(t, ' ')
 end
 
 --[[
@@ -77,55 +77,55 @@ end
  * @returns   {string}                      - The final string
 --]]
 function string.fit(self, size, trailing, trueSize)
-	trailing = trailing or '...'
+    trailing = trailing or '...'
 
-	if size <= 0 then
-		return ''
-	end
+    if size <= 0 then
+        return ''
+    end
 
-	-- Use the actual pixels measurement if required
-	local sizeFunction = string.len
-	if trueSize then
-		sizeFunction = measurestring
-	end
+    -- Use the actual pixels measurement if required
+    local sizeFunction = string.len
+    if trueSize then
+        sizeFunction = measurestring
+    end
 
-	if sizeFunction(self) <= size then
-		return self
-	elseif not trueSize then
-		return self:sub(0, size - #trailing) .. trailing
-	end
+    if sizeFunction(self) <= size then
+        return self
+    elseif not trueSize then
+        return self:sub(0, size - #trailing) .. trailing
+    end
 
-	-- Assuming the order of the letters doesn't matter, we'll just append the
-	-- trailing text to the beginning, so we don't have to worry about it when
-	-- cutting the string for measurements later
-	local trailedText = trailing .. self
+    -- Assuming the order of the letters doesn't matter, we'll just append the
+    -- trailing text to the beginning, so we don't have to worry about it when
+    -- cutting the string for measurements later
+    local trailedText = trailing .. self
 
-	-- Helper function
-	local function attempt(n)
-		return n > 0 and sizeFunction(trailedText:sub(0, n)) <= size
-	end
+    -- Helper function
+    local function attempt(n)
+        return n > 0 and sizeFunction(trailedText:sub(0, n)) <= size
+    end
 
-	local ratio = size / sizeFunction(trailedText)
-	local suggestedSize = math.round(#trailedText * ratio)
-	local firstAttempt = attempt(suggestedSize)
+    local ratio = size / sizeFunction(trailedText)
+    local suggestedSize = math.round(#trailedText * ratio)
+    local firstAttempt = attempt(suggestedSize)
 
-	-- If the first attempt failed, we should start decrementing; if it was
-	-- successful, we should start incrementing
-	local upDown = tern(firstAttempt, 1, -1)
+    -- If the first attempt failed, we should start decrementing; if it was
+    -- successful, we should start incrementing
+    local upDown = tern(firstAttempt, 1, -1)
 
-	-- Keep attempting until we know the result is different; this will mean
-	-- that we just reached the turning point, so we can know we have the best
-	-- solution for our problem, or the longest string that fits the required
-	-- size
-	repeat
-		suggestedSize = suggestedSize + upDown
-	until suggestedSize <= 0 or attempt(suggestedSize) ~= firstAttempt
+    -- Keep attempting until we know the result is different; this will mean
+    -- that we just reached the turning point, so we can know we have the best
+    -- solution for our problem, or the longest string that fits the required
+    -- size
+    repeat
+        suggestedSize = suggestedSize + upDown
+    until suggestedSize <= 0 or attempt(suggestedSize) ~= firstAttempt
 
-	if suggestedSize > 0 then
-		return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
-	else
-		return ''
-	end
+    if suggestedSize > 0 then
+        return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+    else
+        return ''
+    end
 end
 
 --[[
@@ -140,7 +140,7 @@ end
  *                                            given substring
 --]]
 function string.starts(self, substr)
-	return self:sub(1, #substr) == substr
+    return self:sub(1, #substr) == substr
 end
 
 --[[
@@ -155,7 +155,7 @@ end
  *                                            given substring
 --]]
 function string.ends(self, substr)
-	return self:sub(-#substr) == substr
+    return self:sub(-#substr) == substr
 end
 
 --[[
@@ -170,7 +170,7 @@ end
  *                                            substring
 --]]
 function string.begin(self, substr)
-	return tern(self:starts(substr), self, substr .. self)
+    return tern(self:starts(substr), self, substr .. self)
 end
 
 
@@ -186,7 +186,7 @@ end
  *                                            substring
 --]]
 function string.finish(self, substr)
-	return tern(self:ends(substr), self, self .. substr)
+    return tern(self:ends(substr), self, self .. substr)
 end
 
 --[[
@@ -201,15 +201,15 @@ end
  * @returns   {boolean}                     - The trimmed string
 --]]
 function string.ltrim(self, chars)
-	chars = chars or '%s'
-	if type(chars) == 'table' then
-		chars = '[' .. table.concat(chars, '') .. ']'
-	end
+    chars = chars or '%s'
+    if type(chars) == 'table' then
+        chars = '[' .. table.concat(chars, '') .. ']'
+    end
 
-	-- This protects it from matching all characters if '.' is passed
-	chars = chars:gsub('%.', '%%.')
+    -- This protects it from matching all characters if '.' is passed
+    chars = chars:gsub('%.', '%%.')
 
-	return self:gsub('^' .. chars .. '*(.-)$', '%1')
+    return self:gsub('^' .. chars .. '*(.-)$', '%1')
 end
 
 --[[
@@ -224,15 +224,15 @@ end
  * @returns   {boolean}                     - The trimmed string
 --]]
 function string.rtrim(self, chars)
-	chars = chars or '%s'
-	if type(chars) == 'table' then
-		chars = '[' .. table.concat(chars, '') .. ']'
-	end
+    chars = chars or '%s'
+    if type(chars) == 'table' then
+        chars = '[' .. table.concat(chars, '') .. ']'
+    end
 
-	-- This protects it from matching all characters if '.' is passed
-	chars = chars:gsub('%.', '%%.')
+    -- This protects it from matching all characters if '.' is passed
+    chars = chars:gsub('%.', '%%.')
 
-	return self:gsub('^(.-)' .. chars .. '*$', '%1')
+    return self:gsub('^(.-)' .. chars .. '*$', '%1')
 end
 
 --[[
@@ -247,5 +247,5 @@ end
  * @returns   {boolean}                     - The trimmed string
 --]]
 function string.trim(self, chars)
-	return self:ltrim(chars):rtrim(chars)
+    return self:ltrim(chars):rtrim(chars)
 end

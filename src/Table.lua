@@ -12,14 +12,14 @@
  * @returns   {boolean}                     - Whether the target table is empty
 --]]
 function table.isempty(self)
-	if #self ~= 0 or next(self) ~= nil then
-		return false
-	else
-		for k, v in pairs(self) do
-			return false
-		end
-	end
-	return true
+    if #self ~= 0 or next(self) ~= nil then
+        return false
+    else
+        for k, v in pairs(self) do
+            return false
+        end
+    end
+    return true
 end
 
 --[[
@@ -35,13 +35,13 @@ end
  *                                            target table
 --]]
 function table.size(self)
-	local i = 0
+    local i = 0
 
-	for v in pairs(self) do
-		i = i + 1
-	end
+    for v in pairs(self) do
+        i = i + 1
+    end
 
-	return i
+    return i
 end
 
 --[[
@@ -61,17 +61,17 @@ end
  *                                            for each item
 --]]
 function table.each(self, f, recursive)
-	local r = {}
+    local r = {}
 
-	for k, v in pairs(self) do
-		if recursive and type(v) == 'table' then
-			r[k] = table.each(v, f, recursive)
-		else
-			r[k] = f(v, k, self)
-		end
-	end
+    for k, v in pairs(self) do
+        if recursive and type(v) == 'table' then
+            r[k] = table.each(v, f, recursive)
+        else
+            r[k] = f(v, k, self)
+        end
+    end
 
-	return r
+    return r
 end
 
 --[[
@@ -89,13 +89,13 @@ end
  *                                            be iterated; defaults to false
 --]]
 function table.map(self, f, recursive)
-	for k, v in pairs(self) do
-		if recursive and type(v) == 'table' then
-			table.map(v, f, true)
-		else
-			self[k] = f(v, k, self)
-		end
-	end
+    for k, v in pairs(self) do
+        if recursive and type(v) == 'table' then
+            table.map(v, f, true)
+        else
+            self[k] = f(v, k, self)
+        end
+    end
 end
 
 --[[
@@ -108,7 +108,7 @@ end
  * @returns   {any}                         - The first item of the given table
 --]]
 function table.first(self)
-	return self[1]
+    return self[1]
 end
 
 --[[
@@ -121,7 +121,7 @@ end
  * @returns   {any}                         - The last item of the given table
 --]]
 function table.last(self)
-	return self[#self]
+    return self[#self]
 end
 
 --[[
@@ -161,11 +161,11 @@ end
  * @param     {table}        self           - The target table
 --]]
 function table.normalize(self)
-	for i = #self, 1, -1 do
-		if self[i] == nil then
-			table.remove(self, i)
-		end
-	end
+    for i = #self, 1, -1 do
+        if self[i] == nil then
+            table.remove(self, i)
+        end
+    end
 end
 
 --[[
@@ -182,16 +182,16 @@ end
  *                                            default removes falsy values
 --]]
 function table.filter(self, f)
-	if not f then
-		f = tobool
-		table.normalize(self)
-	end
+    if not f then
+        f = tobool
+        table.normalize(self)
+    end
 
-	for k, v in pairs(self) do
-		if not f(v, k, self) then
-			table.remove(self, k)
-		end
-	end
+    for k, v in pairs(self) do
+        if not f(v, k, self) then
+            table.remove(self, k)
+        end
+    end
 end
 
 --[[
@@ -208,34 +208,34 @@ end
  *                                            given tables
 --]]
 function table.merge(...)
-	local args = {...}
-	local r = {}
-	local recursive, f
+    local args = {...}
+    local r = {}
+    local recursive, f
 
-	if (type(table.last(args)) == 'boolean') then
-		recursive = table.remove(args)
-	end
+    if (type(table.last(args)) == 'boolean') then
+        recursive = table.remove(args)
+    end
 
-	if #args[1] ~= table.size(args[1]) then
-		function f(v, k)
-			if recursive and type(r[k]) == 'table' and type(v) == 'table' then
-				r[k] = table.merge(r[k], v, true)
-			else
-				r[k] = v
-			end
-		end
-	else
-		function f(v)
-			local rv = v
-			table.insert(r, rv)
-		end
-	end
+    if #args[1] ~= table.size(args[1]) then
+        function f(v, k)
+            if recursive and type(r[k]) == 'table' and type(v) == 'table' then
+                r[k] = table.merge(r[k], v, true)
+            else
+                r[k] = v
+            end
+        end
+    else
+        function f(v)
+            local rv = v
+            table.insert(r, rv)
+        end
+    end
 
-	table.each(args, function(v)
-		table.each(v, f, recursive)
-	end)
+    table.each(args, function(v)
+        table.each(v, f, recursive)
+    end)
 
-	return r
+    return r
 end
 
 --[[
@@ -249,7 +249,7 @@ end
  * @returns   {number}                      - The sum of all items
 --]]
 function table.sum(self)
-	return table.reduce(self, function (memo, v) return memo + v end)
+    return table.reduce(self, function (memo, v) return memo + v end)
 end
 
 --[[
@@ -263,7 +263,7 @@ end
  * @returns   {number}                      - The average of all items
 --]]
 function table.average(self)
-	return table.sum(self) / table.size(self)
+    return table.sum(self) / table.size(self)
 end
 
 --[[
@@ -271,12 +271,12 @@ end
  *
  * @since     1.1.0
  *
- * @param	{table}		self	- The target table
+ * @param   {table}     self    - The target table
  *
- * @returns {number}			- The maximum value of all items
+ * @returns {number}            - The maximum value of all items
 --]]
 function table.max(self)
-	return math.max(table.unpack(self))
+    return math.max(table.unpack(self))
 end
 
 --[[
@@ -289,7 +289,7 @@ end
  * @returns   {number}                      - The minimum value of all items
 --]]
 function table.min(self)
-	return math.min(table.unpack(self))
+    return math.min(table.unpack(self))
 end
 
 --[[
@@ -303,23 +303,23 @@ end
  *                                            be flattened; defaults to false
 --]]
 function table.flatten(self, recursive)
-	-- I would have liked to use ipairs() here, but since we'll need to skip
-	-- added indexes, I couldn't =/
-	for i = 1, #self do
-		if type(self[i]) == 'table' then
-			if recursive then
-				table.flatten(self[i])
-			end
+    -- I would have liked to use ipairs() here, but since we'll need to skip
+    -- added indexes, I couldn't =/
+    for i = 1, #self do
+        if type(self[i]) == 'table' then
+            if recursive then
+                table.flatten(self[i])
+            end
 
-			for j, v in ipairs(self[i]) do
-				table.insert(self, i + j, v)
-			end
+            for j, v in ipairs(self[i]) do
+                table.insert(self, i + j, v)
+            end
 
-			tableIndex = i
-			i = i + #self[i] - 1
-			table.remove(self, tableIndex)
-		end
-	end
+            tableIndex = i
+            i = i + #self[i] - 1
+            table.remove(self, tableIndex)
+        end
+    end
 end
 
 --[[
@@ -334,14 +334,14 @@ end
  * @returns   {table}                       - The copy of the table, filtered
 --]]
 function table.pick(self, ...)
-	local args = {...}
-	local r = {}
+    local args = {...}
+    local r = {}
 
-	for _, v in ipairs(args) do
-		r[v] = self[v]
-	end
+    for _, v in ipairs(args) do
+        r[v] = self[v]
+    end
 
-	return r
+    return r
 end
 
 --[[
@@ -363,15 +363,15 @@ end
  * @returns   {any}                         - The reduced value
 --]]
 function table.reduce(self, f, memo)
-	for k, v in pairs(self) do
-		if memo == nil then
-			memo = v
-		else
-			memo = f(memo, v, k, self)
-		end
-	end
+    for k, v in pairs(self) do
+        if memo == nil then
+            memo = v
+        else
+            memo = f(memo, v, k, self)
+        end
+    end
 
-	return memo
+    return memo
 end
 
 --[[
@@ -389,13 +389,13 @@ end
  *                                            by the routine
 --]]
 function table.every(self, f)
-	for k, v in pairs(self) do
-		if not f(v, k, self) then
-			return false
-		end
-	end
+    for k, v in pairs(self) do
+        if not f(v, k, self) then
+            return false
+        end
+    end
 
-	return true
+    return true
 end
 
 --[[
@@ -413,13 +413,13 @@ end
  *                                            by the routine
 --]]
 function table.any(self, f)
-	for k, v in pairs(self) do
-		if f(v, k, self) then
-			return true
-		end
-	end
+    for k, v in pairs(self) do
+        if f(v, k, self) then
+            return true
+        end
+    end
 
-	return false
+    return false
 end
 
 --[[
@@ -434,7 +434,7 @@ end
  *                                            properties
 --]]
 function table.pluck(self, prop)
-	return table.each(self, function (v) return v[prop] end)
+    return table.each(self, function (v) return v[prop] end)
 end
 
 --[[
@@ -447,11 +447,11 @@ end
  * @returns   {table}                       - The table with the reversed indexes
 --]]
 function table.reverse(self)
-	local r = {}
+    local r = {}
 
-	for i, v in ipairs(self)
-		r[#self - i + 1] = v
-	do
+    for i, v in ipairs(self)
+        r[#self - i + 1] = v
+    do
 
-	return r
+    return r
 end

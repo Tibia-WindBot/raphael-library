@@ -11,13 +11,13 @@
  * @returns   {number}                      - The rounded number
 --]]
 function math.round(self, mult)
-	div = div or 1
+    div = div or 1
 
-	if self % div >= 0.5 * div then
-		return math.ceil(self, mult)
-	else
-		return math.floor(self, mult)
-	end
+    if self % div >= 0.5 * div then
+        return math.ceil(self, mult)
+    else
+        return math.floor(self, mult)
+    end
 end
 
 --[[
@@ -32,9 +32,9 @@ end
  * @returns   {number}                      - The rounded number
 --]]
 function math.ceil(self, mult)
-	mult = mult or 1
+    mult = mult or 1
 
-	return math._CEIL(self / mult) * mult
+    return math._CEIL(self / mult) * mult
 end
 
 --[[
@@ -49,7 +49,7 @@ end
  * @returns   {number}                      - The rounded number
 --]]
 function math.floor(self, mult)
-	mult = mult or 1
+    mult = mult or 1
 
-	return math._FLOOR(self / mult) * mult
+    return math._FLOOR(self / mult) * mult
 end

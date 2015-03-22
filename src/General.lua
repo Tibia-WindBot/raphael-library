@@ -10,14 +10,14 @@
  * @returns   {string}                      - The variable's type
 --]]
 function type(value)
-	local luaType = _TYPE(value)
+    local luaType = _TYPE(value)
 
-	-- If it's not an object, simply return the actual variable type
-	if luaType ~= 'table' then
-		return luaType
-	end
+    -- If it's not an object, simply return the actual variable type
+    if luaType ~= 'table' then
+        return luaType
+    end
 
-	return value.__class or luaType
+    return value.__class or luaType
 end
 
 --[[
@@ -36,17 +36,17 @@ end
  *                                            than v2
 --]]
 function versionhigherorequal(v1, v2)
-	local v1, v2 = string.explode(tostring(v1), '%.'), string.explode(tostring(v2), '%.')
-	for i = 1, math.max(#v1, #v2) do
-		v1[i] = tonumber(v1[i]) or 0
-		v2[i] = tonumber(v2[i]) or 0
-		if v1[i] < v2[i] then
-			return false
-		elseif v1[i] > v2[i] then
-			return true
-		end
-	end
-	return true
+    local v1, v2 = string.explode(tostring(v1), '%.'), string.explode(tostring(v2), '%.')
+    for i = 1, math.max(#v1, #v2) do
+        v1[i] = tonumber(v1[i]) or 0
+        v2[i] = tonumber(v2[i]) or 0
+        if v1[i] < v2[i] then
+            return false
+        elseif v1[i] > v2[i] then
+            return true
+        end
+    end
+    return true
 end
 
 --[[
@@ -80,7 +80,7 @@ end
  * @returns   {number}                      - The experience needed
 --]]
 function expatlvl(level)
-	return 50 / 3 * (level ^ 3 - 6 * level ^ 2 + 17 * level - 12)
+    return 50 / 3 * (level ^ 3 - 6 * level ^ 2 + 17 * level - 12)
 end
 
 --[[
@@ -94,18 +94,18 @@ end
  * @returns   {string...}                   - The variable's classes
 --]]
 function getclasses(value)
-	local classes = {}
+    local classes = {}
 
-	local meta = getmetatable(value)
-	while meta and meta.__index do
-		if meta.__index.__class then
-			table.insert(classes, meta.__index.__class)
-		end
+    local meta = getmetatable(value)
+    while meta and meta.__index do
+        if meta.__index.__class then
+            table.insert(classes, meta.__index.__class)
+        end
 
-		meta = getmetatable(meta.__index)
-	end
+        meta = getmetatable(meta.__index)
+    end
 
-	return table.unpack(classes)
+    return table.unpack(classes)
 end
 
 --[[
@@ -122,21 +122,21 @@ end
  * @returns   {number}                      - Total amount of gold
 --]]
 function gold(coin, location)
-	local coins = {'gold coin', 'platinum coin', 'crystal coin'}
+    local coins = {'gold coin', 'platinum coin', 'crystal coin'}
 
-	-- Allows us to count only a specific coin type
-	if coin and table.find(coins, coin:lower()) then
-		coins = {coin}
-	else
-		location = coin
-	end
+    -- Allows us to count only a specific coin type
+    if coin and table.find(coins, coin:lower()) then
+        coins = {coin}
+    else
+        location = coin
+    end
 
-	local totalGold = 0
-	for _, v in ipairs(coins) do
-		totalGold = totalGold + itemcount(v, location) * itemvalue(v)
-	end
+    local totalGold = 0
+    for _, v in ipairs(coins) do
+        totalGold = totalGold + itemcount(v, location) * itemvalue(v)
+    end
 
-	return totalGold
+    return totalGold
 end
 
 --[[
@@ -147,9 +147,9 @@ end
  * @returns   {number}                      - Total amount of flasks
 --]]
 function flasks()
-	return itemcount('empty potion flask (small)') +
-	       itemcount('empty potion flask (medium)') +
-	       itemcount('empty potion flask (large)')
+    return itemcount('empty potion flask (small)') +
+           itemcount('empty potion flask (medium)') +
+           itemcount('empty potion flask (large)')
 end
 
 --[[
@@ -167,11 +167,11 @@ end
  * @returns   {any}                         - `expr2` or `expr3`
 --]]
 function tern(expr1, expr2, expr3)
-	if expr1 then
-		return expr2
-	else
-		return expr3
-	end
+    if expr1 then
+        return expr2
+    else
+        return expr3
+    end
 end
 
 --[[
@@ -183,13 +183,13 @@ end
  * @returns   {number}                      - Maximum capacity
 --]]
 function maxcap()
-	-- There's no way to know max cap if we're not logged in
-	if $voc == 0 then
-		return -1
-	end
+    -- There's no way to know max cap if we're not logged in
+    if $voc == 0 then
+        return -1
+    end
 
-	local vocs = {10, 30, 20, 10, 10}
-	return vocs[math.log($voc * 2, 2)] * ($level - 8) + 470
+    local vocs = {10, 30, 20, 10, 10}
+    return vocs[math.log($voc * 2, 2)] * ($level - 8) + 470
 end
 
 --[[
@@ -201,11 +201,11 @@ end
  * @returns   {number}                      - UTC offset in seconds
 --]]
 function utcoffset()
-	local now = os.time()
-	return os.difftime(
-		now,
-		os.time(os.date("!*t", now)) - tern(os.date('*t').isdst, 3600, 0)
-	)
+    local now = os.time()
+    return os.difftime(
+        now,
+        os.time(os.date("!*t", now)) - tern(os.date('*t').isdst, 3600, 0)
+    )
 end
 
 --[[
@@ -218,19 +218,19 @@ end
  * @returns   {number}                      - CET offset in seconds
 --]]
 function cetoffset()
-	-- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
-	local daylightDates = {
-		[2013] = {90, 300},
-		[2014] = {89, 299},
-		[2015] = {88, 298},
-		[2016] = {87, 304},
-		[2017] = {85, 302}
-	}
+    -- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
+    local daylightDates = {
+        [2013] = {90, 300},
+        [2014] = {89, 299},
+        [2015] = {88, 298},
+        [2016] = {87, 304},
+        [2017] = {85, 302}
+    }
 
-	local now = os.date('!*t')
-	local daylightDate = daylightDates[now.year]
+    local now = os.date('!*t')
+    local daylightDate = daylightDates[now.year]
 
-	return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
+    return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
 end
 
 --[[
@@ -241,7 +241,7 @@ end
  * @returns   {number}                      - UTC time of day in seconds
 --]]
 function utctime()
-	return tosec(os.date('!%X'))
+    return tosec(os.date('!%X'))
 end
 
 --[[
@@ -253,7 +253,7 @@ end
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-	return utctime() - utcoffset() + cetoffset()
+    return utctime() - utcoffset() + cetoffset()
 end
 
 --[[
@@ -264,11 +264,11 @@ end
  * @returns   {string}                      - Computer's timezone
 --]]
 function timezone()
-	local offset = utcoffset()
-	if offset then
-		return 'UTC ' .. tern(offset > 0, '+', '-') .. math.abs(offset / 3600)
-	end
-	return 'UTC'
+    local offset = utcoffset()
+    if offset then
+        return 'UTC ' .. tern(offset > 0, '+', '-') .. math.abs(offset / 3600)
+    end
+    return 'UTC'
 end
 
 --[[
@@ -279,7 +279,7 @@ end
  * @returns   {number}                      - Seconds left to server save
 --]]
 function sstime()
-	return (36000 - cettime()) % 86400
+    return (36000 - cettime()) % 86400
 end
 
 --[[
@@ -288,7 +288,7 @@ end
  * @since     0.1.0
 --]]
 function beep()
-	playsound('monster.wav')
+    playsound('monster.wav')
 end
 
 --[[
@@ -297,7 +297,7 @@ end
  * @since     0.1.0
 --]]
 function dontlist()
-	listas('dontlist')
+    listas('dontlist')
 end
 
 --[[
@@ -308,15 +308,15 @@ end
  * @return    {array}                       - The containers' objects
 --]]
 function getopencontainers()
-	local conts, c = {}
-	for i = 0, 15 do
-		c = getcontainer(i)
-		if c.isopen then
-			table.insert(conts, c)
-		end
-	end
+    local conts, c = {}
+    for i = 0, 15 do
+        c = getcontainer(i)
+        if c.isopen then
+            table.insert(conts, c)
+        end
+    end
 
-	return conts
+    return conts
 end
 
 --[[
@@ -330,8 +330,8 @@ end
  * @param     {string}       b              - The other value used on toggle
 --]]
 function toggle(setting, a, b)
-	a, b = a or 'no', b or 'yes'
-	set(setting, tern(get(setting) == a, b, a))
+    a, b = a or 'no', b or 'yes'
+    set(setting, tern(get(setting) == a, b, a))
 end
 
 --[[
@@ -348,23 +348,23 @@ end
  * @return    {boolean}                     - Boolean representation
 --]]
 function tobool(value, strict)
-	strict = strict or false
+    strict = strict or false
 
-	local valType = type(value)
+    local valType = type(value)
 
-	if valType == 'boolean' then
-		return value
-	elseif valType == 'nil' then
-		return false
-	elseif valType == 'userdata' then
-		return true
-	elseif valType == 'number' then
-		return value ~= 0
-	elseif valType == 'string' then
-		return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
-	elseif valType == 'table' then
-		return table.size(value) == 0
-	end
+    if valType == 'boolean' then
+        return value
+    elseif valType == 'nil' then
+        return false
+    elseif valType == 'userdata' then
+        return true
+    elseif valType == 'number' then
+        return value ~= 0
+    elseif valType == 'string' then
+        return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
+    elseif valType == 'table' then
+        return table.size(value) == 0
+    end
 end
 
 --[[
@@ -380,7 +380,7 @@ end
  * @return    {number}                      - Numeric representation
 --]]
 function toonezero(value, strict)
-	return tern(tobool(value, strict), 1, 0)
+    return tern(tobool(value, strict), 1, 0)
 end
 
 --[[
@@ -396,7 +396,7 @@ end
  * @return    {string}                      - Yes/no representation
 --]]
 function toyesno(value, strict)
-	return tern(tobool(value, strict), 'yes', 'no')
+    return tern(tobool(value, strict), 'yes', 'no')
 end
 
 --[[
@@ -412,7 +412,7 @@ end
  * @return    {string}                      - On/off representation
 --]]
 function toonoff(value, strict)
-	return tern(tobool(value, strict), 'on', 'off')
+    return tern(tobool(value, strict), 'on', 'off')
 end
 
 --[[
@@ -426,25 +426,25 @@ end
  *                                            reqName}
 --]]
 function requires(reqs)
-	local failedRequirements = {}
+    local failedRequirements = {}
 
-	for _, v in ipairs(reqs) do
-		if not versionhigherorequal(v[1], v[2]) then
-			table.insert(failedRequirements, v)
-		end
-	end
+    for _, v in ipairs(reqs) do
+        if not versionhigherorequal(v[1], v[2]) then
+            table.insert(failedRequirements, v)
+        end
+    end
 
-	if #failedRequirements > 0 then
-		local errorMsg = 'Your current setup does not meet the following ' ..
-		                 'minimum requirements:\n'
+    if #failedRequirements > 0 then
+        local errorMsg = 'Your current setup does not meet the following ' ..
+                         'minimum requirements:\n'
 
-		for _, v in ipairs(failedRequirements) do
-			errorMsg = errorMsg .. '\n' ..
-			           '- ' .. v[3] .. ': v' .. v[2]
-		end
+        for _, v in ipairs(failedRequirements) do
+            errorMsg = errorMsg .. '\n' ..
+                       '- ' .. v[3] .. ': v' .. v[2]
+        end
 
-		printerror(errorMsg)
-	end
+        printerror(errorMsg)
+    end
 end
 
 --[[
@@ -458,22 +458,22 @@ end
  * @returns   {string}                      - The String reprensentation
 --]]
 function userdatastringformat(userdata)
-	local obj = {}
-	local props = CUSTOM_TYPE[userdata.objtype:upper()]
+    local obj = {}
+    local props = CUSTOM_TYPE[userdata.objtype:upper()]
 
-	for _, v in ipairs(props) do
-		obj[v] = userdata[v]
-	end
+    for _, v in ipairs(props) do
+        obj[v] = userdata[v]
+    end
 
-	if userdata.objtype == 'tile' or userdata.objtype == 'container' then
-		obj.item = {}
+    if userdata.objtype == 'tile' or userdata.objtype == 'container' then
+        obj.item = {}
 
-		for i = 1, userdata.itemcount do
-			table.insert(obj.item, userdata.item[i])
-		end
-	end
+        for i = 1, userdata.itemcount do
+            table.insert(obj.item, userdata.item[i])
+        end
+    end
 
-	return table.stringformat(obj)
+    return table.stringformat(obj)
 end
 
 --[[
@@ -487,13 +487,13 @@ end
  * @returns   {string}                      - The converted value
 --]]
 function tostring(value)
-	if type(value) == 'table' then
-		return table.stringformat(value)
-	elseif type(value) == 'userdata' then
-		return userdatastringformat(value)
-	else
-		return _TOSTRING(value)
-	end
+    if type(value) == 'table' then
+        return table.stringformat(value)
+    elseif type(value) == 'userdata' then
+        return userdatastringformat(value)
+    else
+        return _TOSTRING(value)
+    end
 end
 
 --[[
@@ -510,13 +510,13 @@ end
  * @returns   {string}                      - The converted value
 --]]
 function calltable(t, ...)
-	local f = t[1]
-	local args = {...}
-	for i = 2, #t do
-		table.insert(args, i - 1, t[i])
-	end
+    local f = t[1]
+    local args = {...}
+    for i = 2, #t do
+        table.insert(args, i - 1, t[i])
+    end
 
-	return f(table.unpack(args))
+    return f(table.unpack(args))
 end
 
 --[[
@@ -535,18 +535,18 @@ end
  *                                            fulfilled or not
 --]]
 function waitcondition(f, time, fArgs)
-	fArgs = fArgs or {}
+    fArgs = fArgs or {}
 
-	local t = math.round(time / 100)
-	for i = 1, t do
-		if f(table.unpack(fArgs)) then
-			return true
-		end
+    local t = math.round(time / 100)
+    for i = 1, t do
+        if f(table.unpack(fArgs)) then
+            return true
+        end
 
-		wait(100)
-	end
+        wait(100)
+    end
 
-	return false
+    return false
 end
 
 --[[
@@ -560,14 +560,14 @@ end
  * @returns   {number}                      - The waypoint's ID
 --]]
 function getwptid(label)
-	local id = 0
-	foreach settingsentry s 'Cavebot/Waypoints' do
-		if get(s, 'Label') == label then
-			return id
-		end
+    local id = 0
+    foreach settingsentry s 'Cavebot/Waypoints' do
+        if get(s, 'Label') == label then
+            return id
+        end
 
-		id = id + 1
-	end
+        id = id + 1
+    end
 end
 
 --[[
@@ -589,42 +589,42 @@ end
  * @returns   {number}                      - Amount of time
 --]]
 function timetolevel(extraPrecision, level)
-	-- If not extra precision is wanted, just return the regular old value in
-	-- minutes
-	if not (extraPrecision == true) then
-		return _TIMETOLEVEL(extraPrecision or level)
-	end
+    -- If not extra precision is wanted, just return the regular old value in
+    -- minutes
+    if not (extraPrecision == true) then
+        return _TIMETOLEVEL(extraPrecision or level)
+    end
 
-	-- The reason we use this instead of $timems is because you'll almost always
-	-- show the time to next level beside the current played time, for which the
-	-- majority of HUDs use $charactertime. Also, this is exactly how it's done
-	-- in sirmate's MMH, the most used HUD around. So, if we do this, we get to
-	-- see both values changing simultaneously and this makes me feel better.
-	local curTime = math.floor($charactertime / 1000)
+    -- The reason we use this instead of $timems is because you'll almost always
+    -- show the time to next level beside the current played time, for which the
+    -- majority of HUDs use $charactertime. Also, this is exactly how it's done
+    -- in sirmate's MMH, the most used HUD around. So, if we do this, we get to
+    -- see both values changing simultaneously and this makes me feel better.
+    local curTime = math.floor($charactertime / 1000)
 
-	-- If the experience per hour change, the time to level also changes
-	if $exphour ~= _Tracker.lastExpHour then
-		_Tracker.timeToLevelChanged = curTime
-		_Tracker.lastExpHour = $exphour
-	end
+    -- If the experience per hour change, the time to level also changes
+    if $exphour ~= _Tracker.lastExpHour then
+        _Tracker.timeToLevelChanged = curTime
+        _Tracker.lastExpHour = $exphour
+    end
 
-	-- If the current experience changes, the experience need to advance to the
-	-- level also changes and this, in turn, changes the time to level; One
-	-- argue that when the current experience changes, the experience per hour
-	-- also does, because effectively you're gaining experience. This, however,
-	-- cannot be verified over a non instantaneous period of time and since this
-	-- function might be called at long intervals, specially because it is
-	-- commonly used in HUDs, we will assume otherwise.
-	if $exp ~= _Tracker.lastExp then
-		_Tracker.timeToLevelChanged = curTime
-		_Tracker.lastExp = $exp
-	end
+    -- If the current experience changes, the experience need to advance to the
+    -- level also changes and this, in turn, changes the time to level; One
+    -- argue that when the current experience changes, the experience per hour
+    -- also does, because effectively you're gaining experience. This, however,
+    -- cannot be verified over a non instantaneous period of time and since this
+    -- function might be called at long intervals, specially because it is
+    -- commonly used in HUDs, we will assume otherwise.
+    if $exp ~= _Tracker.lastExp then
+        _Tracker.timeToLevelChanged = curTime
+        _Tracker.lastExp = $exp
+    end
 
-	local timeToLevel = (exptolevel(level) / $exphour) * 3600
-	local timeOffset = (curTime - _Tracker.timeToLevelChanged)
+    local timeToLevel = (exptolevel(level) / $exphour) * 3600
+    local timeOffset = (curTime - _Tracker.timeToLevelChanged)
 
-	-- Don't really want to return negative values; what would that even mean?
-	return math.max(math.round(timeToLevel - timeOffset), 1)
+    -- Don't really want to return negative values; what would that even mean?
+    return math.max(math.round(timeToLevel - timeOffset), 1)
 end
 
 --[[
@@ -643,11 +643,11 @@ end
  *                                            `value` itself
 --]]
 function getvalue(value, ...)
-	if type(value) == 'function' then
-		return value(...)
-	else
-		return value
-	end
+    if type(value) == 'function' then
+        return value(...)
+    else
+        return value
+    end
 end
 
 --[[
@@ -658,9 +658,9 @@ end
  * @returns   {userdata}                    - The currently opened channel
 --]]
 function curchannel()
-	foreach channel c do
-		if c.iscurrent then
-			return c
-		end
-	end
+    foreach channel c do
+        if c.iscurrent then
+            return c
+        end
+    end
 end
