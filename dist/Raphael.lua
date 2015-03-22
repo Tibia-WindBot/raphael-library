@@ -1,13 +1,16 @@
--- Raphael's Library v1.4.2
--- Last Updated: 15/12/2014 - 05:56 UTC
--- Released for WindBot v2.5.6
+-- Raphael's Library v1.5.0
+-- Last Updated: 22/03/2015 - 20:53 UTC
+-- Released for WindBot v2.6.2
 
-RAPHAEL_LIB = '1.4.2'
+RAPHAEL_LIB = '1.5.0'
 
 --[[
- * Changelog v1.4.2
+ * Changelog v1.5.0
  *
- * - Fixed a small bug with the Area constructor.
+ * - Added closebattlelist.
+ * - Added a few more ITEMS_* constants.
+ * - Minor fixes and improvements on Area class.
+ * - Added and improved a shitload of table functions. (Gotta edit this before official release)
  *
 --]]
 
@@ -49,18 +52,22 @@ COMPOSITION_XOR              = CompositionMode_Xor
 
 
 -- Items bought by npcs
-ITEMS_ASNARUS     = {283, 284, 285, 2874, 3277, 3349, 3350, 20183, 20184, 20198, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
-ITEMS_BLUE_DJINN  = {660, 674, 679, 693, 779, 793, 794, 810, 3046, 3049, 3050, 3056, 3060, 3061, 3062, 3071, 3072, 3073, 3074, 3075, 3079, 3081, 3082, 3083, 3091, 3092, 3093, 3271, 3279, 3280, 3284, 3301, 3302, 3313, 3320, 3380, 3381, 3382, 3385, 3391, 3392, 3415, 3416, 3418, 3419, 3439, 3567, 7391, 7410, 7412, 7436, 7451, 7454, 8092, 8093, 8094, 16096, 16115}
-ITEMS_ESRIK       = {3264, 3265, 3266, 3267, 3268, 3269, 3270, 3272, 3273, 3274, 3275, 3276, 3282, 3283, 3285, 3286, 3293, 3294, 3298, 3300, 3304, 3305, 3316, 3336, 3337, 3338, 3351, 3352, 3353, 3354, 3355, 3357, 3358, 3359, 3361, 3362, 3367, 3372, 3374, 3375, 3376, 3377, 3378, 3379, 3409, 3410, 3411, 3412, 3413, 3425, 3426, 3430, 3431, 3462, 3552, 3557, 3558, 3559, 3561, 3562, 4033, 10323, 10384, 10385, 10386, 10387, 10388, 10389, 10390, 10391, 10392, 10404, 10405, 10406, 10408, 10410, 10412, 10414, 10416, 10418, 11651, 11657, 11659, 11660, 11661, 17824}
-ITEMS_FIONA       = {5879, 5881, 5882, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5898, 5899, 5902, 5904, 5905, 5906, 5920, 5921, 5922, 5925, 5930, 5954, 7439, 7440, 7443, 9053, 9054, 9055, 9636, 9642, 9644, 9647, 9649, 9660, 9661, 9665, 9666, 10275, 10276, 10277, 10278, 10280, 10304, 10312, 10397, 10444, 11454, 11457, 11463, 11464, 11465, 11474, 11512, 11658, 11702, 11703, 14008, 14009, 14013, 16131, 16139, 16140, 17809, 17817, 17826, 17827, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18928}
-ITEMS_GREEN_DJINN = {666, 685, 785, 802, 3045, 3048, 3051, 3052, 3053, 3054, 3065, 3066, 3067, 3069, 3070, 3077, 3078, 3084, 3085, 3097, 3098, 3281, 3297, 3299, 3307, 3318, 3322, 3324, 3369, 3370, 3371, 3373, 3383, 3384, 3428, 3429, 3432, 3434, 3574, 7407, 7411, 7413, 7419, 7421, 7428, 8082, 8083, 8084, 16117, 16118}
-ITEMS_GRIZZLY     = {7393, 7394, 7396, 7397, 7398, 7399, 7400, 7401, 9631, 9633, 9648, 9657, 9662, 10244, 10272, 10273, 10282, 10297, 10311, 10398, 10419, 10421, 10452, 10454, 10455, 10456, 11487, 11488, 11489, 11490, 11491, 11514, 11539, 12039, 12040, 12172, 12309, 12312, 12313, 12314, 12315, 12316, 12317, 17461, 17462, 17818, 18993, 18994}
-ITEMS_IRMANA      = {3568, 5876, 5877, 5878, 5883, 5886, 5909, 5910, 5911, 5912, 5913, 5914, 5948, 8923, 9045, 9658, 9684, 9689, 9690, 9691, 9694, 10274, 10279, 10292, 10293, 10295, 10299, 10307, 10317, 10318, 10319, 10407, 11448, 11456, 11458, 11470, 11473, 11475, 11486, 11492, 11493, 11684, 17819}
-ITEMS_MALUNGA     = {8031, 8143, 9634, 9637, 9640, 9641, 9643, 9651, 9659, 9663, 9667, 9668, 9683, 9693, 10281, 10283, 10291, 10301, 10306, 10308, 10309, 10313, 10411, 10420, 10449, 10450, 11446, 11467, 11475, 11481, 11484, 11485, 11513, 11666, 11671, 11672, 11673, 11680, 12541, 12601, 12730, 12742, 12805, 14011, 14012, 14017, 14041, 14044, 14076, 14078, 14079, 14080, 14081, 14082, 14083, 16132, 16134, 17458, 17463, 17822, 17823, 17830, 18924, 18925, 18926, 18927, 18929, 18930, 18995, 18996, 18997, 19110, 19111}
-ITEMS_TAMORIL     = {2903, 3036, 3037, 3038, 3039, 3041}
-ITEMS_TELAS       = {5887, 5888, 5889, 5892, 8775, 9027, 9028, 9063, 9064, 9065, 9066, 9067, 9632, 9654, 9655, 9656, 9664, 10298, 10310, 10315, 11447, 12600, 12806, 16130, 16133, 16135, 16137, 16138}
-ITEMS_RASHID      = {661, 662, 664, 667, 668, 669, 672, 673, 680, 681, 682, 683, 686, 687, 688, 691, 692, 780, 781, 783, 786, 787, 788, 791, 792, 795, 796, 798, 803, 804, 805, 808, 809, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 2958, 2991, 3002, 3006, 3007, 3008, 3010, 3016, 3017, 3018, 3019, 3025, 3055, 3063, 3290, 3314, 3315, 3326, 3327, 3328, 3330, 3332, 3333, 3334, 3339, 3340, 3342, 3344, 3356, 3360, 3364, 3366, 3386, 3397, 3404, 3408, 3414, 3420, 3421, 3435, 3436, 3440, 3441, 3442, 3550, 3554, 3556, 5461, 5710, 5741, 5810, 5917, 5918, 6095, 6096, 6131, 6299, 6553, 7379, 7380, 7381, 7382, 7383, 7384, 7386, 7387, 7388, 7389, 7390, 7392, 7402, 7403, 7404, 7406, 7408, 7414, 7415, 7418, 7422, 7424, 7425, 7426, 7427, 7429, 7430, 7432, 7434, 7437, 7438, 7449, 7452, 7456, 7457, 7460, 7461, 7462, 7463, 7464, 8022, 8027, 8045, 8049, 8050, 8052, 8057, 8061, 8063, 9013, 9014, 9015, 9017, 9302, 9303, 9304, 9653, 10457, 11674, 12683, 16163, 16164, 17828, 17829, 17852}
-ITEMS_YASIR       = {647, 2933, 3044, 3058, 3735, 3736, 3741, 5479, 5804, 5809, 5875, 5876, 5877, 5878, 5879, 5880, 5881, 5882, 5883, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5896, 5897, 5898, 5899, 5901, 5902, 5904, 5905, 5906, 5909, 5910, 5911, 5912, 5913, 5914, 5919, 5920, 5921, 5922, 5925, 5930, 5948, 5954, 6491, 6525, 6534, 6535, 6536, 6537, 6539, 6540, 6546, 8031, 8143, 9035, 9053, 9054, 9055, 9631, 9633, 9634, 9635, 9636, 9637, 9638, 9639, 9640, 9641, 9642, 9643, 9644, 9645, 9646, 9647, 9648, 9649, 9650, 9651, 9652, 9657, 9658, 9659, 9660, 9661, 9662, 9663, 9665, 9666, 9667, 9668, 9683, 9684, 9685, 9686, 9688, 9689, 9690, 9691, 9692, 9693, 9694, 10196, 10272, 10273, 10274, 10275, 10276, 10277, 10278, 10279, 10280, 10281, 10282, 10283, 10291, 10292, 10293, 10295, 10296, 10297, 10299, 10300, 10301, 10302, 10303, 10304, 10305, 10306, 10307, 10308, 10309, 10311, 10312, 10313, 10314, 10316, 10317, 10318, 10319, 10320, 10321, 10397, 10404, 10405, 10407, 10408, 10409, 10410, 10411, 10413, 10414, 10415, 10416, 10417, 10418, 10420, 10444, 10449, 10450, 10452, 10453, 10454, 10455, 10456, 11443, 11444, 11445, 11446, 11448, 11449, 11450, 11451, 11452, 11453, 11454, 11455, 11456, 11457, 11458, 11463, 11464, 11465, 11466, 11467, 11469, 11470, 11471, 11472, 11473, 11474, 11475, 11476, 11477, 11478, 11479, 11480, 11481, 11482, 11483, 11484, 11485, 11486, 11487, 11488, 11489, 11490, 11491, 11492, 11493, 11510, 11511, 11512, 11513, 11514, 11515, 11539, 11652, 11658, 11659, 11660, 11661, 11666, 11671, 11672, 11673, 11680, 11684, 11702, 11703, 12541, 12730, 12737, 12742, 14008, 14009, 14010, 14011, 14012, 14013, 14017, 14041, 14044, 14076, 14077, 14078, 14079, 14080, 14081, 14082, 14083, 14225, 16131, 16132, 16134, 16139, 16140, 17458, 17461, 17462, 17463, 17809, 17817, 17818, 17819, 17822, 17823, 17826, 17827, 17830, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18924, 18925, 18926, 18927, 18928, 18929, 18930, 18993, 18994, 18995, 18996, 18997, 19110, 19111, 20183, 20184, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
+ITEMS_ASNARUS              = {283, 284, 285, 2874, 3277, 3349, 3350, 20183, 20184, 20198, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
+ITEMS_BLUE_DJINN           = {660, 674, 679, 693, 779, 793, 794, 810, 3046, 3049, 3050, 3056, 3060, 3061, 3062, 3071, 3072, 3073, 3074, 3075, 3079, 3081, 3082, 3083, 3091, 3092, 3093, 3271, 3279, 3280, 3284, 3301, 3302, 3313, 3320, 3380, 3381, 3382, 3385, 3391, 3392, 3415, 3416, 3418, 3419, 3439, 3567, 7391, 7410, 7412, 7436, 7451, 7454, 8092, 8093, 8094, 16096, 16115}
+ITEMS_BRENGUS              = {3264, 3265, 3266, 3267, 3268, 3269, 3270, 3271, 3272, 3273, 3274, 3275, 3276, 3277, 3279, 3280, 3282, 3283, 3285, 3286, 3293, 3294, 3298, 3300, 3304, 3305, 3316, 3336, 3337, 3338, 3345, 3346, 3347, 3348, 3349, 3350, 3351, 3352, 3353, 3354, 3355, 3357, 3358, 3359, 3361, 3362, 3367, 3372, 3374, 3375, 3376, 3377, 3378, 3379, 3403, 3404, 3405, 3406, 3407, 3408, 3409, 3410, 3411, 3413, 3425, 3426, 3430, 3431, 3443, 3444, 3445, 3462, 3552, 3556, 3557, 3558, 3559, 3560, 3561, 3562, 11471, 11511, 17824}
+ITEMS_ESRIK                = {3264, 3265, 3266, 3267, 3268, 3269, 3270, 3272, 3273, 3274, 3275, 3276, 3282, 3283, 3285, 3286, 3293, 3294, 3298, 3300, 3304, 3305, 3316, 3336, 3337, 3338, 3351, 3352, 3353, 3354, 3355, 3357, 3358, 3359, 3361, 3362, 3367, 3372, 3374, 3375, 3376, 3377, 3378, 3379, 3409, 3410, 3411, 3412, 3413, 3425, 3426, 3430, 3431, 3462, 3552, 3557, 3558, 3559, 3561, 3562, 4033, 10323, 10384, 10385, 10386, 10387, 10388, 10389, 10390, 10391, 10392, 10404, 10405, 10406, 10408, 10410, 10412, 10414, 10416, 10418, 11651, 11657, 11659, 11660, 11661, 17824}
+ITEMS_FIONA                = {5804, 5808, 5879, 5881, 5882, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5898, 5899, 5902, 5904, 5905, 5906, 5919, 5920, 5921, 5922, 5925, 5930, 5943, 5954, 7439, 7440, 7443, 9053, 9054, 9055, 9636, 9642, 9644, 9647, 9649, 9660, 9661, 9665, 9666, 10275, 10276, 10277, 10278, 10280, 10304, 10312, 10397, 10444, 11454, 11457, 11463, 11464, 11465, 11474, 11512, 11658, 11702, 11703, 14008, 14009, 14013, 16131, 16139, 16140, 17809, 17817, 17826, 17827, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18928}
+ITEMS_GNOMISSION           = {645, 902, 2848, 2852, 3013, 3014, 3068, 3249, 3295, 3306, 3323, 3341, 3387, 3398, 3424, 5080, 5791, 5803, 6103, 6527, 6561, 7183, 7416, 7417, 7453, 8021, 8025, 8029, 8039, 8041, 8055, 9394, 9606, 9613, 9616, 9617, 9618, 9619, 11679, 11693}
+ITEMS_GREEN_DJINN          = {666, 685, 785, 802, 3045, 3048, 3051, 3052, 3053, 3054, 3065, 3066, 3067, 3069, 3070, 3077, 3078, 3084, 3085, 3097, 3098, 3281, 3297, 3299, 3307, 3318, 3322, 3324, 3369, 3370, 3371, 3373, 3383, 3384, 3428, 3429, 3432, 3434, 3574, 7407, 7411, 7413, 7419, 7421, 7428, 8082, 8083, 8084, 16117, 16118}
+ITEMS_GRIZZLY              = {7393, 7394, 7396, 7397, 7398, 7399, 7400, 7401, 9631, 9633, 9648, 9657, 9662, 10244, 10272, 10273, 10282, 10297, 10311, 10398, 10419, 10421, 10452, 10454, 10455, 10456, 11487, 11488, 11489, 11490, 11491, 11514, 11539, 12039, 12040, 12172, 12309, 12312, 12313, 12314, 12315, 12316, 12317, 17461, 17462, 17818, 18993, 18994}
+ITEMS_IRMANA               = {3568, 5876, 5877, 5878, 5883, 5886, 5909, 5910, 5911, 5912, 5913, 5914, 5948, 8923, 9045, 9658, 9684, 9689, 9690, 9691, 9694, 10274, 10279, 10292, 10293, 10295, 10299, 10307, 10317, 10318, 10319, 10407, 11448, 11456, 11458, 11470, 11473, 11475, 11486, 11492, 11493, 11684, 17819}
+ITEMS_JEWELRY              = {281, 282, 3004, 3026, 3027, 3028, 3029, 3030, 3032, 3033, 9057, 9058, 16119, 16120, 16121, 16122, 16123, 16124, 16125, 16126, 16127}
+ITEMS_MALUNGA              = {8031, 8143, 9634, 9637, 9640, 9641, 9643, 9651, 9659, 9663, 9667, 9668, 9683, 9693, 10281, 10283, 10291, 10301, 10306, 10308, 10309, 10313, 10411, 10420, 10449, 10450, 11446, 11467, 11475, 11481, 11484, 11485, 11513, 11666, 11671, 11672, 11673, 11680, 12541, 12601, 12730, 12742, 12805, 14011, 14012, 14017, 14041, 14044, 14076, 14078, 14079, 14080, 14081, 14082, 14083, 16132, 16134, 17458, 17463, 17822, 17823, 17830, 18924, 18925, 18926, 18927, 18929, 18930, 18995, 18996, 18997, 19110, 19111}
+ITEMS_ROCK_IN_A_HARD_PLACE = {283, 284, 285, 2874, 2906, 3003, 3264, 3265, 3266, 3267, 3268, 3269, 3270, 3271, 3272, 3273, 3274, 3275, 3276, 3277, 3279, 3280, 3282, 3283, 3285, 3286, 3293, 3294, 3298, 3300, 3304, 3304, 3305, 3308, 3316, 3336, 3337, 3338, 3349, 3350, 3351, 3352, 3353, 3354, 3355, 3357, 3358, 3359, 3361, 3362, 3367, 3372, 3374, 3375, 3376, 3377, 3378, 3379, 3409, 3410, 3411, 3412, 3413, 3425, 3426, 3430, 3431, 3453, 3456, 3457, 3459, 3462, 3481, 3483, 3552, 3557, 3558, 3559, 3561, 3562, 12730, 13987, 13990, 13991, 13993, 13994, 13995, 13996, 13997, 13998, 13999, 14000, 14001, 14008, 14009, 14010, 14011, 14012, 14013, 14017, 14040, 14041, 14042, 14043, 14044, 14076, 14077, 14078, 14079, 14080, 14081, 14082, 14083, 14086, 14087, 14088, 14089, 14225, 14246, 14247, 14250, 17824}
+ITEMS_TAMORIL              = {2903, 3036, 3037, 3038, 3039, 3041}
+ITEMS_TELAS                = {5887, 5888, 5889, 5892, 8775, 9027, 9028, 9063, 9064, 9065, 9066, 9067, 9632, 9654, 9655, 9656, 9664, 10298, 10310, 10315, 11447, 12600, 12806, 16130, 16133, 16135, 16137, 16138}
+ITEMS_RASHID               = {661, 662, 664, 667, 668, 669, 672, 673, 680, 681, 682, 683, 686, 687, 688, 691, 692, 780, 781, 783, 786, 787, 788, 791, 792, 795, 796, 798, 803, 804, 805, 808, 809, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 2958, 2991, 3002, 3006, 3007, 3008, 3010, 3016, 3017, 3018, 3019, 3025, 3055, 3063, 3290, 3314, 3315, 3326, 3327, 3328, 3330, 3332, 3333, 3334, 3339, 3340, 3342, 3344, 3356, 3360, 3364, 3366, 3386, 3397, 3404, 3408, 3414, 3420, 3421, 3435, 3436, 3440, 3441, 3442, 3550, 3554, 3556, 5461, 5710, 5741, 5810, 5917, 5918, 6095, 6096, 6131, 6299, 6553, 7379, 7380, 7381, 7382, 7383, 7384, 7386, 7387, 7388, 7389, 7390, 7392, 7402, 7403, 7404, 7406, 7408, 7414, 7415, 7418, 7422, 7424, 7425, 7426, 7427, 7429, 7430, 7432, 7434, 7437, 7438, 7449, 7452, 7456, 7457, 7460, 7461, 7462, 7463, 7464, 8022, 8027, 8045, 8049, 8050, 8052, 8057, 8061, 8063, 9013, 9014, 9015, 9017, 9302, 9303, 9304, 9653, 10457, 11674, 12683, 16163, 16164, 17828, 17829, 17852}
+ITEMS_YASIR                = {647, 2933, 3044, 3058, 3735, 3736, 3741, 5479, 5804, 5809, 5875, 5876, 5877, 5878, 5879, 5880, 5881, 5882, 5883, 5884, 5885, 5890, 5891, 5893, 5894, 5895, 5896, 5897, 5898, 5899, 5901, 5902, 5904, 5905, 5906, 5909, 5910, 5911, 5912, 5913, 5914, 5919, 5920, 5921, 5922, 5925, 5930, 5948, 5954, 6491, 6525, 6534, 6535, 6536, 6537, 6539, 6540, 6546, 8031, 8143, 9035, 9053, 9054, 9055, 9631, 9633, 9634, 9635, 9636, 9637, 9638, 9639, 9640, 9641, 9642, 9643, 9644, 9645, 9646, 9647, 9648, 9649, 9650, 9651, 9652, 9657, 9658, 9659, 9660, 9661, 9662, 9663, 9665, 9666, 9667, 9668, 9683, 9684, 9685, 9686, 9688, 9689, 9690, 9691, 9692, 9693, 9694, 10196, 10272, 10273, 10274, 10275, 10276, 10277, 10278, 10279, 10280, 10281, 10282, 10283, 10291, 10292, 10293, 10295, 10296, 10297, 10299, 10300, 10301, 10302, 10303, 10304, 10305, 10306, 10307, 10308, 10309, 10311, 10312, 10313, 10314, 10316, 10317, 10318, 10319, 10320, 10321, 10397, 10404, 10405, 10407, 10408, 10409, 10410, 10411, 10413, 10414, 10415, 10416, 10417, 10418, 10420, 10444, 10449, 10450, 10452, 10453, 10454, 10455, 10456, 11443, 11444, 11445, 11446, 11448, 11449, 11450, 11451, 11452, 11453, 11454, 11455, 11456, 11457, 11458, 11463, 11464, 11465, 11466, 11467, 11469, 11470, 11471, 11472, 11473, 11474, 11475, 11476, 11477, 11478, 11479, 11480, 11481, 11482, 11483, 11484, 11485, 11486, 11487, 11488, 11489, 11490, 11491, 11492, 11493, 11510, 11511, 11512, 11513, 11514, 11515, 11539, 11652, 11658, 11659, 11660, 11661, 11666, 11671, 11672, 11673, 11680, 11684, 11702, 11703, 12541, 12730, 12737, 12742, 14008, 14009, 14010, 14011, 14012, 14013, 14017, 14041, 14044, 14076, 14077, 14078, 14079, 14080, 14081, 14082, 14083, 14225, 16131, 16132, 16134, 16139, 16140, 17458, 17461, 17462, 17463, 17809, 17817, 17818, 17819, 17822, 17823, 17826, 17827, 17830, 17831, 17847, 17848, 17849, 17850, 17851, 17853, 17854, 17855, 17856, 17857, 18924, 18925, 18926, 18927, 18928, 18929, 18930, 18993, 18994, 18995, 18996, 18997, 19110, 19111, 20183, 20184, 20199, 20200, 20201, 20202, 20203, 20204, 20205, 20206, 20207}
 
 
 -- Vocation IDs used by $voc
@@ -98,25 +105,26 @@ REGEX_SPA_SIZE   = REGEX_RANGE
 
 -- Custom Types properties
 CUSTOM_TYPE = {
-	CREATURE     = {'name', 'id', 'hppc', 'posx', 'posy', 'posz', 'dir', 'speed', 'iswalking', 'outfit', 'headcolor', 'chestcolor', 'legscolor', 'feetcolor', 'addon', 'mount', 'lightintensity', 'lightcolor', 'lastattacked', 'walkblock', 'skull', 'party', 'warbanner', 'updated', 'aggressortype', 'isshootable', 'isreachable', 'dist', 'ignored', 'ismonster', 'isplayer', 'isnpc', 'issummon', 'isownsummon', 'hpcolor'},
-	ITEM         = {'id', 'count', 'special'},
-	CONTAINER    = {'name', 'itemid', 'itemcount', 'maxcount', 'isopen', 'ispage', 'hashigher'},
-	TILE         = {'itemcount'},
-	MESSAGE      = {'content', 'level', 'sender', 'type'},
-	PROJECTILE   = {'type', 'fromx', 'fromy', 'tox', 'toy', 'time'},
-	EFFECT       = {'type', 'posx', 'posy', 'time'},
-	ANIMTEXT     = {'type', 'content', 'posx', 'posy', 'time'},
-	RECT         = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
-	POINT        = {'x', 'y'},
-	ITEMDATA     = {'name', 'id', 'sellprice', 'buyprice', 'weight', 'isbank', 'isclip', 'isbottom', 'istop', 'iscontainer', 'iscumulative', 'isforceuse', 'ismultiuse', 'iswrite', 'iswriteonce', 'isliquidcontainer', 'isliquidpool', 'isunpass', 'isunmove', 'isunsight', 'isavoid', 'isnomovementanimation', 'istake', 'ishang', 'ishooksouth', 'ishookeast', 'isrotate', 'islight', 'isdonthide', 'istranslucent', 'isfloorchange', 'isshift', 'isheight', 'islyingobject', 'isanimatealways', 'isautomap', 'islenshelp', 'isfullbank', 'isignorelook', 'isclothes', 'ismarket', 'ismount', 'isdefaultaction', 'isusable', 'ignoreextradata', 'enchantable', 'destructible', 'hasextradata', 'height', 'sizeinpixels', 'layers', 'patternx', 'patterny', 'patterndepth', 'phase', 'walkspeed', 'textlimit', 'lightradius', 'lightcolor', 'shiftx', 'shifty', 'walkheight', 'automapcolor', 'lenshelp', 'defaultaction', 'clothslot', 'marketcategory', 'markettradeas', 'marketshowas', 'marketrestrictprofession', 'marketrestrictlevel', 'durationtotalinmsecs', 'specialeffect', 'specialeffectgain', 'category', 'attack', 'attackmod', 'hitpercentmod', 'defense', 'defensemod', 'armor', 'holyresistmod', 'deathresistmod', 'earthresistmod', 'fireresistmod', 'iceresistmod', 'energyresistmod', 'physicalresistmod', 'lifedrainresistmod', 'manadrainresistmod', 'itemlossmod', 'mindmg', 'maxdmg', 'dmgtype', 'range', 'mana'},
-	SUPPLYDATA   = {'name', 'id', 'weight', 'buyprice', 'leaveat', 'count', 'rule', 'rulevalue', 'destination', 'category', 'uptocount', 'downtocap', 'amountbought', 'amounttobuy', 'amountused'},
-	LOOTINGDATA  = {'name' ,'id' ,'weight' ,'sellprice' ,'count' ,'action' ,'alert' ,'condition' ,'conditionvalue' ,'destination' ,'category' ,'amountlooted' ,'haslessthan' ,'caphigherthan', 'lootmessage'},
-	VIP          = {'name', 'id', 'icon', 'isonline', 'notify'},
-	MOUSEINFO    = {'x', 'y', 'z', 'id', 'count', 'crosshair'},
-	DEATHTIMER   = {'timeofdeath', 'target', 'killer', 'time'},
-	PLAYERINFO   = {'name', 'guild', 'voc', 'vocation', 'vocshort', 'priority', 'status', 'time', 'level', 'comment'},
-	NAVPING      = {'time', 'color', 'glowcolor', 'posx', 'posy', 'posz'},
-	NAVTARGET    = {'name', 'posx', 'posy', 'posz', 'time', 'color', 'glowcolor', 'isleader', 'isfriend', 'isenemy', 'isneutral', 'team', 'teamname', 'creature', 'realname', 'id', 'mp', 'maxmp', 'voc', 'icon'}
+    CREATURE     = {'name', 'id', 'hppc', 'posx', 'posy', 'posz', 'dir', 'speed', 'iswalking', 'outfit', 'headcolor', 'chestcolor', 'legscolor', 'feetcolor', 'addon', 'mount', 'lightintensity', 'lightcolor', 'lastattacked', 'walkblock', 'skull', 'party', 'warbanner', 'updated', 'aggressortype', 'isshootable', 'isreachable', 'dist', 'ignored', 'ismonster', 'isplayer', 'isnpc', 'issummon', 'isownsummon', 'hpcolor'},
+    ITEM         = {'id', 'count', 'special'},
+    CONTAINER    = {'name', 'itemid', 'itemcount', 'maxcount', 'isopen', 'ispage', 'hashigher'},
+    TILE         = {'itemcount'},
+    MESSAGE      = {'content', 'level', 'sender', 'type'},
+    PROJECTILE   = {'type', 'fromx', 'fromy', 'tox', 'toy', 'time'},
+    EFFECT       = {'type', 'posx', 'posy', 'time'},
+    ANIMTEXT     = {'type', 'content', 'posx', 'posy', 'time'},
+    RECT         = {'left', 'top', 'bottom', 'right', 'width', 'height', 'centerx', 'centery'},
+    POINT        = {'x', 'y'},
+    ITEMDATA     = {'name', 'id', 'sellprice', 'buyprice', 'weight', 'isbank', 'isclip', 'isbottom', 'istop', 'iscontainer', 'iscumulative', 'isforceuse', 'ismultiuse', 'iswrite', 'iswriteonce', 'isliquidcontainer', 'isliquidpool', 'isunpass', 'isunmove', 'isunsight', 'isavoid', 'isnomovementanimation', 'istake', 'ishang', 'ishooksouth', 'ishookeast', 'isrotate', 'islight', 'isdonthide', 'istranslucent', 'isfloorchange', 'isshift', 'isheight', 'islyingobject', 'isanimatealways', 'isautomap', 'islenshelp', 'isfullbank', 'isignorelook', 'isclothes', 'ismarket', 'ismount', 'isdefaultaction', 'isusable', 'ignoreextradata', 'enchantable', 'destructible', 'hasextradata', 'height', 'sizeinpixels', 'layers', 'patternx', 'patterny', 'patterndepth', 'phase', 'walkspeed', 'textlimit', 'lightradius', 'lightcolor', 'shiftx', 'shifty', 'walkheight', 'automapcolor', 'lenshelp', 'defaultaction', 'clothslot', 'marketcategory', 'markettradeas', 'marketshowas', 'marketrestrictprofession', 'marketrestrictlevel', 'durationtotalinmsecs', 'specialeffect', 'specialeffectgain', 'category', 'attack', 'attackmod', 'hitpercentmod', 'defense', 'defensemod', 'armor', 'holyresistmod', 'deathresistmod', 'earthresistmod', 'fireresistmod', 'iceresistmod', 'energyresistmod', 'physicalresistmod', 'lifedrainresistmod', 'manadrainresistmod', 'itemlossmod', 'mindmg', 'maxdmg', 'dmgtype', 'range', 'mana'},
+    SUPPLYDATA   = {'name', 'id', 'weight', 'buyprice', 'leaveat', 'count', 'rule', 'rulevalue', 'destination', 'category', 'uptocount', 'downtocap', 'amountbought', 'amounttobuy', 'amountused'},
+    LOOTINGDATA  = {'name' ,'id' ,'weight' ,'sellprice' ,'count' ,'action' ,'alert' ,'condition' ,'conditionvalue' ,'destination' ,'category' ,'amountlooted' ,'haslessthan' ,'caphigherthan', 'lootmessage'},
+    VIP          = {'name', 'id', 'icon', 'isonline', 'notify'},
+    MOUSEINFO    = {'x', 'y', 'z', 'id', 'count', 'crosshair'},
+    DEATHTIMER   = {'timeofdeath', 'target', 'killer', 'time'},
+    PLAYERINFO   = {'name', 'guild', 'voc', 'vocation', 'vocshort', 'priority', 'status', 'time', 'level', 'comment'},
+    NAVPING      = {'time', 'color', 'glowcolor', 'posx', 'posy', 'posz'},
+    NAVTARGET    = {'name', 'posx', 'posy', 'posz', 'time', 'color', 'glowcolor', 'isleader', 'isfriend', 'isenemy', 'isneutral', 'team', 'teamname', 'creature', 'realname', 'id', 'mp', 'maxmp', 'voc', 'icon'},
+    SPELLINFO    = {'name', 'words', 'vocation', 'soul', 'level', 'mlevel', 'mp', 'price', 'premium', 'promotion', 'castarea', 'castmode', 'dmgtype', 'healtype', 'specialeffect', 'itemid', 'group', 'cooldownid', 'duration', 'iconid'},
 }
 
 
@@ -124,126 +132,125 @@ CUSTOM_TYPE = {
 -- http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
 -- CAUTION: This list is fucked up, for some reason
 local KEYS = {
-	MOUSELEFT   = 0x01,
-	MOUSERIGHT  = 0x02,
-	MOUSEMIDDLE = 0x04,
-	BACKSPACE   = 0x08,
-	TAB         = 0x09,
-	CLEAR       = 0x0C,
-	ENTER       = 0x0D,
-	SHIFT       = 0x10,
-	CTRL        = 0x11,
-	ALT         = 0x12,
-	PAUSE       = 0x13,
-	CAPSLOCK    = 0x14,
-	ESC         = 0x1B,
-	SPACE       = 0x20,
-	PAGEUP      = 0x21,
-	PAGEDOWN    = 0x22,
-	END         = 0x25,
-	HOME        = 0x24,
-	LEFTARROW   = 0x25,
-	UPARROW     = 0x26,
-	RIGHTARROW  = 0x27,
-	DOWNARROW   = 0x28,
-	SELECT      = 0x29,
-	PRINT       = 0x2A,
-	EXECUTE     = 0x2B,
-	PRINTSCREEN = 0x2C,
-	INSERT      = 0x2D,
-	DELETE      = 0x2E,
-	HELP        = 0x2F,
+    MOUSELEFT   = 0x01,
+    MOUSERIGHT  = 0x02,
+    MOUSEMIDDLE = 0x04,
+    BACKSPACE   = 0x08,
+    TAB         = 0x09,
+    CLEAR       = 0x0C,
+    ENTER       = 0x0D,
+    SHIFT       = 0x10,
+    CTRL        = 0x11,
+    ALT         = 0x12,
+    PAUSE       = 0x13,
+    CAPSLOCK    = 0x14,
+    ESC         = 0x1B,
+    SPACE       = 0x20,
+    PAGEUP      = 0x21,
+    PAGEDOWN    = 0x22,
+    END         = 0x25,
+    HOME        = 0x24,
+    LEFTARROW   = 0x25,
+    UPARROW     = 0x26,
+    RIGHTARROW  = 0x27,
+    DOWNARROW   = 0x28,
+    SELECT      = 0x29,
+    PRINT       = 0x2A,
+    EXECUTE     = 0x2B,
+    PRINTSCREEN = 0x2C,
+    INSERT      = 0x2D,
+    DELETE      = 0x2E,
+    HELP        = 0x2F,
 
-	['0']       = 0x30,
-	['1']       = 0x31,
-	['2']       = 0x32,
-	['3']       = 0x33,
-	['4']       = 0x34,
-	['5']       = 0x35,
-	['6']       = 0x36,
-	['7']       = 0x37,
-	['8']       = 0x38,
-	['9']       = 0x39,
+    ['0']       = 0x30,
+    ['1']       = 0x31,
+    ['2']       = 0x32,
+    ['3']       = 0x33,
+    ['4']       = 0x34,
+    ['5']       = 0x35,
+    ['6']       = 0x36,
+    ['7']       = 0x37,
+    ['8']       = 0x38,
+    ['9']       = 0x39,
 
-	A           = 0x41,
-	B           = 0x42,
-	C           = 0x43,
-	D           = 0x44,
-	E           = 0x45,
-	F           = 0x46,
-	G           = 0x47,
-	H           = 0x48,
-	I           = 0x49,
-	J           = 0x4A,
-	K           = 0x4B,
-	L           = 0x4C,
-	M           = 0x4D,
-	N           = 0x4E,
-	O           = 0x4F,
-	P           = 0x50,
-	Q           = 0x51,
-	R           = 0x52,
-	S           = 0x53,
-	T           = 0x54,
-	U           = 0x55,
-	V           = 0x56,
-	W           = 0x57,
-	x           = 0x58,
-	Y           = 0x59,
-	Z           = 0x5A,
+    A           = 0x41,
+    B           = 0x42,
+    C           = 0x43,
+    D           = 0x44,
+    E           = 0x45,
+    F           = 0x46,
+    G           = 0x47,
+    H           = 0x48,
+    I           = 0x49,
+    J           = 0x4A,
+    K           = 0x4B,
+    L           = 0x4C,
+    M           = 0x4D,
+    N           = 0x4E,
+    O           = 0x4F,
+    P           = 0x50,
+    Q           = 0x51,
+    R           = 0x52,
+    S           = 0x53,
+    T           = 0x54,
+    U           = 0x55,
+    V           = 0x56,
+    W           = 0x57,
+    x           = 0x58,
+    Y           = 0x59,
+    Z           = 0x5A,
 
-	SLEEP       = 0x5F,
-	NUM0        = 0x60,
-	NUM1        = 0x61,
-	NUM2        = 0x62,
-	NUM3        = 0x63,
-	NUM4        = 0x64,
-	NUM5        = 0x65,
-	NUM6        = 0x66,
-	NUM7        = 0x67,
-	NUM8        = 0x68,
-	NUM9        = 0x69,
-	MULTIPLY    = 0x6A,
-	ADD         = 0x6B,
-	SEPARATOR   = 0x6C,
-	SUBTRACT    = 0x6D,
-	DECIMAL     = 0x6E,
-	DIVIDE      = 0x6F,
+    SLEEP       = 0x5F,
+    NUM0        = 0x60,
+    NUM1        = 0x61,
+    NUM2        = 0x62,
+    NUM3        = 0x63,
+    NUM4        = 0x64,
+    NUM5        = 0x65,
+    NUM6        = 0x66,
+    NUM7        = 0x67,
+    NUM8        = 0x68,
+    NUM9        = 0x69,
+    MULTIPLY    = 0x6A,
+    ADD         = 0x6B,
+    SEPARATOR   = 0x6C,
+    SUBTRACT    = 0x6D,
+    DECIMAL     = 0x6E,
+    DIVIDE      = 0x6F,
 
-	F1          = 0x70,
-	F2          = 0x71,
-	F3          = 0x72,
-	F4          = 0x73,
-	F5          = 0x74,
-	F6          = 0x75,
-	F7          = 0x76,
-	F8          = 0x77,
-	F9          = 0x78,
-	F10         = 0x89,
-	F11         = 0x7A,
-	F12         = 0x7B,
-	F13         = 0x7C,
-	F14         = 0x7D,
-	F15         = 0x7E,
-	F16         = 0x7F,
-	F17         = 0x80,
-	F18         = 0x81,
-	F19         = 0x82,
-	F20         = 0x83,
-	F21         = 0x84,
-	F22         = 0x85,
-	F23         = 0x86,
-	F24         = 0x87,
+    F1          = 0x70,
+    F2          = 0x71,
+    F3          = 0x72,
+    F4          = 0x73,
+    F5          = 0x74,
+    F6          = 0x75,
+    F7          = 0x76,
+    F8          = 0x77,
+    F9          = 0x78,
+    F10         = 0x89,
+    F11         = 0x7A,
+    F12         = 0x7B,
+    F13         = 0x7C,
+    F14         = 0x7D,
+    F15         = 0x7E,
+    F16         = 0x7F,
+    F17         = 0x80,
+    F18         = 0x81,
+    F19         = 0x82,
+    F20         = 0x83,
+    F21         = 0x84,
+    F22         = 0x85,
+    F23         = 0x86,
+    F24         = 0x87,
 
-	NUMLOCK     = 0x90,
-	SCROLLLOCK  = 0x91,
-	COMMA       = 0xBC,
-	HIFFEN      = 0xBD,
-	DOT         = 0xBE,
-	BAR         = 0xBF,
-	SINGLEQUOTE = 0xD3
+    NUMLOCK     = 0x90,
+    SCROLLLOCK  = 0x91,
+    COMMA       = 0xBC,
+    HIFFEN      = 0xBD,
+    DOT         = 0xBE,
+    BAR         = 0xBF,
+    SINGLEQUOTE = 0xD3
 }
-
 
 
 
@@ -260,14 +267,14 @@ local KEYS = {
  * @returns   {string}                      - The variable's type
 --]]
 function type(value)
-	local luaType = _TYPE(value)
+    local luaType = _TYPE(value)
 
-	-- If it's not an object, simply return the actual variable type
-	if luaType ~= 'table' then
-		return luaType
-	end
+    -- If it's not an object, simply return the actual variable type
+    if luaType ~= 'table' then
+        return luaType
+    end
 
-	return value.__class or luaType
+    return value.__class or luaType
 end
 
 --[[
@@ -286,17 +293,17 @@ end
  *                                            than v2
 --]]
 function versionhigherorequal(v1, v2)
-	local v1, v2 = string.explode(tostring(v1), '%.'), string.explode(tostring(v2), '%.')
-	for i = 1, math.max(#v1, #v2) do
-		v1[i] = tonumber(v1[i]) or 0
-		v2[i] = tonumber(v2[i]) or 0
-		if v1[i] < v2[i] then
-			return false
-		elseif v1[i] > v2[i] then
-			return true
-		end
-	end
-	return true
+    local v1, v2 = string.explode(tostring(v1), '%.'), string.explode(tostring(v2), '%.')
+    for i = 1, math.max(#v1, #v2) do
+        v1[i] = tonumber(v1[i]) or 0
+        v2[i] = tonumber(v2[i]) or 0
+        if v1[i] < v2[i] then
+            return false
+        elseif v1[i] > v2[i] then
+            return true
+        end
+    end
+    return true
 end
 
 --[[
@@ -330,7 +337,7 @@ end
  * @returns   {number}                      - The experience needed
 --]]
 function expatlvl(level)
-	return 50 / 3 * (level ^ 3 - 6 * level ^ 2 + 17 * level - 12)
+    return 50 / 3 * (level ^ 3 - 6 * level ^ 2 + 17 * level - 12)
 end
 
 --[[
@@ -344,18 +351,18 @@ end
  * @returns   {string...}                   - The variable's classes
 --]]
 function getclasses(value)
-	local classes = {}
+    local classes = {}
 
-	local meta = getmetatable(value)
-	while meta and meta.__index do
-		if meta.__index.__class then
-			table.insert(classes, meta.__index.__class)
-		end
+    local meta = getmetatable(value)
+    while meta and meta.__index do
+        if meta.__index.__class then
+            table.insert(classes, meta.__index.__class)
+        end
 
-		meta = getmetatable(meta.__index)
-	end
+        meta = getmetatable(meta.__index)
+    end
 
-	return table.unpack(classes)
+    return table.unpack(classes)
 end
 
 --[[
@@ -372,21 +379,21 @@ end
  * @returns   {number}                      - Total amount of gold
 --]]
 function gold(coin, location)
-	local coins = {'gold coin', 'platinum coin', 'crystal coin'}
+    local coins = {'gold coin', 'platinum coin', 'crystal coin'}
 
-	-- Allows us to count only a specific coin type
-	if coin and table.find(coins, coin:lower()) then
-		coins = {coin}
-	else
-		location = coin
-	end
+    -- Allows us to count only a specific coin type
+    if coin and table.find(coins, coin:lower()) then
+        coins = {coin}
+    else
+        location = coin
+    end
 
-	local totalGold = 0
-	for _, v in ipairs(coins) do
-		totalGold = totalGold + itemcount(v, location) * itemvalue(v)
-	end
+    local totalGold = 0
+    for _, v in ipairs(coins) do
+        totalGold = totalGold + itemcount(v, location) * itemvalue(v)
+    end
 
-	return totalGold
+    return totalGold
 end
 
 --[[
@@ -397,9 +404,9 @@ end
  * @returns   {number}                      - Total amount of flasks
 --]]
 function flasks()
-	return itemcount('empty potion flask (small)') +
-	       itemcount('empty potion flask (medium)') +
-	       itemcount('empty potion flask (large)')
+    return itemcount('empty potion flask (small)') +
+           itemcount('empty potion flask (medium)') +
+           itemcount('empty potion flask (large)')
 end
 
 --[[
@@ -417,11 +424,11 @@ end
  * @returns   {any}                         - `expr2` or `expr3`
 --]]
 function tern(expr1, expr2, expr3)
-	if expr1 then
-		return expr2
-	else
-		return expr3
-	end
+    if expr1 then
+        return expr2
+    else
+        return expr3
+    end
 end
 
 --[[
@@ -433,13 +440,13 @@ end
  * @returns   {number}                      - Maximum capacity
 --]]
 function maxcap()
-	-- There's no way to know max cap if we're not logged in
-	if $voc == 0 then
-		return -1
-	end
+    -- There's no way to know max cap if we're not logged in
+    if $voc == 0 then
+        return -1
+    end
 
-	local vocs = {10, 30, 20, 10, 10}
-	return vocs[math.log($voc * 2, 2)] * ($level - 8) + 470
+    local vocs = {10, 30, 20, 10, 10}
+    return vocs[math.log($voc * 2, 2)] * ($level - 8) + 470
 end
 
 --[[
@@ -451,11 +458,11 @@ end
  * @returns   {number}                      - UTC offset in seconds
 --]]
 function utcoffset()
-	local now = os.time()
-	return os.difftime(
-		now,
-		os.time(os.date("!*t", now)) - tern(os.date('*t').isdst, 3600, 0)
-	)
+    local now = os.time()
+    return os.difftime(
+        now,
+        os.time(os.date("!*t", now)) - tern(os.date('*t').isdst, 3600, 0)
+    )
 end
 
 --[[
@@ -468,19 +475,19 @@ end
  * @returns   {number}                      - CET offset in seconds
 --]]
 function cetoffset()
-	-- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
-	local daylightDates = {
-		[2013] = {90, 300},
-		[2014] = {89, 299},
-		[2015] = {88, 298},
-		[2016] = {87, 304},
-		[2017] = {85, 302}
-	}
+    -- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
+    local daylightDates = {
+        [2013] = {90, 300},
+        [2014] = {89, 299},
+        [2015] = {88, 298},
+        [2016] = {87, 304},
+        [2017] = {85, 302}
+    }
 
-	local now = os.date('!*t')
-	local daylightDate = daylightDates[now.year]
+    local now = os.date('!*t')
+    local daylightDate = daylightDates[now.year]
 
-	return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
+    return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
 end
 
 --[[
@@ -491,7 +498,7 @@ end
  * @returns   {number}                      - UTC time of day in seconds
 --]]
 function utctime()
-	return tosec(os.date('!%X'))
+    return tosec(os.date('!%X'))
 end
 
 --[[
@@ -503,7 +510,7 @@ end
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-	return utctime() - utcoffset() + cetoffset()
+    return utctime() - utcoffset() + cetoffset()
 end
 
 --[[
@@ -514,11 +521,11 @@ end
  * @returns   {string}                      - Computer's timezone
 --]]
 function timezone()
-	local offset = utcoffset()
-	if offset then
-		return 'UTC ' .. tern(offset > 0, '+', '-') .. math.abs(offset / 3600)
-	end
-	return 'UTC'
+    local offset = utcoffset()
+    if offset then
+        return 'UTC ' .. tern(offset > 0, '+', '-') .. math.abs(offset / 3600)
+    end
+    return 'UTC'
 end
 
 --[[
@@ -529,7 +536,7 @@ end
  * @returns   {number}                      - Seconds left to server save
 --]]
 function sstime()
-	return (36000 - cettime()) % 86400
+    return (36000 - cettime()) % 86400
 end
 
 --[[
@@ -538,7 +545,7 @@ end
  * @since     0.1.0
 --]]
 function beep()
-	playsound('monster.wav')
+    playsound('monster.wav')
 end
 
 --[[
@@ -547,7 +554,7 @@ end
  * @since     0.1.0
 --]]
 function dontlist()
-	listas('dontlist')
+    listas('dontlist')
 end
 
 --[[
@@ -558,15 +565,15 @@ end
  * @return    {array}                       - The containers' objects
 --]]
 function getopencontainers()
-	local conts, c = {}
-	for i = 0, 15 do
-		c = getcontainer(i)
-		if c.isopen then
-			table.insert(conts, c)
-		end
-	end
+    local conts, c = {}
+    for i = 0, 15 do
+        c = getcontainer(i)
+        if c.isopen then
+            table.insert(conts, c)
+        end
+    end
 
-	return conts
+    return conts
 end
 
 --[[
@@ -580,8 +587,8 @@ end
  * @param     {string}       b              - The other value used on toggle
 --]]
 function toggle(setting, a, b)
-	a, b = a or 'no', b or 'yes'
-	set(setting, tern(get(setting) == a, b, a))
+    a, b = a or 'no', b or 'yes'
+    set(setting, tern(get(setting) == a, b, a))
 end
 
 --[[
@@ -598,23 +605,23 @@ end
  * @return    {boolean}                     - Boolean representation
 --]]
 function tobool(value, strict)
-	strict = strict or false
+    strict = strict or false
 
-	local valType = type(value)
+    local valType = type(value)
 
-	if valType == 'boolean' then
-		return value
-	elseif valType == 'nil' then
-		return false
-	elseif valType == 'userdata' then
-		return true
-	elseif valType == 'number' then
-		return value ~= 0
-	elseif valType == 'string' then
-		return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
-	elseif valType == 'table' then
-		return table.size(value) == 0
-	end
+    if valType == 'boolean' then
+        return value
+    elseif valType == 'nil' then
+        return false
+    elseif valType == 'userdata' then
+        return true
+    elseif valType == 'number' then
+        return value ~= 0
+    elseif valType == 'string' then
+        return tobool(#value) and (strict or not (value == 'no' or value == 'off'))
+    elseif valType == 'table' then
+        return table.size(value) == 0
+    end
 end
 
 --[[
@@ -630,7 +637,7 @@ end
  * @return    {number}                      - Numeric representation
 --]]
 function toonezero(value, strict)
-	return tern(tobool(value, strict), 1, 0)
+    return tern(tobool(value, strict), 1, 0)
 end
 
 --[[
@@ -646,7 +653,7 @@ end
  * @return    {string}                      - Yes/no representation
 --]]
 function toyesno(value, strict)
-	return tern(tobool(value, strict), 'yes', 'no')
+    return tern(tobool(value, strict), 'yes', 'no')
 end
 
 --[[
@@ -662,7 +669,7 @@ end
  * @return    {string}                      - On/off representation
 --]]
 function toonoff(value, strict)
-	return tern(tobool(value, strict), 'on', 'off')
+    return tern(tobool(value, strict), 'on', 'off')
 end
 
 --[[
@@ -676,25 +683,25 @@ end
  *                                            reqName}
 --]]
 function requires(reqs)
-	local failedRequirements = {}
+    local failedRequirements = {}
 
-	for _, v in ipairs(reqs) do
-		if not versionhigherorequal(v[1], v[2]) then
-			table.insert(failedRequirements, v)
-		end
-	end
+    for _, v in ipairs(reqs) do
+        if not versionhigherorequal(v[1], v[2]) then
+            table.insert(failedRequirements, v)
+        end
+    end
 
-	if #failedRequirements > 0 then
-		local errorMsg = 'Your current setup does not meet the following ' ..
-		                 'minimum requirements:\n'
+    if #failedRequirements > 0 then
+        local errorMsg = 'Your current setup does not meet the following ' ..
+                         'minimum requirements:\n'
 
-		for _, v in ipairs(failedRequirements) do
-			errorMsg = errorMsg .. '\n' ..
-			           '- ' .. v[3] .. ': v' .. v[2]
-		end
+        for _, v in ipairs(failedRequirements) do
+            errorMsg = errorMsg .. '\n' ..
+                       '- ' .. v[3] .. ': v' .. v[2]
+        end
 
-		printerror(errorMsg)
-	end
+        printerror(errorMsg)
+    end
 end
 
 --[[
@@ -708,22 +715,22 @@ end
  * @returns   {string}                      - The String reprensentation
 --]]
 function userdatastringformat(userdata)
-	local obj = {}
-	local props = CUSTOM_TYPE[userdata.objtype:upper()]
+    local obj = {}
+    local props = CUSTOM_TYPE[userdata.objtype:upper()]
 
-	for _, v in ipairs(props) do
-		obj[v] = userdata[v]
-	end
+    for _, v in ipairs(props) do
+        obj[v] = userdata[v]
+    end
 
-	if userdata.objtype == 'tile' or userdata.objtype == 'container' then
-		obj.item = {}
+    if userdata.objtype == 'tile' or userdata.objtype == 'container' then
+        obj.item = {}
 
-		for i = 1, userdata.itemcount do
-			table.insert(obj.item, userdata.item[i])
-		end
-	end
+        for i = 1, userdata.itemcount do
+            table.insert(obj.item, userdata.item[i])
+        end
+    end
 
-	return table.stringformat(obj)
+    return table.stringformat(obj)
 end
 
 --[[
@@ -737,13 +744,13 @@ end
  * @returns   {string}                      - The converted value
 --]]
 function tostring(value)
-	if type(value) == 'table' then
-		return table.stringformat(value)
-	elseif type(value) == 'userdata' then
-		return userdatastringformat(value)
-	else
-		return _TOSTRING(value)
-	end
+    if type(value) == 'table' then
+        return table.stringformat(value)
+    elseif type(value) == 'userdata' then
+        return userdatastringformat(value)
+    else
+        return _TOSTRING(value)
+    end
 end
 
 --[[
@@ -760,13 +767,13 @@ end
  * @returns   {string}                      - The converted value
 --]]
 function calltable(t, ...)
-	local f = t[1]
-	local args = {...}
-	for i = 2, #t do
-		table.insert(args, i - 1, t[i])
-	end
+    local f = t[1]
+    local args = {...}
+    for i = 2, #t do
+        table.insert(args, i - 1, t[i])
+    end
 
-	return f(table.unpack(args))
+    return f(table.unpack(args))
 end
 
 --[[
@@ -785,18 +792,18 @@ end
  *                                            fulfilled or not
 --]]
 function waitcondition(f, time, fArgs)
-	fArgs = fArgs or {}
+    fArgs = fArgs or {}
 
-	local t = math.round(time / 100)
-	for i = 1, t do
-		if f(table.unpack(fArgs)) then
-			return true
-		end
+    local t = math.round(time / 100)
+    for i = 1, t do
+        if f(table.unpack(fArgs)) then
+            return true
+        end
 
-		wait(100)
-	end
+        wait(100)
+    end
 
-	return false
+    return false
 end
 
 --[[
@@ -810,14 +817,14 @@ end
  * @returns   {number}                      - The waypoint's ID
 --]]
 function getwptid(label)
-	local id = 0
-	foreach settingsentry s 'Cavebot/Waypoints' do
-		if get(s, 'Label') == label then
-			return id
-		end
+    local id = 0
+    foreach settingsentry s 'Cavebot/Waypoints' do
+        if get(s, 'Label') == label then
+            return id
+        end
 
-		id = id + 1
-	end
+        id = id + 1
+    end
 end
 
 --[[
@@ -839,42 +846,42 @@ end
  * @returns   {number}                      - Amount of time
 --]]
 function timetolevel(extraPrecision, level)
-	-- If not extra precision is wanted, just return the regular old value in
-	-- minutes
-	if not (extraPrecision == true) then
-		return _TIMETOLEVEL(extraPrecision or level)
-	end
+    -- If not extra precision is wanted, just return the regular old value in
+    -- minutes
+    if not (extraPrecision == true) then
+        return _TIMETOLEVEL(extraPrecision or level)
+    end
 
-	-- The reason we use this instead of $timems is because you'll almost always
-	-- show the time to next level beside the current played time, for which the
-	-- majority of HUDs use $charactertime. Also, this is exactly how it's done
-	-- in sirmate's MMH, the most used HUD around. So, if we do this, we get to
-	-- see both values changing simultaneously and this makes me feel better.
-	local curTime = math.floor($charactertime / 1000)
+    -- The reason we use this instead of $timems is because you'll almost always
+    -- show the time to next level beside the current played time, for which the
+    -- majority of HUDs use $charactertime. Also, this is exactly how it's done
+    -- in sirmate's MMH, the most used HUD around. So, if we do this, we get to
+    -- see both values changing simultaneously and this makes me feel better.
+    local curTime = math.floor($charactertime / 1000)
 
-	-- If the experience per hour change, the time to level also changes
-	if $exphour ~= _Tracker.lastExpHour then
-		_Tracker.timeToLevelChanged = curTime
-		_Tracker.lastExpHour = $exphour
-	end
+    -- If the experience per hour change, the time to level also changes
+    if $exphour ~= _Tracker.lastExpHour then
+        _Tracker.timeToLevelChanged = curTime
+        _Tracker.lastExpHour = $exphour
+    end
 
-	-- If the current experience changes, the experience need to advance to the
-	-- level also changes and this, in turn, changes the time to level; One
-	-- argue that when the current experience changes, the experience per hour
-	-- also does, because effectively you're gaining experience. This, however,
-	-- cannot be verified over a non instantaneous period of time and since this
-	-- function might be called at long intervals, specially because it is
-	-- commonly used in HUDs, we will assume otherwise.
-	if $exp ~= _Tracker.lastExp then
-		_Tracker.timeToLevelChanged = curTime
-		_Tracker.lastExp = $exp
-	end
+    -- If the current experience changes, the experience need to advance to the
+    -- level also changes and this, in turn, changes the time to level; One
+    -- argue that when the current experience changes, the experience per hour
+    -- also does, because effectively you're gaining experience. This, however,
+    -- cannot be verified over a non instantaneous period of time and since this
+    -- function might be called at long intervals, specially because it is
+    -- commonly used in HUDs, we will assume otherwise.
+    if $exp ~= _Tracker.lastExp then
+        _Tracker.timeToLevelChanged = curTime
+        _Tracker.lastExp = $exp
+    end
 
-	local timeToLevel = (exptolevel(level) / $exphour) * 3600
-	local timeOffset = (curTime - _Tracker.timeToLevelChanged)
+    local timeToLevel = (exptolevel(level) / $exphour) * 3600
+    local timeOffset = (curTime - _Tracker.timeToLevelChanged)
 
-	-- Don't really want to return negative values; what would that even mean?
-	return math.max(math.round(timeToLevel - timeOffset), 1)
+    -- Don't really want to return negative values; what would that even mean?
+    return math.max(math.round(timeToLevel - timeOffset), 1)
 end
 
 --[[
@@ -893,11 +900,11 @@ end
  *                                            `value` itself
 --]]
 function getvalue(value, ...)
-	if type(value) == 'function' then
-		return value(...)
-	else
-		return value
-	end
+    if type(value) == 'function' then
+        return value(...)
+    else
+        return value
+    end
 end
 
 --[[
@@ -908,11 +915,11 @@ end
  * @returns   {userdata}                    - The currently opened channel
 --]]
 function curchannel()
-	foreach channel c do
-		if c.iscurrent then
-			return c
-		end
-	end
+    foreach channel c do
+        if c.iscurrent then
+            return c
+        end
+    end
 end
 
 --[[
@@ -932,98 +939,98 @@ end
  *                                            messages were correctly said
 --]]
 function npctalk(...)
-	local args = {...}
+    local args = {...}
 
-	-- Checks for NPCs around
-	-- Blatantly (almost) copied from @Colandus' lib
-	local npcFound = false
-	foreach creature c 'nfs' do
-		if c.dist <= 3 then
-			npcFound = true
-			break
-		end
-	end
+    -- Checks for NPCs around
+    -- Blatantly (almost) copied from @Colandus' lib
+    local npcFound = false
+    foreach creature c 'nfs' do
+        if c.dist <= 3 then
+            npcFound = true
+            break
+        end
+    end
 
-	if not npcFound then
-		return false
-	end
+    if not npcFound then
+        return false
+    end
 
 
-	-- Checks for aditional parameters
-	local normalWait = false
-	if type(table.last(args)) == 'boolean' then
-		normalWait = table.remove(args)
-	end
+    -- Checks for aditional parameters
+    local normalWait = false
+    if type(table.last(args)) == 'boolean' then
+        normalWait = table.remove(args)
+    end
 
-	-- Use specified waiting method
-	local waitFunction = waitmessage
-	if normalWait then
-		waitFunction = function()
-			waitping()
-			return true
-		end
-	end
+    -- Use specified waiting method
+    local waitFunction = waitmessage
+    if normalWait then
+        waitFunction = function()
+            waitping()
+            return true
+        end
+    end
 
-	-- We gotta convert all args to strings because there may be some numbers
-	-- in between and those wouldn't be correctly said by the bot.
-	table.map(args, tostring)
+    -- We gotta convert all args to strings because there may be some numbers
+    -- in between and those wouldn't be correctly said by the bot.
+    table.map(args, tostring)
 
-	local msgSuccess = false
+    local msgSuccess = false
 
-	-- Open NPCs channel if needed
-	if not ischannel('NPCs') then
-		while not msgSuccess do
-			say(args[1])
-			msgSuccess = waitFunction($name, args[1], 3000, true, MSG_DEFAULT)
-		end
+    -- Open NPCs channel if needed
+    if not ischannel('NPCs') then
+        while not msgSuccess do
+            say(args[1])
+            msgSuccess = waitFunction($name, args[1], 3000, true, MSG_DEFAULT)
+        end
 
-		table.remove(args, 1)
-		wait(400, 600)
-	end
+        table.remove(args, 1)
+        wait(400, 600)
+    end
 
-	for k, v in ipairs(args) do
-		msgSuccess = false
-		while not msgSuccess do
+    for k, v in ipairs(args) do
+        msgSuccess = false
+        while not msgSuccess do
 
-			-- When we have fast hotkeys enabled, the bot sends the messages way
-			-- too fast and this ends up causing a huge problem because the
-			-- server can't properly read them. So we simulate the time it would
-			-- take to actually type the text.
-			if $fasthotkeys then
-				local minWait, maxWait = get('Settings/TypeWaitTime'):match(REGEX_RANGE)
-				minWait, maxWait = tonumber(minWait), tonumber(maxWait)
+            -- When we have fast hotkeys enabled, the bot sends the messages way
+            -- too fast and this ends up causing a huge problem because the
+            -- server can't properly read them. So we simulate the time it would
+            -- take to actually type the text.
+            if $fasthotkeys then
+                local minWait, maxWait = get('Settings/TypeWaitTime'):match(REGEX_RANGE)
+                minWait, maxWait = tonumber(minWait), tonumber(maxWait)
 
-				-- Even though values can go as low as 10 x 10 ms, there's a
-				-- physical cap at about 30 x 30 ms.
-				minWait, maxWait = math.max(minWait, 30), math.max(maxWait, 30)
+                -- Even though values can go as low as 10 x 10 ms, there's a
+                -- physical cap at about 30 x 30 ms.
+                minWait, maxWait = math.max(minWait, 30), math.max(maxWait, 30)
 
-				local waitTime = 0
+                local waitTime = 0
 
-				for i = 1, #v do
-					waitTime = waitTime + math.random(minWait, maxWait)
-				end
+                for i = 1, #v do
+                    waitTime = waitTime + math.random(minWait, maxWait)
+                end
 
-				-- My measurements indicate at least 15% extra time to actually
-				-- press the keys then it should take, even with relatively
-				-- high settings. However, the measurements go relatively high
-				-- when using extremely short strings. So I made up this weird
-				-- formula with the help of Wolfram Alpha.
-				waitTime = waitTime * (1 + (3 * (1.15 / #v)^1.15))
+                -- My measurements indicate at least 15% extra time to actually
+                -- press the keys then it should take, even with relatively
+                -- high settings. However, the measurements go relatively high
+                -- when using extremely short strings. So I made up this weird
+                -- formula with the help of Wolfram Alpha.
+                waitTime = waitTime * (1 + (3 * (1.15 / #v)^1.15))
 
-				wait(waitTime)
-			end
+                wait(waitTime)
+            end
 
-			say('NPCs', v)
-			msgSuccess = waitFunction($name, v, 3000, true, MSG_SENT)
-			if not msgSuccess then
-				if not ischannel('NPCs') then
-					return npctalk(select(k, ...))
-				end
-			end
-		end
-	end
+            say('NPCs', v)
+            msgSuccess = waitFunction($name, v, 3000, true, MSG_SENT)
+            if not msgSuccess then
+                if not ischannel('NPCs') then
+                    return npctalk(select(k, ...))
+                end
+            end
+        end
+    end
 
-	return true
+    return true
 end
 
 --[[
@@ -1036,23 +1043,34 @@ end
  * @param     {string}       keys           - Keys to be pressed
 --]]
 function press(keys)
-	keys = keys:upper()
+    keys = keys:upper()
 
-	for i, j, k in string.gmatch(keys .. '[]', '([^%[]-)%[(.-)%]([^%[]-)') do
-		for n = 1, #i do
-			keyevent(KEYS[i:at(n)])
-		end
+    for i, j, k in string.gmatch(keys .. '[]', '([^%[]-)%[(.-)%]([^%[]-)') do
+        for n = 1, #i do
+            keyevent(KEYS[i:at(n)])
+        end
 
-		if #j then
-			keyevent(KEYS[j])
-		end
+        if #j then
+            keyevent(KEYS[j])
+        end
 
-		for n = 1, #k do
-			keyevent(KEYS[k:at(n)])
-		end
-	end
+        for n = 1, #k do
+            keyevent(KEYS[k:at(n)])
+        end
+    end
 end
 
+--[[
+ * Closes the battle list.
+ *
+ * NOTE: This is pretty much an alias to openbattlelist(true), because I found
+ * that boolean parameter to be pretty stupid.
+ *
+ * @since     1.5.0
+--]]
+function closebattlelist()
+    openbattlelist(true)
+end
 
 
 
@@ -1079,9 +1097,9 @@ end
  *                                            splitting the string.
 --]]
 function string.explode(self, delimiter)
-	local result = {}
-	self:gsub('[^'.. delimiter ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
-	return result
+    local result = {}
+    self:gsub('[^'.. delimiter ..'*]+', function(s) table.insert(result, (string.gsub(s, '^%s*(.-)%s*$', '%1'))) end)
+    return result
 end
 
 --[[
@@ -1095,7 +1113,7 @@ end
  * @returns   {string}                      - The nth character
 --]]
 function string.at(self, n)
-	return self:sub(n, n)
+    return self:sub(n, n)
 end
 
 --[[
@@ -1108,7 +1126,7 @@ end
  * @returns   {string}                      - The capitalized string
 --]]
 function string.capitalize(self) -- Working
-	return self:at(1):upper() .. self:sub(2):lower()
+    return self:at(1):upper() .. self:sub(2):lower()
 end
 
 --[[
@@ -1121,9 +1139,9 @@ end
  * @returns   {string}                      - The capitalized string
 --]]
 function string.capitalizeall(self) -- Working
-	local t = string.explode(self, ' ')
-	table.map(t, string.capitalize)
-	return table.concat(t, ' ')
+    local t = string.explode(self, ' ')
+    table.map(t, string.capitalize)
+    return table.concat(t, ' ')
 end
 
 --[[
@@ -1143,55 +1161,55 @@ end
  * @returns   {string}                      - The final string
 --]]
 function string.fit(self, size, trailing, trueSize)
-	trailing = trailing or '...'
+    trailing = trailing or '...'
 
-	if size <= 0 then
-		return ''
-	end
+    if size <= 0 then
+        return ''
+    end
 
-	-- Use the actual pixels measurement if required
-	local sizeFunction = string.len
-	if trueSize then
-		sizeFunction = measurestring
-	end
+    -- Use the actual pixels measurement if required
+    local sizeFunction = string.len
+    if trueSize then
+        sizeFunction = measurestring
+    end
 
-	if sizeFunction(self) <= size then
-		return self
-	elseif not trueSize then
-		return self:sub(0, size - #trailing) .. trailing
-	end
+    if sizeFunction(self) <= size then
+        return self
+    elseif not trueSize then
+        return self:sub(0, size - #trailing) .. trailing
+    end
 
-	-- Assuming the order of the letters doesn't matter, we'll just append the
-	-- trailing text to the beginning, so we don't have to worry about it when
-	-- cutting the string for measurements later
-	local trailedText = trailing .. self
+    -- Assuming the order of the letters doesn't matter, we'll just append the
+    -- trailing text to the beginning, so we don't have to worry about it when
+    -- cutting the string for measurements later
+    local trailedText = trailing .. self
 
-	-- Helper function
-	local function attempt(n)
-		return n > 0 and sizeFunction(trailedText:sub(0, n)) <= size
-	end
+    -- Helper function
+    local function attempt(n)
+        return n > 0 and sizeFunction(trailedText:sub(0, n)) <= size
+    end
 
-	local ratio = size / sizeFunction(trailedText)
-	local suggestedSize = math.round(#trailedText * ratio)
-	local firstAttempt = attempt(suggestedSize)
+    local ratio = size / sizeFunction(trailedText)
+    local suggestedSize = math.round(#trailedText * ratio)
+    local firstAttempt = attempt(suggestedSize)
 
-	-- If the first attempt failed, we should start decrementing; if it was
-	-- successful, we should start incrementing
-	local upDown = tern(firstAttempt, 1, -1)
+    -- If the first attempt failed, we should start decrementing; if it was
+    -- successful, we should start incrementing
+    local upDown = tern(firstAttempt, 1, -1)
 
-	-- Keep attempting until we know the result is different; this will mean
-	-- that we just reached the turning point, so we can know we have the best
-	-- solution for our problem, or the longest string that fits the required
-	-- size
-	repeat
-		suggestedSize = suggestedSize + upDown
-	until suggestedSize <= 0 or attempt(suggestedSize) ~= firstAttempt
+    -- Keep attempting until we know the result is different; this will mean
+    -- that we just reached the turning point, so we can know we have the best
+    -- solution for our problem, or the longest string that fits the required
+    -- size
+    repeat
+        suggestedSize = suggestedSize + upDown
+    until suggestedSize <= 0 or attempt(suggestedSize) ~= firstAttempt
 
-	if suggestedSize > 0 then
-		return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
-	else
-		return ''
-	end
+    if suggestedSize > 0 then
+        return self:sub(0, suggestedSize - tern(firstAttempt, 1, 0) - #trailing ) .. trailing
+    else
+        return ''
+    end
 end
 
 --[[
@@ -1206,7 +1224,7 @@ end
  *                                            given substring
 --]]
 function string.starts(self, substr)
-	return self:sub(1, #substr) == substr
+    return self:sub(1, #substr) == substr
 end
 
 --[[
@@ -1221,7 +1239,7 @@ end
  *                                            given substring
 --]]
 function string.ends(self, substr)
-	return self:sub(-#substr) == substr
+    return self:sub(-#substr) == substr
 end
 
 --[[
@@ -1236,7 +1254,7 @@ end
  *                                            substring
 --]]
 function string.begin(self, substr)
-	return tern(self:starts(substr), self, substr .. self)
+    return tern(self:starts(substr), self, substr .. self)
 end
 
 
@@ -1252,7 +1270,7 @@ end
  *                                            substring
 --]]
 function string.finish(self, substr)
-	return tern(self:ends(substr), self, self .. substr)
+    return tern(self:ends(substr), self, self .. substr)
 end
 
 --[[
@@ -1267,15 +1285,15 @@ end
  * @returns   {boolean}                     - The trimmed string
 --]]
 function string.ltrim(self, chars)
-	chars = chars or '%s'
-	if type(chars) == 'table' then
-		chars = '[' .. table.concat(chars, '') .. ']'
-	end
+    chars = chars or '%s'
+    if type(chars) == 'table' then
+        chars = '[' .. table.concat(chars, '') .. ']'
+    end
 
-	-- This protects it from matching all characters if '.' is passed
-	chars = chars:gsub('%.', '%%.')
+    -- This protects it from matching all characters if '.' is passed
+    chars = chars:gsub('%.', '%%.')
 
-	return self:gsub('^' .. chars .. '*(.-)$', '%1')
+    return self:gsub('^' .. chars .. '*(.-)$', '%1')
 end
 
 --[[
@@ -1290,15 +1308,15 @@ end
  * @returns   {boolean}                     - The trimmed string
 --]]
 function string.rtrim(self, chars)
-	chars = chars or '%s'
-	if type(chars) == 'table' then
-		chars = '[' .. table.concat(chars, '') .. ']'
-	end
+    chars = chars or '%s'
+    if type(chars) == 'table' then
+        chars = '[' .. table.concat(chars, '') .. ']'
+    end
 
-	-- This protects it from matching all characters if '.' is passed
-	chars = chars:gsub('%.', '%%.')
+    -- This protects it from matching all characters if '.' is passed
+    chars = chars:gsub('%.', '%%.')
 
-	return self:gsub('^(.-)' .. chars .. '*$', '%1')
+    return self:gsub('^(.-)' .. chars .. '*$', '%1')
 end
 
 --[[
@@ -1313,9 +1331,8 @@ end
  * @returns   {boolean}                     - The trimmed string
 --]]
 function string.trim(self, chars)
-	return self:ltrim(chars):rtrim(chars)
+    return self:ltrim(chars):rtrim(chars)
 end
-
 
 
 
@@ -1340,13 +1357,13 @@ end
  * @returns   {number}                      - The rounded number
 --]]
 function math.round(self, mult)
-	div = div or 1
+    div = div or 1
 
-	if self % div >= 0.5 * div then
-		return math.ceil(self, mult)
-	else
-		return math.floor(self, mult)
-	end
+    if self % div >= 0.5 * div then
+        return math.ceil(self, mult)
+    else
+        return math.floor(self, mult)
+    end
 end
 
 --[[
@@ -1361,9 +1378,9 @@ end
  * @returns   {number}                      - The rounded number
 --]]
 function math.ceil(self, mult)
-	mult = mult or 1
+    mult = mult or 1
 
-	return math._CEIL(self / mult) * mult
+    return math._CEIL(self / mult) * mult
 end
 
 --[[
@@ -1378,11 +1395,10 @@ end
  * @returns   {number}                      - The rounded number
 --]]
 function math.floor(self, mult)
-	mult = mult or 1
+    mult = mult or 1
 
-	return math._FLOOR(self / mult) * mult
+    return math._FLOOR(self / mult) * mult
 end
-
 
 
 
@@ -1408,14 +1424,14 @@ end
  * @returns   {boolean}                     - Whether the target table is empty
 --]]
 function table.isempty(self)
-	if #self ~= 0 or next(self) ~= nil then
-		return false
-	else
-		for k, v in pairs(self) do
-			return false
-		end
-	end
-	return true
+    if #self ~= 0 or next(self) ~= nil then
+        return false
+    else
+        for k, v in pairs(self) do
+            return false
+        end
+    end
+    return true
 end
 
 --[[
@@ -1431,18 +1447,18 @@ end
  *                                            target table
 --]]
 function table.size(self)
-	local i = 0
+    local i = 0
 
-	for v in pairs(self) do
-		i = i + 1
-	end
+    for v in pairs(self) do
+        i = i + 1
+    end
 
-	return i
+    return i
 end
 
 --[[
  * Runs a routine through every item in the given table. The routine to be ran
- * will receive as arguments, for each item, it's value and correspondent index
+ * will receive as arguments, for each item, its value and correspondent index
  * and the whole table.
  *
  * @since     0.1.0
@@ -1457,23 +1473,23 @@ end
  *                                            for each item
 --]]
 function table.each(self, f, recursive)
-	local r = {}
+    local r = {}
 
-	for k, v in pairs(self) do
-		if recursive and type(v) == 'table' then
-			r[k] = table.each(v, f, recursive)
-		else
-			r[k] = f(v, k, self)
-		end
-	end
+    for k, v in pairs(self) do
+        if recursive and type(v) == 'table' then
+            r[k] = table.each(v, f, recursive)
+        else
+            r[k] = f(v, k, self)
+        end
+    end
 
-	return r
+    return r
 end
 
 --[[
  * Runs a routine through every item in the given table and replace the item
  * with the value returned by it. The routine to be ran will receive as
- * arguments, for each item, it's value and correspondent index and the whole
+ * arguments, for each item, its value and correspondent index and the whole
  * table.
  *
  * @since     0.1.0
@@ -1485,13 +1501,13 @@ end
  *                                            be iterated; defaults to false
 --]]
 function table.map(self, f, recursive)
-	for k, v in pairs(self) do
-		if recursive and type(v) == 'table' then
-			table.map(v, f, true)
-		else
-			self[k] = f(v, k, self)
-		end
-	end
+    for k, v in pairs(self) do
+        if recursive and type(v) == 'table' then
+            table.map(v, f, true)
+        else
+            self[k] = f(v, k, self)
+        end
+    end
 end
 
 --[[
@@ -1504,7 +1520,7 @@ end
  * @returns   {any}                         - The first item of the given table
 --]]
 function table.first(self)
-	return self[1]
+    return self[1]
 end
 
 --[[
@@ -1517,7 +1533,7 @@ end
  * @returns   {any}                         - The last item of the given table
 --]]
 function table.last(self)
-	return self[#self]
+    return self[#self]
 end
 
 --[[
@@ -1557,17 +1573,17 @@ end
  * @param     {table}        self           - The target table
 --]]
 function table.normalize(self)
-	for i = #self, 1, -1 do
-		if self[i] == nil then
-			table.remove(self, i)
-		end
-	end
+    for i = #self, 1, -1 do
+        if self[i] == nil then
+            table.remove(self, i)
+        end
+    end
 end
 
 --[[
  * Runs a routine through every item in the given table and remove it from the
  * table if the routine returns false. The routine to be ran will receive as
- * arguments, for each item, it's value and correspondent index and the whole
+ * arguments, for each item, its value and correspondent index and the whole
  * table.
  *
  * @since     1.1.0
@@ -1578,16 +1594,16 @@ end
  *                                            default removes falsy values
 --]]
 function table.filter(self, f)
-	if not f then
-		f = tobool
-		table.normalize(self)
-	end
+    if not f then
+        f = tobool
+        table.normalize(self)
+    end
 
-	for k, v in pairs(self) do
-		if not f(v, k, self) then
-			table.remove(self, k)
-		end
-	end
+    for k, v in pairs(self) do
+        if not f(v, k, self) then
+            table.remove(self, k)
+        end
+    end
 end
 
 --[[
@@ -1604,34 +1620,34 @@ end
  *                                            given tables
 --]]
 function table.merge(...)
-	local args = {...}
-	local r = {}
-	local recursive, f
+    local args = {...}
+    local r = {}
+    local recursive, f
 
-	if (type(table.last(args)) == 'boolean') then
-		recursive = table.remove(args)
-	end
+    if (type(table.last(args)) == 'boolean') then
+        recursive = table.remove(args)
+    end
 
-	if #args[1] ~= table.size(args[1]) then
-		function f(v, k)
-			if recursive and type(r[k]) == 'table' and type(v) == 'table' then
-				r[k] = table.merge(r[k], v, true)
-			else
-				r[k] = v
-			end
-		end
-	else
-		function f(v)
-			local rv = v
-			table.insert(r, rv)
-		end
-	end
+    if #args[1] ~= table.size(args[1]) then
+        function f(v, k)
+            if recursive and type(r[k]) == 'table' and type(v) == 'table' then
+                r[k] = table.merge(r[k], v, true)
+            else
+                r[k] = v
+            end
+        end
+    else
+        function f(v)
+            local rv = v
+            table.insert(r, rv)
+        end
+    end
 
-	table.each(args, function(v)
-		table.each(v, f, recursive)
-	end)
+    table.each(args, function(v)
+        table.each(v, f, recursive)
+    end)
 
-	return r
+    return r
 end
 
 --[[
@@ -1645,7 +1661,7 @@ end
  * @returns   {number}                      - The sum of all items
 --]]
 function table.sum(self)
-	return table.reduce(self, function (memo, v) return memo + v end)
+    return table.reduce(self, function (memo, v) return memo + v end)
 end
 
 --[[
@@ -1659,7 +1675,7 @@ end
  * @returns   {number}                      - The average of all items
 --]]
 function table.average(self)
-	return table.sum(self) / table.size(self)
+    return table.sum(self) / table.size(self)
 end
 
 --[[
@@ -1667,12 +1683,12 @@ end
  *
  * @since     1.1.0
  *
- * @param	{table}		self	- The target table
+ * @param   {table}     self    - The target table
  *
- * @returns {number}			- The maximum value of all items
+ * @returns {number}            - The maximum value of all items
 --]]
 function table.max(self)
-	return math.max(table.unpack(self))
+    return math.max(table.unpack(self))
 end
 
 --[[
@@ -1685,7 +1701,7 @@ end
  * @returns   {number}                      - The minimum value of all items
 --]]
 function table.min(self)
-	return math.min(table.unpack(self))
+    return math.min(table.unpack(self))
 end
 
 --[[
@@ -1699,70 +1715,157 @@ end
  *                                            be flattened; defaults to false
 --]]
 function table.flatten(self, recursive)
-	-- I would have liked to use ipairs() here, but since we'll need to skip
-	-- added indexes, I couldn't =/
-	for i = 1, #self do
-		if type(self[i]) == 'table' then
-			if recursive then
-				table.flatten(self[i])
-			end
+    -- I would have liked to use ipairs() here, but since we'll need to skip
+    -- added indexes, I couldn't =/
+    for i = 1, #self do
+        if type(self[i]) == 'table' then
+            if recursive then
+                table.flatten(self[i])
+            end
 
-			for j, v in ipairs(self[i]) do
-				table.insert(self, i + j, v)
-			end
+            for j, v in ipairs(self[i]) do
+                table.insert(self, i + j, v)
+            end
 
-			tableIndex = i
-			i = i + #self[i] - 1
-			table.remove(self, tableIndex)
-		end
-	end
+            tableIndex = i
+            i = i + #self[i] - 1
+            table.remove(self, tableIndex)
+        end
+    end
 end
 
+--[[
+ * Returns a copy of the table, filtered to only have values for the whitelisted
+ * keys.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {string}       key1, [...]    - The whitelisted keys
+ *
+ * @returns   {table}                       - The copy of the table, filtered
+--]]
 function table.pick(self, ...)
-	local args = {...}
-	local r = {}
+    local args = {...}
+    local r = {}
 
-	for _, v in ipairs(args) do
-		r[v] = self[v]
-	end
+    for _, v in ipairs(args) do
+        r[v] = self[v]
+    end
 
-	return r
+    return r
 end
 
+--[[
+ * Runs a routine through every item in the given table to reduce it to a single
+ * value. The routine to be ran will receive as arguments, for each item, its
+ * value and the result of the reduction of the previous elements of the table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - The routine used to reduce the
+ *                                            table
+ * @param     {any}          [memo]         - The initial value to be passed to
+ *                                            the routine as the second argument;
+ *                                            if none is passed, the first item
+ *                                            is used and iteration starts on the
+ *                                            second one instead
+ *
+ * @returns   {any}                         - The reduced value
+--]]
 function table.reduce(self, f, memo)
-	for k, v in pairs(self) do
-		if memo == nil then
-			memo = v
-		else
-			memo = f(memo, v, k, self)
-		end
-	end
+    for k, v in pairs(self) do
+        if memo == nil then
+            memo = v
+        else
+            memo = f(memo, v, k, self)
+        end
+    end
 
-	return memo
+    return memo
 end
 
+--[[
+ * Runs a routine through every item in the given table and returns whether every
+ * item ran through the routine returns true. The routine to be ran will receive
+ * as arguments, for each item, its value and correspondent index and the whole
+ * table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - The routine ran through the table
+ *
+ * @returns   {boolean}                     - Whether all items passed the test
+ *                                            by the routine
+--]]
 function table.every(self, f)
-	for k, v in pairs(self) do
-		if not f(v, k, self) then
-			return false
-		end
-	end
+    for k, v in pairs(self) do
+        if not f(v, k, self) then
+            return false
+        end
+    end
 
-	return true
+    return true
 end
 
+--[[
+ * Runs a routine through every item in the given table and returns whether any
+ * item ran through the routine returns true. The routine to be ran will receive
+ * as arguments, for each item, its value and correspondent index and the whole
+ * table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {function}     f              - The routine ran through the table
+ *
+ * @returns   {boolean}                     - Whether any items passed the test
+ *                                            by the routine
+--]]
 function table.any(self, f)
-	for k, v in pairs(self) do
-		if f(v, k, self) then
-			return true
-		end
-	end
+    for k, v in pairs(self) do
+        if f(v, k, self) then
+            return true
+        end
+    end
 
-	return false
+    return false
 end
 
+--[[
+ * Extracts a property from each item in the given table.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ * @param     {any}          prop           - The property to be extracted
+ *
+ * @returns   {table}                       - The table with the extracted
+ *                                            properties
+--]]
 function table.pluck(self, prop)
-	return table.each(self, function (v) return v[prop] end)
+    return table.each(self, function (v) return v[prop] end)
+end
+
+--[[
+ * Returns a copy of the table with the indexes reversed.
+ *
+ * @since     1.5.0
+ *
+ * @param     {table}        self           - The target table
+ *
+ * @returns   {table}                       - The table with the reversed indexes
+--]]
+function table.reverse(self)
+    local r = {}
+
+    for i, v in ipairs(self)
+        r[#self - i + 1] = v
+    do
+
+    return r
 end
 
 
@@ -1787,13 +1890,13 @@ file = {}
  * @returns   {boolean}                     - Whether it exists or not
 --]]
 function file.exists(filename)
-	local handler = io.open(filename)
+    local handler = io.open(filename)
 
-	if type(handler) ~= 'nil' then
-		handler:close()
-		return true
-	end
-	return false
+    if type(handler) ~= 'nil' then
+        handler:close()
+        return true
+    end
+    return false
 end
 
 --[[
@@ -1806,14 +1909,14 @@ end
  * @returns   {string}                      - File content
 --]]
 function file.content(filename)
-	if not file.exists(filename) then
-		return nil
-	end
+    if not file.exists(filename) then
+        return nil
+    end
 
-	local handler = io.open(filename, 'r')
-	local content = handler:read('*all')
-	handler:close()
-	return content
+    local handler = io.open(filename, 'r')
+    local content = handler:read('*all')
+    handler:close()
+    return content
 end
 
 --[[
@@ -1826,16 +1929,16 @@ end
  * @returns   {number}                      - File lines count
 --]]
 function file.linescount(filename)
-	if not file.exists(filename) then
-		return -1
-	end
+    if not file.exists(filename) then
+        return -1
+    end
 
-	local l = 0
-	for line in io.lines(filename) do
-		l = l + 1
-	end
+    local l = 0
+    for line in io.lines(filename) do
+        l = l + 1
+    end
 
-	return l
+    return l
 end
 
 --[[
@@ -1849,20 +1952,20 @@ end
  * @returns   {string}                      - Line content
 --]]
 function file.line(filename, linenum)
-	if not file.exists(filename) then
-			return nil
-	end
+    if not file.exists(filename) then
+            return nil
+    end
 
-	local l, linev = 0, ''
-	for line in io.lines(filename) do
-		l = l + 1
-		if l == linenum then
-			linev = line
-			break
-		end
-	end
+    local l, linev = 0, ''
+    for line in io.lines(filename) do
+        l = l + 1
+        if l == linenum then
+            linev = line
+            break
+        end
+    end
 
-	return linev
+    return linev
 end
 
 --[[
@@ -1875,9 +1978,9 @@ end
  * @param     {string}       content        - Content to be appended
 --]]
 function file.write(filename, content)
-	local handler = io.open(filename, 'a+')
-	handler:write(content)
-	handler:close()
+    local handler = io.open(filename, 'a+')
+    handler:write(content)
+    handler:close()
 end
 
 --[[
@@ -1890,9 +1993,9 @@ end
  * @param     {string}       content        - Content to be written
 --]]
 function file.rewrite(filename, content)
-	local handler = io.open(filename, 'w+')
-	handler:write(content)
-	handler:close()
+    local handler = io.open(filename, 'w+')
+    handler:write(content)
+    handler:close()
 end
 
 --[[
@@ -1904,8 +2007,8 @@ end
  * @param     {string}       filename       - File name to be cleared
 --]]
 function file.clear(filename)
-	local handler = io.open(filename, 'w+')
-	handler:close()
+    local handler = io.open(filename, 'w+')
+    handler:close()
 end
 
 --[[
@@ -1918,12 +2021,12 @@ end
  * @param     {string}       content        - Content to be appended
 --]]
 function file.writeline(filename, content)
-	local s = ''
-	if file.linescount(filename) > 0 then
-		s = '\n'
-	end
+    local s = ''
+    if file.linescount(filename) > 0 then
+        s = '\n'
+    end
 
-	file.write(filename, s .. content)
+    file.write(filename, s .. content)
 end
 
 --[[
@@ -1938,19 +2041,19 @@ end
  * @returns   {number}                      - Matching line number
 --]]
 function file.isline(filename, content)
-	if not file.exists(filename) then
-		return false
-	end
+    if not file.exists(filename) then
+        return false
+    end
 
-	local l = 0
-	for line in io.lines(filename) do
-		l = l + 1
-		if line == content then
-			return l
-		end
-	end
+    local l = 0
+    for line in io.lines(filename) do
+        l = l + 1
+        if line == content then
+            return l
+        end
+    end
 
-	return false
+    return false
 end
 
 --[[
@@ -1963,13 +2066,12 @@ end
  * @returns   {any}                         - Anything returned by the code ran
 --]]
 function file.exec(filename)
-	if not file.exists(filename) then
-		return nil
-	end
+    if not file.exists(filename) then
+        return nil
+    end
 
-	return exec(file.content(filename))
+    return exec(file.content(filename))
 end
-
 
 
 
@@ -1984,56 +2086,55 @@ end
 -- Temporary fix for Lucas' table.stringformat
 -- Now handles userdatas and booleans correctly
 function table.stringformat(self, tablename, separator)
-	if type(self) ~= 'table' then
-		return ''
-	end
-	separator = separator or ''
-	tablename = tablename or ''
-	local ret
-	if tablename == '' then
-		ret = '{'
-	else
-		ret = tablename..' = {'
-	end
-	local count = 0
-	for i,j in ipairs(self) do
-		count = count+1
-		local valType = type(j)
-		if valType == 'string' then
-			ret = ret..'"'..j..'", '..separator
-		elseif valType == 'number' then
-			ret = ret..j..', '..separator
-		elseif valType == 'boolean' then
-			ret = ret..tostring(j)..', '..separator
-		elseif valType == 'nil' then
-			ret = ret..'nil, '..separator
-		elseif valType == 'table' then
-			ret = ret..table.stringformat(j)..', '..separator
-		elseif valType == 'userdata' then
-			ret = ret..userdatastringformat(j)..', '..separator
-		end
-	end
-	if count == 0 then
-		for i,j in pairs(self) do
-			local valType = type(j)
-			if valType == 'string' then
-				ret = ret..i..' = "'..j..'", '..separator
-			elseif valType == 'number' then
-				ret = ret..i..' = '..j..', '..separator
-			elseif valType == 'boolean' then
-				ret = ret..i..' = '..tostring(j)..', '..separator
-			elseif valType == 'nil' then
-				ret = ret..i..' = nil, '..separator
-			elseif valType == 'table' then
-				ret = ret..i..' = '..table.stringformat(j)..', '..separator
-			elseif valType == 'userdata' then
-				ret = ret..i..' = '..userdatastringformat(j)..', '..separator
-			end
-		end
-	end
-	return ret:sub(1,#ret-2)..'}'
+    if type(self) ~= 'table' then
+        return ''
+    end
+    separator = separator or ''
+    tablename = tablename or ''
+    local ret
+    if tablename == '' then
+        ret = '{'
+    else
+        ret = tablename..' = {'
+    end
+    local count = 0
+    for i,j in ipairs(self) do
+        count = count+1
+        local valType = type(j)
+        if valType == 'string' then
+            ret = ret..'"'..j..'", '..separator
+        elseif valType == 'number' then
+            ret = ret..j..', '..separator
+        elseif valType == 'boolean' then
+            ret = ret..tostring(j)..', '..separator
+        elseif valType == 'nil' then
+            ret = ret..'nil, '..separator
+        elseif valType == 'table' then
+            ret = ret..table.stringformat(j)..', '..separator
+        elseif valType == 'userdata' then
+            ret = ret..userdatastringformat(j)..', '..separator
+        end
+    end
+    if count == 0 then
+        for i,j in pairs(self) do
+            local valType = type(j)
+            if valType == 'string' then
+                ret = ret..i..' = "'..j..'", '..separator
+            elseif valType == 'number' then
+                ret = ret..i..' = '..j..', '..separator
+            elseif valType == 'boolean' then
+                ret = ret..i..' = '..tostring(j)..', '..separator
+            elseif valType == 'nil' then
+                ret = ret..i..' = nil, '..separator
+            elseif valType == 'table' then
+                ret = ret..i..' = '..table.stringformat(j)..', '..separator
+            elseif valType == 'userdata' then
+                ret = ret..i..' = '..userdatastringformat(j)..', '..separator
+            end
+        end
+    end
+    return ret:sub(1,#ret-2)..'}'
 end
-
 
 
 
@@ -2051,7 +2152,6 @@ get = getsetting
 
 
 
-
 --    ______           __                     ________
 --   / ____/_  _______/ /_____  ____ ___     / ____/ /___ ______________  _____
 --  / /   / / / / ___/ __/ __ \/ __ `__ \   / /   / / __ `/ ___/ ___/ _ \/ ___/
@@ -2063,270 +2163,277 @@ Point = { __class = 'Point' }
 PointMT = { __index = Point }
 
 function Point:new(x, y)
-	if type(x) == 'Point' then
-		return x
-	elseif type(x) == 'table' or type(x) == 'userdata' then
-		if x.x ~= nil then
-			x, y = x.x, x.y
-		else
-			x, y = x[1], x[2]
-		end
-	elseif type(x) == 'string' or type(x) == 'string' then
-		x = tonumber(x)
-		y = tonumber(y)
-	end
+    if type(x) == 'Point' then
+        return x
+    elseif type(x) == 'table' or type(x) == 'userdata' then
+        if x.x ~= nil then
+            x, y = x.x, x.y
+        else
+            x, y = x[1], x[2]
+        end
+    elseif type(x) == 'string' or type(x) == 'string' then
+        x = tonumber(x)
+        y = tonumber(y)
+    end
 
-	if type(x) ~= 'number' or type(y) ~= 'number' then
-		return nil
-	end
+    if type(x) ~= 'number' or type(y) ~= 'number' then
+        return nil
+    end
 
-	x, y = math.round(x), math.round(y)
+    x, y = math.round(x), math.round(y)
 
-	local newObj = {x = x, y = y}
-	setmetatable(newObj, PointMT)
-	return newObj
+    local newObj = {x = x, y = y}
+    setmetatable(newObj, PointMT)
+    return newObj
 end
 
 function PointMT:__add(value)
-	self = Point:new(self)
-	value = Point:new(value)
+    self = Point:new(self)
+    value = Point:new(value)
 
-	return Point:new(self.x + value.x, self.y + value.y)
+    return Point:new(self.x + value.x, self.y + value.y)
 end
 
 function PointMT:__sub(value)
-	self = Point:new(self)
-	value = Point:new(value)
+    self = Point:new(self)
+    value = Point:new(value)
 
-	return Point:new(self.x - value.x, self.y - value.y)
+    return Point:new(self.x - value.x, self.y - value.y)
 end
 
 function PointMT:__mul(value)
-	self = Point:new(self)
-	value = Point:new(value)
+    self = Point:new(self)
+    value = Point:new(value)
 
-	return Point:new(self.x * value.x, self.y * value.y)
+    return Point:new(self.x * value.x, self.y * value.y)
 end
 
 function PointMT:__div(value)
-	self = Point:new(self)
-	value = Point:new(value)
+    self = Point:new(self)
+    value = Point:new(value)
 
-	return Point:new(self.x / value.x, self.y / value.y)
+    return Point:new(self.x / value.x, self.y / value.y)
 end
 
 function PointMT:__unm()
-	return self * {-1, -1}
+    return self * {-1, -1}
 end
 
 function PointMT:__eq(value)
-	return self.x == value.x and self.y == value.y
+    return self.x == value.x and self.y == value.y
 end
 
 function PointMT:__tostring()
-	return '{x = ' .. self.x .. ', y = ' .. self.y .. '}'
+    return '{x = ' .. self.x .. ', y = ' .. self.y .. '}'
 end
-
 
 Area = { __class = 'Area' }
 AreaMT = { __index = Area }
 
 function Area:new(firstCorner, width, height)
-	-- Special handling for rect
-	if type(firstCorner) == 'userdata' and firstCorner.objtype == 'rect' then
-		return Area:new(Point:new(firstCorner.left, firstCorner.top), firstCorner.width, firstCorner.height)
-	end
+    -- Special handling for rect
+    if type(firstCorner) == 'userdata' and firstCorner.objtype == 'rect' then
+        return Area:new(Point:new(firstCorner.left, firstCorner.top), firstCorner.width, firstCorner.height)
+    end
 
-	firstCorner = Point:new(firstCorner)
+    firstCorner = Point:new(firstCorner)
 
-	local secondCorner = Point:new(width)
-	if secondCorner == nil then
-		secondCorner = firstCorner + Point:new(width - 1, height - 1)
-	end
+    local secondCorner = Point:new(width)
+    if secondCorner == nil then
+        secondCorner = firstCorner + Point:new(width - 1, height - 1)
+    end
 
-	if type(firstCorner) ~= 'Point' or type(secondCorner) ~= 'Point' then
-		return nil
-	end
+    if type(firstCorner) ~= 'Point' or type(secondCorner) ~= 'Point' then
+        return nil
+    end
 
-	local newObj = {
-		topLeft = Point:new(math.min(firstCorner.x, secondCorner.x), math.min(firstCorner.y, secondCorner.y)),
-		botRight = Point:new(math.max(firstCorner.x, secondCorner.x), math.max(firstCorner.y, secondCorner.y))
-	}
-	setmetatable(newObj, AreaMT)
-	return newObj
+    local newObj = {
+        topLeft = Point:new(math.min(firstCorner.x, secondCorner.x), math.min(firstCorner.y, secondCorner.y)),
+        botRight = Point:new(math.max(firstCorner.x, secondCorner.x), math.max(firstCorner.y, secondCorner.y))
+    }
+    setmetatable(newObj, AreaMT)
+    return newObj
 end
 
 function Area:createFromWaypoint(waypoint)
-	local topLeft = Point:new(get(waypoint, 'Coordinates'):match(REGEX_COORDS))
-	local width, height = get(waypoint, 'Range'):match(REGEX_RANGE)
+    local topLeft = Point:new(get(waypoint, 'Coordinates'):match(REGEX_COORDS))
+    local width, height = get(waypoint, 'Range'):match(REGEX_RANGE)
 
-	return Area:new(topLeft, width, height)
+    return Area:new(topLeft, width, height)
 end
 
 function Area:createFromSpecialArea(specialArea)
-	local topLeft = Point:new(get(specialArea, 'Coordinates'):match(REGEX_COORDS))
-	local width, height = get(specialArea, 'Size'):match(REGEX_RANGE)
+    local topLeft = Point:new(get(specialArea, 'Coordinates'):match(REGEX_COORDS))
+    local width, height = get(specialArea, 'Size'):match(REGEX_RANGE)
 
-	return Area:new(topLeft, width, height)
+    return Area:new(topLeft, width, height)
 end
 
 function Area:createFromAreaTable(areaTable)
-	return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.width, areaTable.height)
+    if areaTable.width ~= nil then
+        return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.width, areaTable.height)
+    else
+        return Area:new(Point:new(areaTable.left, areaTable.top), areaTable.right - areaTable.left, areaTable.bottom - areaTable.top)
+    end
 end
 
 function Area:extend(top, right, bottom, left)
-	-- This gives us a CSS-like workflow; the one that usually works in margin
-	-- and padding shorthands
-	top    = top    or 0
-	right  = right  or top
-	bottom = bottom or top
-	left   = left   or right
+    -- This gives us a CSS-like workflow; the one that usually works in margin
+    -- and padding shorthands
+    top    = top    or 0
+    right  = right  or top
+    bottom = bottom or top
+    left   = left   or right
 
-	self.topLeft = self.topLeft - Point:new(top, left)
-	self.botRight = self.botRight + Point:new(bottom, right)
+    self.topLeft = self.topLeft - Point:new(left, top)
+    self.botRight = self.botRight + Point:new(right, bottom)
+
+    -- Allow chaining
+    return self
 end
 
 function Area:getLeft()
-	return self.topLeft.x
+    return self.topLeft.x
 end
 
 function Area:getTop()
-	return self.topLeft.y
+    return self.topLeft.y
 end
 
 function Area:getRight()
-	return self.botRight.x
+    return self.botRight.x
 end
 
 function Area:getBottom()
-	return self.botRight.y
+    return self.botRight.y
 end
 
 function Area:getWidth()
-	return self.botRight.x - self.topLeft.x
+    return self.botRight.x - self.topLeft.x + 1
 end
 
 function Area:getHeight()
-	return self.botRight.y - self.topLeft.y
+    return self.botRight.y - self.topLeft.y + 1
 end
 
 function Area:hasPoint(point, y)
-	point = Point:new(point, y)
+    point = Point:new(point, y)
 
-	return point.x >= self.topLeft.x  and
-	       point.y >= self.topLeft.y  and
-	       point.x <= self.botRight.x and
-	       point.y <= self.botRight.y
+    return point.x >= self.topLeft.x  and
+           point.y >= self.topLeft.y  and
+           point.x <= self.botRight.x and
+           point.y <= self.botRight.y
 end
 
 function Area:move(point, y)
-	point = Point:new(point, y)
+    point = Point:new(point, y)
 
-	self.topLeft = self.topLeft + point
-	self.botRight = self.botRight + point
+    self.topLeft = self.topLeft + point
+    self.botRight = self.botRight + point
+
+    -- Allow chaining
+    return self
 end
 
 function AreaMT:__tostring()
-	return '{topLeft = ' .. tostring(self.topLeft) .. ', botRight = ' .. tostring(self.botRight) .. '}'
+    return '{topLeft = ' .. tostring(self.topLeft) .. ', botRight = ' .. tostring(self.botRight) .. '}'
 end
-
 
 HUD = { __class = 'HUD' }
 HUDMT = { __index = HUD }
 
 function HUD:new(options)
-	newObj = {
-		uniqueId      = nil,
-		draggable     = false,
-		dragEvent     = IEVENT_MMOUSEDOWN,
-		dragStopEvent = IEVENT_MMOUSEUP,
-		dragTarget    = nil,
-		savePosition  = false,
-		startPosition = Point:new(0, 0),
-		posRelativeTo = function() return Point:new(0, 0) end,
-		database      = $botdb,
+    newObj = {
+        uniqueId      = nil,
+        draggable     = false,
+        dragEvent     = IEVENT_MMOUSEDOWN,
+        dragStopEvent = IEVENT_MMOUSEUP,
+        dragTarget    = nil,
+        savePosition  = false,
+        startPosition = Point:new(0, 0),
+        posRelativeTo = function() return Point:new(0, 0) end,
+        database      = $botdb,
 
-		dragging      = false
-	}
+        dragging      = false
+    }
 
-	newObj = table.merge(newObj, options, true)
+    newObj = table.merge(newObj, options, true)
 
-	if newObj.savePosition then
-		if newObj.uniqueId == nil then
-			error('The uniqueId attribute is required when savePosition is enabled.')
-		end
+    if newObj.savePosition then
+        if newObj.uniqueId == nil then
+            error('The uniqueId attribute is required when savePosition is enabled.')
+        end
 
-		local oldPos = newObj.database:getvalue('HUDs Info', newObj.uniqueId .. '.position')
-		if oldPos ~= nil then
-			newObj.startPosition = newObj.posRelativeTo() + Point:new(oldPos:explode(';'))
-		end
-	end
+        local oldPos = newObj.database:getvalue('HUDs Info', newObj.uniqueId .. '.position')
+        if oldPos ~= nil then
+            newObj.startPosition = newObj.posRelativeTo() + Point:new(oldPos:explode(';'))
+        end
+    end
 
-	setmetatable(newObj, HUDMT)
-	return newObj
+    setmetatable(newObj, HUDMT)
+    return newObj
 end
 
 function HUD:bootstrap()
-	filterinput(false, self.draggable, false, false)
-	self:setPosition(self.startPosition)
+    filterinput(false, self.draggable, false, false)
+    self:setPosition(self.startPosition)
 end
 
 function HUD:setPosition(x, y)
-	local p = Point:new(x, y)
-	setposition(p.x, p.y)
+    local p = Point:new(x, y)
+    setposition(p.x, p.y)
 
-	if self.savePosition then
-		self:updateSavedPosition()
-	end
+    if self.savePosition then
+        self:updateSavedPosition()
+    end
 end
 
 function HUD:handleInput(e)
-	if self.draggable and (self.dragTarget == nil or self.dragTarget == e.elementid) then
-		if e.type == self.dragEvent then
-			self:startDragging()
-		elseif e.type == self.dragStopEvent then
-			self:stopDragging()
-		end
-	end
+    if self.draggable and (self.dragTarget == nil or self.dragTarget == e.elementid) then
+        if e.type == self.dragEvent then
+            self:startDragging()
+        elseif e.type == self.dragStopEvent then
+            self:stopDragging()
+        end
+    end
 end
 
 function HUD:run()
-	if self.draggable then
-		self:drag()
-	end
+    if self.draggable then
+        self:drag()
+    end
 end
 
 function HUD:startDragging()
-	self.dragging = true
-	self.mousePos = Point:new($cursor)
+    self.dragging = true
+    self.mousePos = Point:new($cursor)
 end
 
 function HUD:stopDragging()
-	self.dragging = false
+    self.dragging = false
 
-	-- Had to move it to HUD:setPosition(), because apparently getposition()
-	-- doesn't work inside inputevents()
-	--[[ if self.savePosition then
-		self:updateSavedPosition()
-	end ]]--
+    -- Had to move it to HUD:setPosition(), because apparently getposition()
+    -- doesn't work inside inputevents()
+    --[[ if self.savePosition then
+        self:updateSavedPosition()
+    end ]]--
 end
 
 function HUD:updateSavedPosition()
-	local relativePos = Point:new(getposition()) - self.posRelativeTo()
-	self.database:setvalue('HUDs Info', self.uniqueId .. '.position', relativePos.x .. ';' .. relativePos.y)
+    local relativePos = Point:new(getposition()) - self.posRelativeTo()
+    self.database:setvalue('HUDs Info', self.uniqueId .. '.position', relativePos.x .. ';' .. relativePos.y)
 end
 
 function HUD:drag()
-	if self.dragging then
-		auto(10)
+    if self.dragging then
+        auto(10)
 
-		local curMouse = Point:new($cursor)
+        local curMouse = Point:new($cursor)
 
-		self:setPosition((curMouse - self.mousePos) + getposition())
-		self.mousePos = curMouse
-	end
+        self:setPosition((curMouse - self.mousePos) + getposition())
+        self.mousePos = curMouse
+    end
 end
-
 
 
 
