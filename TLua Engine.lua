@@ -15,6 +15,11 @@ function TLua.getFileContent(filename)
     local content = handler:read('*all')
     handler:close()
 
+    -- Trim trailing newline
+    if content:sub(-1) == '\n' then
+        content = content:sub(1, -2)
+    end
+
     return content
 end
 
