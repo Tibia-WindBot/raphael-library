@@ -237,11 +237,18 @@ end
  * Returns the current time of day, in seconds, on UTC timezone.
  *
  * @since     0.1.0
+ * @updated   1.5.1
  *
  * @returns   {number}                      - UTC time of day in seconds
 --]]
 function utctime()
-    return tosec(os.date('!%X'))
+    local t = os.date('!%X')
+
+    -- Apparently os.date('!%X') returns the time with AM/PM appended on some
+    -- computers; this ignores anything before and after the actual timestamp
+    t = table.first(t:match('(%d%d:%d%d:%d%d)'))
+
+    return tosec(t)
 end
 
 --[[
