@@ -1,16 +1,14 @@
--- Raphael's Library v1.5.0
--- Last Updated: 22/03/2015 - 20:53 UTC
+-- Raphael's Library v1.5.1
+-- Last Updated: 30/03/2015 - 14:52 UTC
 -- Released for WindBot v2.6.2
 
-RAPHAEL_LIB = '1.5.0'
+RAPHAEL_LIB = '1.5.1'
 
 --[[
- * Changelog v1.5.0
+ * Changelog v1.5.1
  *
- * - Added closebattlelist.
- * - Added a few more ITEMS_* constants.
- * - Minor fixes and improvements on Area class.
- * - Added and improved a shitload of table functions. (Gotta edit this before official release)
+ * - Fixed typo on table.reverse.
+ * - Fixed very rare issue with utctime().
  *
 --]]
 
@@ -494,11 +492,18 @@ end
  * Returns the current time of day, in seconds, on UTC timezone.
  *
  * @since     0.1.0
+ * @updated   1.5.1
  *
  * @returns   {number}                      - UTC time of day in seconds
 --]]
 function utctime()
-    return tosec(os.date('!%X'))
+    local t = os.date('!%X')
+
+    -- Apparently os.date('!%X') returns the time with AM/PM appended on some
+    -- computers; this ignores anything before and after the actual timestamp
+    t = table.first(t:match('(%d%d:%d%d:%d%d)'))
+
+    return tosec(t)
 end
 
 --[[
@@ -1853,6 +1858,7 @@ end
  * Returns a copy of the table with the indexes reversed.
  *
  * @since     1.5.0
+ * @updated   1.5.1
  *
  * @param     {table}        self           - The target table
  *
@@ -1861,9 +1867,9 @@ end
 function table.reverse(self)
     local r = {}
 
-    for i, v in ipairs(self)
+    for i, v in ipairs(self) do
         r[#self - i + 1] = v
-    do
+    end
 
     return r
 end
