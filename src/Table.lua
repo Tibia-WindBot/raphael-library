@@ -441,6 +441,7 @@ end
  * Returns a copy of the table with the indexes reversed.
  *
  * @since     1.5.0
+ * @updated   1.5.1
  *
  * @param     {table}        self           - The target table
  *
@@ -449,9 +450,9 @@ end
 function table.reverse(self)
     local r = {}
 
-    for i, v in ipairs(self)
+    for i, v in ipairs(self) do
         r[#self - i + 1] = v
-    do
+    end
 
     return r
 end
