@@ -147,3 +147,50 @@ end
 function closebattlelist()
     openbattlelist(true)
 end
+
+--[[
+ * Sends a private message to a given player.
+ *
+ * @since     1.6.0
+ *
+ * @param     {string}       name           - Name of the player to send the
+ *                                            message to
+ * @param     {string}       message        - Message content
+--]]
+function pm(name, message)
+    say(('*%s* %s'):format(name, message))
+end
+
+
+--[[
+ * Yells message on a given channel.
+ *
+ * @since     1.6.0
+ *
+ * @param     {string}       [channel]      - Channel to yell the message on                              message to
+ * @param     {string}       message        - Message content
+--]]
+function yell(channel, message)
+    if not message then
+        message, channel = channel, 'Default'
+    end
+
+    say(channel, ('#y %s'):format(message))
+end
+
+
+--[[
+ * Whispers message on a given channel.
+ *
+ * @since     1.6.0
+ *
+ * @param     {string}       [channel]      - Channel to whisper the message on                              message to
+ * @param     {string}       message        - Message content
+--]]
+function whisper(channel, message)
+    if not message then
+        message, channel = channel, 'Default'
+    end
+
+    say(channel, ('#w %s'):format(message))
+end
