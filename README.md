@@ -8,7 +8,7 @@ Raphael's Library is a pack of functions created with a view to ease and fasten 
 Building
 --------
 
-If you want to build the library yourself, simply execute `build.lua` using the Lua interpreter.
+If you want to build the library yourself, simply execute `lua build.lua <version>` using the Lua interpreter.
 
 
 

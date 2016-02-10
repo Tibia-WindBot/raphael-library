@@ -1,15 +1,7 @@
--- {{ name }} v{{ version }}
+-- Raphael's Library v{{ version }}
 -- Last Updated: {{{ os.date('!%d/%m/%Y - %H:%M UTC') }}}
--- Released for WindBot v{{ windbot }}
 
 RAPHAEL_LIB = '{{ version }}'
-
---[[
- * Changelog v{{ version }}
- *
-@include(log/changelog-{{ version }}.log)
- *
---]]
 
 LIBS = LIBS or {}
 LIBS.RAPHAEL = RAPHAEL_LIB
@@ -126,4 +118,4 @@ LIBS.RAPHAEL = RAPHAEL_LIB
 
 @include(src/Third/JSON.lua)
 
-print("{{ name }} Version: " .. RAPHAEL_LIB)
+print("Raphael's Library Version: " .. RAPHAEL_LIB)

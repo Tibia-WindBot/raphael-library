@@ -1,8 +1,0 @@
- * - Added tostring.
- * - Added userdatastringformat.
- * - Added requires.
- * - Added toyesno, toonezero and toonoff.
- * - Added string.starts, string.ends, string.begin and string.finish.
- * - Added some useful patterns.
- * - Removed getnamecolor.
- * - Minor internal changes.

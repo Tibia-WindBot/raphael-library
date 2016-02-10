@@ -1,2 +1,0 @@
- * - Fixed typo on table.reverse.
- * - Fixed very rare issue with utctime().
