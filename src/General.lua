@@ -695,3 +695,18 @@ function getwpt(id)
 
     return null
 end
+
+
+--[[
+ * Given the id of an unequipped item, returns its id when equipped. If it's not
+ * on the list of exceptions, returns its own id.
+ *
+ * @since     1.6.0
+ *
+ * @param     {number}         id           - The unequipped items's id
+ *
+ * @returns   {number}                      - The equiped items's id
+--]]
+function iteminuse(id)
+    return ITEMS_IN_USE[itemid(id)] or id
+end
