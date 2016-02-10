@@ -688,7 +688,7 @@ function getwpt(id)
     local iid = 0
 
     foreach settingsentry s 'Cavebot/Waypoints' do
-        if get(s, 'Label') == id or iid = id then
+        if get(s, 'Label') == id or iid == id then
             return s
         end
     end
