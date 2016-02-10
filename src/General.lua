@@ -671,3 +671,27 @@ function curchannel()
         end
     end
 end
+
+
+--[[
+ * Given a waypoint's id or label, returns its setting entry. Only works on the
+ * current section. If no waypoint with that id or label is found, null is
+ * returned.
+ *
+ * @since     1.6.0
+ *
+ * @param     {number|string}  id           - The waypoint's id or label
+ *
+ * @returns   {userdata}                    - The waypoint's setting entry
+--]]
+function getwpt(id)
+    local iid = 0
+
+    foreach settingsentry s 'Cavebot/Waypoints' do
+        if get(s, 'Label') == id or iid = id then
+            return s
+        end
+    end
+
+    return null
+end
