@@ -615,8 +615,8 @@ function timetolevel(extraPrecision, level)
         _Tracker.lastExpHour = $exphour
     end
 
-    -- If the current experience changes, the experience need to advance to the
-    -- level also changes and this, in turn, changes the time to level; One
+    -- If the current experience changes, the experience needed to advance to the
+    -- level also changes and this, in turn, changes the time to level; One could
     -- argue that when the current experience changes, the experience per hour
     -- also does, because effectively you're gaining experience. This, however,
     -- cannot be verified over a non instantaneous period of time and since this
