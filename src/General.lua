@@ -197,15 +197,14 @@ end
  * UTC timezone.
  *
  * @since     0.1.0
+ * @updated   1.6.1
  *
  * @returns   {number}                      - UTC offset in seconds
 --]]
 function utcoffset()
     local now = os.time()
-    return os.difftime(
-        now,
-        os.time(os.date("!*t", now)) - tern(os.date('*t').isdst, 3600, 0)
-    )
+
+    return os.difftime(os.time(os.date("!*t", now)), now)
 end
 
 --[[
@@ -213,31 +212,36 @@ end
  * CET timezone.
  *
  * @since     0.1.0
- * @updated   1.4.0
+ * @updated   1.6.1
  *
  * @returns   {number}                      - CET offset in seconds
 --]]
 function cetoffset()
-    -- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
-    local daylightDates = {
-        [2013] = {90, 300},
-        [2014] = {89, 299},
-        [2015] = {88, 298},
-        [2016] = {87, 304},
-        [2017] = {85, 302}
-    }
+    -- See the difference an 'n' can do?
+    local function iscest()
+        -- List taken from http://www.timeanddate.com/time/zone/germany/frankfurt
+        local daylightDates = {
+            [2013] = {90, 300},
+            [2014] = {89, 299},
+            [2015] = {88, 298},
+            [2016] = {87, 304},
+            [2017] = {85, 302}
+        }
 
-    local now = os.date('!*t')
-    local daylightDate = daylightDates[now.year]
+        local now = os.date('!*t')
+        local daylightDate = daylightDates[now.year]
 
-    return utcoffset() + tern(now.yday >= daylightDate[1] and now.yday <= daylightDate[2], 7200, 3600)
+        return now.yday >= daylightDate[1] and now.yday <= daylightDate[2]
+    end
+
+    return utcoffset() + tern(iscest(), 7200, 3600)
 end
 
 --[[
  * Returns the current time of day, in seconds, on UTC timezone.
  *
  * @since     0.1.0
- * @updated   1.5.1
+ * @updated   1.6.1
  *
  * @returns   {number}                      - UTC time of day in seconds
 --]]
@@ -246,7 +250,7 @@ function utctime()
 
     -- Apparently os.date('!%X') returns the time with AM/PM appended on some
     -- computers; this ignores anything before and after the actual timestamp
-    t = table.first(t:match('(%d%d:%d%d:%d%d)'))
+    t = t:match('(%d%d:%d%d:%d%d)')
 
     return tosec(t)
 end
@@ -255,12 +259,12 @@ end
  * Returns the current time of day, in seconds, on CET timezone.
  *
  * @since     0.1.0
- * @updated   1.4.0
+ * @updated   1.6.1
  *
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-    return utctime() - utcoffset() + cetoffset()
+    return utctime() - utcoffset() - cetoffset()
 end
 
 --[[
