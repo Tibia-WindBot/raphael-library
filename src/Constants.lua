@@ -109,6 +109,7 @@ REGEX_COORDS        = '^x:(%d+), y:(%d+), z:(%d+)$'
 REGEX_RANGE         = '^(%d+) x (%d+)$'
 REGEX_ITEMS_SOLD    = '^Sold (%d+)x (.-) for (%d+) gold%.$'
 REGEX_ITEMS_BOUGHT  = '^Bought (%d+)x (.-) for (%d+) gold%.$'
+REGEX_MONEY_PAID    = '^Paid %d+ gold from .-bank account%. Your account balance is now (%d+) gold%.$'
 
 -- Deprecated regexes
 REGEX_SPA_COORDS = REGEX_COORDS

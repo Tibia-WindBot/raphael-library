@@ -699,7 +699,7 @@ function getwpt(id)
         end
     end
 
-    return null
+    return nil
 end
 
 
