@@ -266,7 +266,7 @@ end
  * @returns   {number}                      - CET time of day in seconds
 --]]
 function cettime()
-    return utctime() - utcoffset() - cetoffset()
+    return utctime() - utcoffset() + cetoffset()
 end
 
 --[[
