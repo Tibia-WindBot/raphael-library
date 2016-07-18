@@ -697,6 +697,7 @@ function getwpt(id)
         if get(s, 'Label') == id or iid == id then
             return s
         end
+        iid = iid + 1
     end
 
     return nil
