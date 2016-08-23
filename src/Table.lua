@@ -460,7 +460,7 @@ end
 --[[
  * Shuffles the table (randomizes the order of the elements).
  *
- * @since     1.5.0
+ * @since     1.6.3
  *
  * @param     {table}        self           - The target table
 --]]
