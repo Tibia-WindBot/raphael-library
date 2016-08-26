@@ -456,3 +456,19 @@ function table.reverse(self)
 
     return r
 end
+
+--[[
+ * Shuffles the table (randomizes the order of the elements).
+ *
+ * @since     1.7.0
+ *
+ * @param     {table}        self           - The target table
+--]]
+function table.shuffle(self)
+    local index
+    for i = #self, 1, -1 do
+        index = math.random(i)
+
+        self[i], self[index] = self[index], self[i]
+    end
+end

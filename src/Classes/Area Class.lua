@@ -96,6 +96,14 @@ function Area:hasPoint(point, y)
            point.y <= self.botRight.y
 end
 
+function Area:isVertical()
+    return self:getHeight() > self:getWidth()
+end
+
+function Area:isHorizontal()
+    return self:getWidth() > self:getHeight()
+end
+
 function Area:move(point, y)
     point = Point:new(point, y)
 
