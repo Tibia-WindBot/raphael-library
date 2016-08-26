@@ -97,7 +97,11 @@ function Area:hasPoint(point, y)
 end
 
 function Area:isVertical()
-    return self:getHeight() >= self:getWidth()
+    return self:getHeight() > self:getWidth()
+end
+
+function Area:isHorizontal()
+    return self:getWidth() > self:getHeight()
 end
 
 function Area:move(point, y)
